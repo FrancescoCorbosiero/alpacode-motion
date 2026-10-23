@@ -1,0 +1,57 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<p data-scrub>Il movimento non decora: racconta.</p>`;
+---
+
+<Entry
+  id="scrub"
+  markup={markup}
+  look="Le parole si accendono al passo dello scroll; tornando su si spengono di nuovo."
+>
+  <section class="sc">
+    <div class="wrap sc-inner">
+      <p class="sc-kicker">Manifesto</p>
+      <p class="sc-statement" data-scrub>
+        Il movimento non decora: racconta. Ogni sezione sceglie la sola mossa che dice ciò che chi legge deve capire, e la
+        fa bene, una volta, senza chiedere attenzione per sé.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .sc {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding-block: clamp(120px, 26vh, 280px);
+  }
+  .sc-inner {
+    display: grid;
+    gap: 36px;
+  }
+  .sc-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--on-ink-mute);
+  }
+  .sc-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .sc-statement {
+    margin: 0;
+    max-width: 21em;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(30px, 4.6vw, 70px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+  }
+</style>

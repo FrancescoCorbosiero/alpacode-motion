@@ -1,0 +1,30 @@
+---
+/* The gallery's header: the core moves it (core-header, [data-header]). */
+const path = Astro.url.pathname;
+const here = (href: string): boolean => (href === "/" ? path === "/" : path.startsWith(href));
+const nav = [
+  { href: "/", label: "Catalog" },
+  { href: "/core/", label: "Core" },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="site-header-strut" aria-hidden="true"></div>
+  <div class="site-header-row wrap">
+    <a class="brand" href="/" aria-label="alpacode motion, the catalog">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span class="brand-name">alpacode</span>
+      <span class="brand-sub">motion</span>
+    </a>
+    <nav class="site-nav" aria-label="Gallery">
+      {
+        nav.map((item) => (
+          <a href={item.href} aria-current={here(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="https://github.com/FrancescoCorbosiero/alpacode-motion" rel="noopener">Repo</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,20 @@
+---
+/* One page per entry that has a demo here (src/demos/<id>.astro). The
+   demo file holds the live markup and wraps itself in <Entry>. */
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+export function getStaticPaths() {
+  const demos = import.meta.glob<{ default: AstroComponentFactory }>("../demos/*.astro", { eager: true });
+  return Object.entries(demos).map(([path, mod]) => ({
+    params: { id: path.replace(/^.*\/([^/]+)\.astro$/, "$1") },
+    props: { Demo: mod.default },
+  }));
+}
+
+interface Props {
+  Demo: AstroComponentFactory;
+}
+const { Demo } = Astro.props;
+---
+
+<Demo />

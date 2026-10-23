@@ -1,0 +1,23 @@
+---
+import { Code } from "astro:components";
+import { studio } from "../gallery/code-theme";
+
+interface Props {
+  code: string;
+  lang: "ts" | "css" | "html" | "sh" | "astro";
+  /** The file, when the block is one. */
+  path?: string;
+  /** What it is, after the path. */
+  note?: string;
+}
+const { code, lang, path, note } = Astro.props;
+---
+
+<figure class="code">
+  <figcaption class="code-head">
+    {path && <span class="code-path">{path}</span>}
+    {note && <span class="code-note">{note}</span>}
+    <button type="button" class="code-copy" data-copy>Copy</button>
+  </figcaption>
+  <Code code={code.trimEnd()} lang={lang} theme={studio} />
+</figure>

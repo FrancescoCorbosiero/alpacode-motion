@@ -1,0 +1,27 @@
+# Check and build on every push to main and every PR, as on alpacode.
+# `npm run check` is astro check (types) plus the catalog check: catalog.md,
+# the engine's modules, the registry, the demos, the weights and the
+# screenshots agree.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build

@@ -1,0 +1,15 @@
+---
+/* An entry's status: src (only in the sources) → port (rebuilt here) →
+   demo (its page, a measured weight, screenshots). */
+interface Props {
+  value: string;
+}
+const { value } = Astro.props;
+const title: Record<string, string> = {
+  src: "Only in the sources so far",
+  port: "Rebuilt here",
+  demo: "Rebuilt here, with its demo page, its measured weight and screenshots",
+};
+---
+
+<span class:list={["status", `status--${value}`]} title={title[value]}><i aria-hidden="true"></i>{value}</span>

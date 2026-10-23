@@ -1,0 +1,124 @@
+---
+/* The index, built from catalog.md: every entry, its tier and section,
+   its cost and its status; the ones with a demo link to their page. */
+import Layout from "../components/Layout.astro";
+import Status from "../components/Status.astro";
+import Cost from "../components/Cost.astro";
+import { catalog, TIER_LABEL } from "../gallery/data";
+import { costOf, hookOf, inline, slug, whatOf } from "../gallery/catalog.js";
+
+const demos = new Set(Object.keys(import.meta.glob("../demos/*.astro")).map((p) => p.replace(/^.*\/([^/]+)\.astro$/, "$1")));
+
+const all = [...catalog.entries.values()];
+const effects = all.filter((e) => e.section.tier !== "core");
+const core = all.filter((e) => e.section.tier === "core");
+const withPage = effects.filter((e) => demos.has(e.id)).length;
+
+const tiers = (["core", "1", "2", "3"] as const).map((tier) => {
+  const top = catalog.sections.find((s) => s.tier === tier && !s.group);
+  return {
+    tier,
+    title: top?.title ?? TIER_LABEL[tier],
+    intro: top?.intro.split("\n\n")[0] ?? "",
+    sections: catalog.sections.filter((s) => s.tier === tier && s.entries.length && (s.group || tier === "core" || tier === "2")),
+  };
+});
+
+const usage = [
+  ["Start from the story", "What should the visitor understand from this section? Pick the one move that tells it. One strong move per section; neighbours never repeat."],
+  ["Check the cost", "Against what the page already does: pins, scrubbed triggers, split headings, loops."],
+  ["Copy, don't link", "The core once per site, then the entry's module, its CSS with the reduced-motion end state, and its markup."],
+  ["Keep the names", "The canonical hooks, unless the site has its own convention: then map them in its config."],
+  ["Record it", "In the site's own docs: which entries, from which commit of this repo."],
+];
+---
+
+<Layout
+  title="alpacode motion"
+  description="The motion catalog of the Alpacode sites: every effect, indexed from the code and rebuilt here to be copied by hand."
+>
+  <section class="hero wrap">
+    <p class="label" data-intro style="--intro-d: 0.02s">alpacode-motion</p>
+    <h1 class="hero-title intro-lines">
+      <span class="line"><span>The motion</span></span>
+      <span class="line"><span>catalog</span></span>
+    </h1>
+    <p class="hero-lede" data-intro>
+      Every effect the studio has built for its sites, in GSAP, CSS or plain JS: indexed from the code where it lives,
+      then rebuilt here one by one, with a live demo, its measured weight and the markup to copy into the next site.
+    </p>
+    <dl class="hero-facts" data-intro style="--intro-d: 0.75s">
+      <div><dt>effects</dt><dd>{effects.length}</dd></div>
+      <div><dt>core pieces</dt><dd>{core.length}</dd></div>
+      <div><dt>with a page</dt><dd>{withPage}</dd></div>
+    </dl>
+  </section>
+
+  <section class="usage wrap" aria-labelledby="usage-title">
+    <h2 class="usage-title" id="usage-title">Using it on a site</h2>
+    <ol class="usage-list">
+      {
+        usage.map(([title, text]) => (
+          <li>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="catalog wrap" aria-labelledby="catalog-title">
+    <div class="catalog-head">
+      <h2 class="catalog-title" id="catalog-title">The entries</h2>
+      <fieldset class="filter">
+        <legend>Show</legend>
+        <label><input type="radio" name="show" value="all" checked /> everything</label>
+        <label><input type="radio" name="show" value="page" /> with a page</label>
+      </fieldset>
+    </div>
+    {
+      tiers.map((t) => (
+        <section class="tier" id={`tier-${t.tier}`}>
+          <header class="tier-head">
+            <h2 class="tier-title">{t.title}</h2>
+            {t.intro && <p class="tier-intro" set:html={inline(t.intro)} />}
+          </header>
+          {t.sections.map((s) => (
+            <section class="group" id={slug(s.title)}>
+              {s.group && <h3 class="group-title" set:html={inline(s.title)} />}
+              {s.group && s.intro && s.entries[0]?.id !== "alpaca" && (
+                <p class="group-intro" set:html={inline(s.intro.split("\n\n")[0] ?? "")} />
+              )}
+              {t.tier === "core" && (
+                <p class="group-intro">
+                  Ported here, all of it: <a href="/core/">the core's page</a> has the files and how a site installs them.
+                </p>
+              )}
+              <ul class="rows">
+                {s.entries.map((e) => {
+                  const page = demos.has(e.id) ? `/${e.id}/` : t.tier === "core" ? "/core/" : null;
+                  return (
+                    <li class="row" data-page={page ? "" : undefined}>
+                      {page ? (
+                        <a class="row-id" href={page}>
+                          {e.id}
+                        </a>
+                      ) : (
+                        <span class="row-id">{e.id}</span>
+                      )}
+                      <p class="row-what" set:html={inline(whatOf(e))} />
+                      <span class="row-hook" set:html={inline(hookOf(e))} />
+                      <Cost codes={costOf(e)} />
+                      <Status value={e.status} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
+        </section>
+      ))
+    }
+  </section>
+</Layout>

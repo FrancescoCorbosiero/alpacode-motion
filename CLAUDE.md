@@ -8,7 +8,14 @@ is copied into a site by hand and adapted.
 
 **Start every session by reading [`docs/status.md`](docs/status.md)**,
 then `catalog.md` and [`docs/decisions.md`](docs/decisions.md). The
-prompts that start each phase are in [`docs/prompts.md`](docs/prompts.md).
+prompts that start each phase are in [`docs/prompts.md`](docs/prompts.md);
+porting an entry follows the `add-effect` skill
+(`.claude/skills/add-effect`).
+
+The gallery is an Astro site at the root (`npm run dev`): the engine a
+site copies is `src/engine/` (`core/` once per site, `effects/<id>.*` per
+entry, `config.ts` and `registry.ts` written per site), the gallery's own
+code is `src/gallery/`, `src/components/`, `src/demos/`, `src/pages/`.
 
 ## Working with the owner
 
@@ -37,8 +44,9 @@ from a session working on this one.
    neighbouring sections never repeat the same move.
 2. **Check the cost** (Cost column, `docs/weight.md`) against what the
    page already does: pins, scrubbed triggers, split headings, loops.
-3. **Copy, don't link**: core once per site, then the entry's module, its
-   CSS (with the reduced-motion end state) and its markup contract.
+3. **Copy, don't link**: the core once per site (`src/engine/core/`; the
+   gallery's `/core/` page says how), then the entry's module, its CSS
+   (with the reduced-motion end state) and its markup contract.
    Until an entry is ported here, copy from its source link and adapt.
 4. **Names**: use the canonical hooks unless the site has its own
    convention; then map them, as alpacode's selector lists do.
@@ -88,15 +96,21 @@ copied, keeps them.
 - **A pinned stage fits a phone** (390×664).
 - No emoji in UI.
 
-## Verify (once the gallery exists, phase 1)
+## Verify
 
-1. The repo's check and build.
-2. Serve the build and look: Playwright with the pre-installed Chromium
-   (`/opt/pw-browsers/chromium` in Claude Code cloud sessions) at
-   1440×900 and 390×844, pinned stages at 390×664, plus a reduced-motion
-   full-page shot.
-3. Measure the entry's weight with the repo's script; write it in its
-   page and in the catalog.
+1. `npm run check` (types, then the catalog check: catalog.md, modules,
+   registry, demos, weights and screenshots agree) and `npm run build`.
+2. `npm run smoke`: the lifecycle in a real browser, on the build (soft
+   navigation, replay, reduced motion switched mid-visit, keyboard focus,
+   the scroll lock).
+3. `npm run shots -- <id>`: six frames as the demo scrolls through at
+   1440×900 and 390×844, pinned stages at 390×664, and the page under
+   reduced motion; sheets in `docs/shots/<id>/`, full frames in
+   `.shots/<id>/`. Look at them. The browser scripts use the pre-installed
+   Chromium (`/opt/pw-browsers/chromium` in Claude Code cloud sessions),
+   else `$CHROMIUM_PATH` or the installed Chrome.
+4. `npm run weight`: the entry's weight into its page, the catalog and
+   `docs/weight.md`.
 
 ## Git
 

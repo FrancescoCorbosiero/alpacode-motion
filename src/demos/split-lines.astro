@@ -1,0 +1,92 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<h2 data-split="lines">Prima la storia, poi la mossa.</h2>`;
+---
+
+<Entry
+  id="split-lines"
+  markup={markup}
+  look="Ogni riga sale dalla sua maschera, la prima apre la strada. Le righe sono quelle dell'impaginato: a un'altra larghezza, il taglio cambia."
+>
+  <section class="sl">
+    <div class="wrap sl-block">
+      <p class="sl-kicker">Uno</p>
+      <h2 class="sl-title sl-title--xl" data-split="lines">Prima la storia, poi la mossa.</h2>
+      <p class="sl-text">
+        Che cosa deve capire chi legge questa sezione? La risposta sceglie il movimento, non il contrario: un titolo che
+        sale riga per riga annuncia che qui comincia qualcosa.
+      </p>
+    </div>
+    <div class="wrap sl-block sl-block--side">
+      <p class="sl-kicker">Due</p>
+      <h2 class="sl-title" data-split="lines">Si copia a mano, si adatta al sito, si pesa prima di spedire.</h2>
+      <p class="sl-text">
+        Nessun sito installa questo catalogo. Il codice di un effetto si copia, si accorda alla voce del sito e si misura:
+        se costa più di quello che racconta, resta fuori.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .sl {
+    display: grid;
+    gap: clamp(120px, 24vh, 260px);
+    padding-block: clamp(80px, 14vh, 160px) clamp(120px, 20vh, 220px);
+  }
+  .sl-block {
+    display: grid;
+    gap: 24px;
+  }
+  .sl-block--side {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(32px, 6vw, 96px);
+    align-items: end;
+  }
+  .sl-block--side .sl-kicker {
+    grid-column: 1 / -1;
+  }
+  .sl-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .sl-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .sl-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 4.8vw, 72px);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .sl-title--xl {
+    max-width: 9.5em;
+    font-size: clamp(44px, 9.6vw, 152px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .sl-text {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.6;
+    color: var(--mute-2);
+  }
+  @media (max-width: 860px) {
+    .sl-block--side {
+      grid-template-columns: 1fr;
+      row-gap: 24px;
+    }
+  }
+</style>

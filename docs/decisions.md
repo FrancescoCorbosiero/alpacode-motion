@@ -77,10 +77,68 @@ the measured cost, the source links), an index built from the catalog.
 gsap 3.15 and lenis 1.3 as in the sites; Astro 6, the newest of the two
 (alpacode is on 5, C on 6) — an assumption, see status.md. Code and docs
 in English; demo copy in Italian.
+Checked in phase 1: every Astro release up to 7.3.1 (all of 6.x, and both
+sites' versions) carries advisories `npm audit` rates critical — XSS in
+server rendering, RCE in AVIF image optimization. None applies to this
+static build of first-party content, with no islands, MDX or image
+processing; Astro 7.3.2 and later fix them, but move to Vite 8 and
+Rolldown, and 7.4.2 needs Node 22.23 or later (O6).
 
 **D12 — Proof.** An entry is `demo` only with its page, its weight
 measured by the repo's script, and screenshots at 1440×900, 390×844
 (pinned stages at 390×664) and under reduced motion.
+
+**D13 — The effect contract** (phase 1). An effect is a module,
+`src/engine/effects/<id>.ts`, that exports its `hook` (a selector of
+`data-*` attributes) and `init(kit)`. The kit is the one alpacode's
+landing scenes get (`on`, `fine`, `cleanup`: A `scenes.ts`) plus the
+page's `media` (its `gsap.matchMedia()`) and `query(hook)`, which adds
+the site's own selectors. `init` runs once per page inside the page's
+context; what a context can't revert goes in `kit.cleanup`. The settings
+— the site's voice — are constants at the top of the module, in a fixed
+shape the gallery reads into the entry's page: the module is their one
+truth. Its CSS, `<id>.css`, opens with its reduced-motion end state.
+Code a family shares lives in `effects/_<family>.ts` (`_headings.ts`).
+
+**D14 — What a site copies, what it writes.** `src/engine/core/` and an
+entry's files are copied as they are; three files are written per site:
+`config.ts` (its selectors: header, nav, scroll panes, intro containers,
+the map of its classes onto the hooks), `registry.ts` (its effects:
+`effects` in the main bundle, in build order; `lazy`, fetched by
+presence, D7) and `index.ts` (start). The layout loads `index.ts` once;
+overlays import only `core/scroll-lock.ts`.
+
+**D15 — The port: the union, plus the rules.** Where the sources differ,
+the port takes the union the catalog's Notes name. Where both break a
+rule of motion, the port fixes it and the row says so: a scrubbed
+statement in the first view is left alone; a block keyboard focus has
+shown isn't re-tweened by its batch; each effect is built in a context
+of its own, so one that throws is undone alone (GSAP's `Context.add()`
+doesn't restore its state when its function throws); a change of the
+reduced-motion preference mid-visit rebuilds the page. Tuning keeps A's
+values until phase 2 decides the pending defaults.
+
+**D16 — Proof, as scripts** (D12). `npm run check` is astro check plus
+the catalog check: catalog.md, the modules, the registry, the demos, the
+weights and the screenshots agree, and a `demo` entry has all of them.
+`npm run weight` measures each entry's own code (the module bundled
+alone, libraries and core left out; minified, gzip -9, 1 KB = 1000 B as
+in phase 0), what it needs and a page with the core and only it, and
+writes them into the catalog, `docs/weight.md` and the gallery.
+`npm run shots` takes six frames per viewport while the demo scrolls
+through — mid-move for what plays once, caught up for what is scrubbed —
+and the page under reduced motion down to the end of its demo (the docs
+below it never move); they are committed as WebP sheets in
+`docs/shots/<id>/`, about 200 KB per entry. `npm run smoke` checks the
+lifecycle in a real browser. CI runs check and build, as on alpacode.
+
+**D17 — The gallery's voice.** The studio's, from alpacode's tokens:
+blueprint paper, blue-black ink, the blue strut, Archivo Black over
+Manrope, no round corners, labels in the body face (never mono
+micro-labels; mono only for code). Its chrome is in English, like the
+docs; demo copy is Italian (`lang="it"`) and speaks about the catalog's
+own craft, so it stays neutral (O1). Speaking each site's voice is O5.
+Pages live at `/<id>/`, the core at `/core/`; `noindex` until O1.
 
 ## Naming registry
 
@@ -117,14 +175,22 @@ canonical name.
 | `.btn` (label roll) | C | `data-roll` | attributes only |
 | `stepEnter()` | C | `panelEnter()` | same move |
 | `lockScroll()`; event `alpa:scroll-lock` | C; A | event `motion:scroll-lock` | decoupled and brand-neutral |
+| `.site-header` | A, C | `data-header` (the site maps it in `config.ts`) | attributes only |
+| `[data-nav].open` | C | `[data-nav][data-open]` (`config.ts`) | attributes only |
+| `.scroll-progress` | A | `data-read-progress` | attributes only |
 
 ## Pending defaults
 
 Decided in phase 2 with the variants side by side in the demo.
 
+Phase 1 ported `reveal`, `split-lines` and `scrub` with A's values; 2a
+confirms or changes them with the variants side by side.
+
 | Entry | A | C (or FAST) |
 | --- | --- | --- |
 | reveal | 44px, 1.1s | C 44px, 1.0s; FAST 34px, 0.8s |
+| split-lines | stagger 0.085s | 0.09s |
+| scrub | lit by `bottom 48%` | `bottom 50%` |
 | split-wipe | 1.3s | 1.2s |
 | split cycle | lines, wipe, words, blur, chars | lines, pop, wipe, chars (drop), blur |
 | pop | ±90° alternating, delay 0.15s | −160° |
@@ -152,7 +218,16 @@ For the owner.
   a site adopts them when an effect is touched.
 - **O5 — The demo theme.** Neutral, or switchable between the brands
   (studio, FAST, C) to show an effect in each voice.
-- **O6 — Astro 6 for the gallery** (assumed, D11).
+- **O6 — Astro 6 for the gallery** (assumed, D11). Every 6.x release
+  carries advisories that don't apply to this static build but show in
+  `npm audit` and in GitHub's alerts; 7.3.2+ fixes them. Move the gallery
+  to Astro 7 (and the sites, which are on 5 and 6)?
 - **O7 — "The sticker you can tug".** alpacode's engine header promises
   it; there is no drag code. A stale comment, or an effect to build
   (Draggable + Inertia)?
+- **O8 — Screenshots in git.** The sheets are committed (WebP, about
+  200 KB per entry: some 17 MB once all 85 are `demo`, more with every
+  reshoot). Keep them in the repo, or move them to CI artifacts?
+- **O9 — The smoke test in CI.** `npm run smoke` needs a Chrome, which
+  GitHub's runners have (about 30 s). Add it to CI next to check and
+  build?

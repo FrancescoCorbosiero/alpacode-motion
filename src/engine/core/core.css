@@ -1,0 +1,191 @@
+/* ============================================================
+   The core's CSS — the half of the engine that runs without it.
+   Copied once per site, with the core. Selectors are the canonical
+   hooks; a site with its own classes maps them here (D5).
+
+   1. Lenis — the upstream lenis.css rules.
+   2. Intro (core-css-intro) — above the fold, motion is CSS keyframes:
+      the first screen moves on first paint, without waiting for the
+      script, and replays after every navigation for free.
+        .intro-lines   each .line > span rises out of its own mask
+        [data-intro]   fades up; --intro-d sets the delay
+   3. Header (core-header) — it slides away while reading downwards.
+   4. Reading progress (core-read-progress) — CSS scroll timeline.
+   5. The effects layer (core-fx-layer).
+   6. Page transitions (core-view-transitions).
+
+   Reduced motion: no intro, no transitions, the header never slides
+   away, no progress bar, no effects layer.
+   Sources: A src/styles/motion.css:24, :114, :290, :318, :389;
+   C src/styles/motion.css:16, :27, :88; C src/styles/effects.css:21;
+   A src/styles/components.css:24.
+   ============================================================ */
+
+/* ---------- 1. Lenis ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+/* Native smooth scrolling fights Lenis. */
+html.lenis {
+  scroll-behavior: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ---------- 2. Intro ---------- */
+/* Line masks. The padding/negative-margin pair grows each mask enough to
+   keep accents and descenders while leaving the layout untouched. */
+.intro-lines .line {
+  display: block;
+  overflow: hidden;
+  padding: 0.1em 0 0.12em;
+  margin: -0.1em 0 -0.12em;
+}
+.intro-lines .line > span {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Fill mode backwards (C's): once the intro is over its properties go
+     back to the stylesheet, and the scroll effects' inline styles work. */
+  .intro-lines .line > span {
+    animation: introLine 1.15s var(--ease-expo, cubic-bezier(0.19, 1, 0.22, 1)) backwards;
+    animation-delay: calc(var(--intro-base, 0.12s) + var(--line-i, 0) * 0.09s);
+  }
+  .intro-lines .line:nth-child(2) > span {
+    --line-i: 1;
+  }
+  .intro-lines .line:nth-child(3) > span {
+    --line-i: 2;
+  }
+  .intro-lines .line:nth-child(4) > span {
+    --line-i: 3;
+  }
+  [data-intro] {
+    animation: introFade 0.95s var(--ease-expo, cubic-bezier(0.19, 1, 0.22, 1)) backwards;
+    animation-delay: var(--intro-d, 0.55s);
+  }
+}
+
+@keyframes introLine {
+  from {
+    transform: translateY(120%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes introFade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 3. Header ---------- */
+/* The look is the site's; the core only moves it. */
+[data-header] {
+  transition: transform 0.6s var(--ease-expo, cubic-bezier(0.19, 1, 0.22, 1));
+}
+[data-header].is-hidden {
+  transform: translateY(-100%);
+}
+/* Never hide the header while something inside it has focus. */
+[data-header].is-hidden:focus-within {
+  transform: none;
+}
+
+/* ---------- 4. Reading progress ---------- */
+/* A strut growing down the left edge with the scroll. Native scroll
+   timeline (Lenis drives the real scroll position, so it stays in sync);
+   decorative, so where unsupported there is simply no bar. */
+[data-read-progress] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--read-progress-width, 3px);
+  background: var(--read-progress-color, currentColor);
+  transform: scaleY(0);
+  transform-origin: top center;
+  z-index: 60;
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  [data-read-progress] {
+    animation: readProgress linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes readProgress {
+    to {
+      transform: scaleY(1);
+    }
+  }
+}
+
+/* ---------- 5. Effects layer ---------- */
+.fx-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fx-bit {
+  position: absolute;
+  display: block;
+  will-change: transform, opacity;
+}
+
+/* ---------- 6. Page transitions ---------- */
+/* The outgoing page lifts away, the new one settles in. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtOut 0.32s var(--ease, cubic-bezier(0.2, 0.72, 0.2, 1)) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtIn 0.5s var(--ease-expo, cubic-bezier(0.19, 1, 0.22, 1)) both;
+  }
+}
+@keyframes vtOut {
+  to {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+@keyframes vtIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-header],
+  [data-header].is-hidden {
+    transition: none;
+    transform: none;
+  }
+  [data-read-progress],
+  .fx-layer {
+    display: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
