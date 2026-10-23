@@ -16,6 +16,8 @@ adapted. A site ships only the effects it uses.
 | [`docs/status.md`](docs/status.md) | where the work stands, the phases, the assumptions to validate |
 | [`docs/prompts.md`](docs/prompts.md) | the prompts that start each phase in a new chat |
 | [`CLAUDE.md`](CLAUDE.md) | how Claude works here, and the rules of motion |
+| [`src/engine/`](src/engine) | the engine a site copies: the core, the effects, the registry |
+| [`docs/shots/`](docs/shots) | each entry's screenshots, the proof of its demo |
 
 ## The tiers
 
@@ -36,5 +38,22 @@ adapted. A site ships only the effects it uses.
 - `comunicazionecinofila` — `src/scripts/motion.ts`, built from
   alpacode's engine and grown in another direction
 
-Status: phase 0, the catalog and the decisions. The demo gallery comes
-next (`docs/status.md`).
+## The gallery
+
+An Astro site at the root of the repo: the index, built from the catalog;
+the core's page; one page per ported entry, with the effect live, the
+markup to copy, its settings, its files, its weight and its sources.
+
+```sh
+npm install
+npm run dev       # the gallery, at http://localhost:4321
+npm run check     # types, and the catalog check
+npm run build     # dist/
+npm run smoke     # the lifecycle in a real browser (after build)
+npm run shots     # each entry's screenshots (after build)
+npm run weight    # each entry's weight, into the catalog and the docs
+```
+
+Status: phase 1 done — the gallery, the core, the effect contract and the
+first three entries (`reveal`, `split-lines`, `scrub`). Next, tier 1
+(`docs/status.md`).

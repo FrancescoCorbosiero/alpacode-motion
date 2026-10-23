@@ -1,0 +1,257 @@
+---
+/* The core: the skeleton every effect stands on, how a site installs it,
+   two of its pieces live, its files and its weight. */
+import Layout from "../components/Layout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import Status from "../components/Status.astro";
+import { catalog, coreFiles, kb, weight } from "../gallery/data";
+import { inline, notesOf, whatOf } from "../gallery/catalog.js";
+
+const pieces = catalog.sections.find((s) => s.tier === "core")?.entries ?? [];
+const files = coreFiles();
+const where: Record<string, string[]> = {
+  "core-lifecycle": ["core/lifecycle.ts"],
+  "core-lenis": ["core/lenis.ts"],
+  "core-scroll-to": ["core/scroll.ts"],
+  "core-scroll-lock": ["core/scroll-lock.ts", "core/lenis.ts"],
+  "core-header": ["core/header.ts", "core/core.css"],
+  "core-guards": ["core/guards.ts"],
+  "core-focus-reveal": ["core/focus.ts"],
+  "core-refresh": ["core/refresh.ts", "core/lifecycle.ts"],
+  "core-fx-layer": ["core/fx-layer.ts", "core/core.css"],
+  "core-lazy-chunk": ["core/lifecycle.ts", "registry.ts"],
+  "core-css-intro": ["core/core.css"],
+  "core-view-transitions": ["core/core.css"],
+  "core-read-progress": ["core/core.css"],
+};
+const install = `npm i gsap@3.15.0 lenis@1.3.27`;
+// A fence of its own: three dashes on a line would close this frontmatter.
+const fence = "-".repeat(3);
+const layout = `${fence}
+import { ClientRouter } from "astro:transitions";
+import "../engine/core/core.css"; // then each effect's CSS
+${fence}
+<html lang="it">
+  <head>
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="site-header" data-header>…</header>
+    <h1 class="intro-lines"><span class="line"><span>Above the fold,</span></span>
+      <span class="line"><span>CSS moves first.</span></span></h1>
+    <p data-intro>…</p>
+    <main>…</main>
+    <script>
+      import "../engine";
+    </script>
+  </body>
+</html>`;
+const overlay = `import { lockScroll } from "../engine/core/scroll-lock";
+
+const release = lockScroll(); // the page stops, Lenis with it
+// …
+release(); // the last overlay to close lets it go`;
+const core = weight.core;
+---
+
+<Layout title="Core" description="The skeleton every effect stands on: the page lifecycle, Lenis, scrolling, the header, the guards. Copied once per site.">
+  <article class="entry entry--core">
+    <header class="entry-head wrap">
+      <p class="label" data-intro style="--intro-d: 0.02s">Core, not an effect</p>
+      <h1 class="entry-id intro-lines" style="--chars: 4">
+        <span class="line"><span>core</span></span>
+      </h1>
+      <p class="entry-what" data-intro>
+        The skeleton every effect stands on: the page's lifecycle, Lenis, scrolling, the header, the guards that keep
+        content visible. Copied once per site, before the first effect.
+      </p>
+      <dl class="spec" data-intro style="--intro-d: 0.7s">
+        <div><dt>Pieces</dt><dd>{pieces.length}</dd></div>
+        <div><dt>Files</dt><dd>{files.length}</dd></div>
+        <div>
+          <dt>Weight</dt>
+          <dd>{core ? <>{kb(core.gzip)}{" "}<span class="unit">gzip, its own code</span></> : "not measured yet"}</dd>
+        </div>
+        <div><dt>Needs</dt><dd>gsap 3.15, ScrollTrigger, Lenis 1.3</dd></div>
+        <div><dt>From</dt><dd>alpacode · cinofila</dd></div>
+      </dl>
+    </header>
+
+    <div class="docs wrap">
+      <section class="doc" id="pieces">
+        <h2 class="doc-title">The pieces</h2>
+        <div class="doc-body">
+          <p>
+            The two engines were already the same architecture (cinofila was built from alpacode's): where they differ,
+            the port takes the union, as the catalog's notes say.
+          </p>
+          <ul class="pieces">
+            {
+              pieces.map((p) => (
+                <li class="piece">
+                  <div class="piece-head">
+                    <span class="row-id">{p.id}</span>
+                    <Status value={p.status} />
+                  </div>
+                  <p set:html={inline(whatOf(p))} />
+                  <p class="piece-notes" set:html={inline(notesOf(p))} />
+                  <p class="piece-files">
+                    {(where[p.id] ?? []).map((f) => (
+                      <code>src/engine/{f}</code>
+                    ))}
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="doc" id="install">
+        <h2 class="doc-title">Install it on a site</h2>
+        <div class="doc-body">
+          <ol class="steps">
+            <li>The libraries, at the versions the catalog was measured on:</li>
+          </ol>
+          <CodeBlock code={install} lang="sh" />
+          <ol class="steps" start="2">
+            <li><code>src/engine/core/</code>, copied as it is.</li>
+            <li>
+              The site's three files: <code>config.ts</code> (its header, its panes, its intro containers, the map of its
+              own classes onto the hooks), <code>registry.ts</code> (its effects, in build order) and
+              <code>index.ts</code> (one line: start).
+            </li>
+            <li><code>core.css</code> in the site's stylesheet, before the effects' CSS.</li>
+            <li>
+              The layout loads the script once; the header carries <code>data-header</code>; above the fold, motion is the
+              CSS intro.
+            </li>
+          </ol>
+          <CodeBlock code={layout} lang="astro" path="src/layouts/Layout.astro" />
+          <ol class="steps" start="6">
+            <li>Overlays pause the page through the lock, which sends <code>motion:scroll-lock</code>: they never import the engine.</li>
+          </ol>
+          <CodeBlock code={overlay} lang="ts" />
+        </div>
+      </section>
+
+      <section class="doc" id="try">
+        <h2 class="doc-title">Two pieces, live</h2>
+        <div class="doc-body" lang="it">
+          <div class="try">
+            <div class="try-card">
+              <h3>Scorri, e avvisami all'arrivo</h3>
+              <p>
+                <code>scrollToTarget(el, done)</code> scivola con Lenis e lascia spazio all'header; <code>done</code> parte
+                solo quando la pagina è arrivata. Sul programma referral di alpacode fa partire i coriandoli.
+              </p>
+              <button type="button" class="btn" data-try-glide>Vai al bersaglio</button>
+            </div>
+            <div class="try-card">
+              <h3>Un pannello che ferma la pagina</h3>
+              <p>
+                Il pannello prende il blocco con <code>lockScroll()</code>, che manda <code>motion:scroll-lock</code>: il
+                motore ferma Lenis, la pagina resta ferma, l'elenco dentro scorre da solo.
+              </p>
+              <button type="button" class="btn" data-try-lock>Apri il pannello</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc" id="files">
+        <h2 class="doc-title">The files</h2>
+        <div class="doc-body">
+          <p>
+            Everything under <code>core/</code> is copied as it is. The first three are the site's own, written for it:
+            here, the gallery's.
+          </p>
+          <div class="files">
+            {
+              files.map((f) => (
+                <details class="file">
+                  <summary>
+                    <code>{f.path}</code>
+                    <span>{f.role}</span>
+                  </summary>
+                  <CodeBlock code={f.code} lang={f.lang} path={f.path} />
+                </details>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="doc" id="weight">
+        <h2 class="doc-title">Weight</h2>
+        <div class="doc-body">
+          {
+            core ? (
+              <>
+                <dl class="figures">
+                  <div>
+                    <dt>Its own code</dt>
+                    <dd>
+                      {kb(core.gzip)} <span class="unit">gzip</span>
+                    </dd>
+                    <dd class="figure-note">{kb(core.min)} minified, the libraries left out</dd>
+                  </div>
+                  <div>
+                    <dt>With its libraries</dt>
+                    <dd>
+                      {kb(core.total)} <span class="unit">gzip</span>
+                    </dd>
+                    <dd class="figure-note">gsap, ScrollTrigger and Lenis: the fixed cost of a page with motion</dd>
+                  </div>
+                </dl>
+                <table class="table">
+                  <thead>
+                    <tr><th scope="col">The libraries</th><th scope="col">gzip</th></tr>
+                  </thead>
+                  <tbody>
+                    {(weight.libraries ?? []).map((l) => (
+                      <tr>
+                        <td>{l.name}</td>
+                        <td>{kb(l.gzip)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p>
+                  Measured by <code>npm run weight</code> on {weight.measured} (esbuild {weight.tools?.esbuild}; gsap{" "}
+                  {weight.tools?.gsap}, lenis {weight.tools?.lenis}).
+                </p>
+              </>
+            ) : (
+              <p>Not measured yet: <code>npm run weight</code>.</p>
+            )
+          }
+        </div>
+      </section>
+
+      <section class="doc doc--target" id="target" lang="it">
+        <h2 class="doc-title">Il bersaglio</h2>
+        <div class="doc-body">
+          <p class="target" data-try-target>
+            <span class="target-wait">Qui arriva lo scorrimento.</span>
+            <span class="target-done" aria-live="polite"></span>
+          </p>
+          <button type="button" class="btn btn--quiet" data-scroll-top>Torna su</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="sheet" data-try-sheet hidden>
+      <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title" lang="it">
+        <div class="sheet-head">
+          <h3 id="sheet-title">La pagina è ferma</h3>
+          <button type="button" class="btn" data-try-close>Chiudi</button>
+        </div>
+        <p>Prova a scorrere fuori dal pannello: non succede niente. Questo elenco, invece, scorre da sé.</p>
+        <ol class="sheet-list">
+          {pieces.map((p) => <li><code>{p.id}</code></li>)}
+        </ol>
+      </div>
+    </div>
+  </article>
+</Layout>

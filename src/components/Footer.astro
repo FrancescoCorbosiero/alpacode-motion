@@ -1,0 +1,40 @@
+---
+import { catalog } from "../gallery/data";
+
+const { A, C } = catalog.commits;
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer-row">
+    <p class="site-footer-lead">
+      Context, not a dependency: no site installs this. An effect is copied into a site by hand, adapted, and
+      recorded in that site's docs.
+    </p>
+    <dl class="site-footer-facts">
+      <div>
+        <dt>The index</dt>
+        <dd><a href="https://github.com/FrancescoCorbosiero/alpacode-motion/blob/main/catalog.md">catalog.md</a></dd>
+      </div>
+      {
+        A && (
+          <div>
+            <dt>alpacode-website</dt>
+            <dd>
+              <a href={`${A.url}/tree/${A.sha}`}>{A.sha}</a>, {A.date}
+            </dd>
+          </div>
+        )
+      }
+      {
+        C && (
+          <div>
+            <dt>comunicazionecinofila</dt>
+            <dd>
+              <a href={`${C.url}/tree/${C.sha}`}>{C.sha}</a>, {C.date}
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+  </div>
+</footer>

@@ -1,0 +1,54 @@
+---
+/* The gallery's page: the studio's voice (tokens in gallery.css), the
+   core's CSS and every effect's, one engine script, Astro's ClientRouter
+   — the way the sites run, so the lifecycle is exercised for real. */
+import "@fontsource/archivo-black/400.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/600.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/manrope/800.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "../engine/core/core.css";
+import "../styles/gallery.css";
+import { ClientRouter } from "astro:transitions";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
+// Every effect's CSS, as a site's stylesheet would hold it: their end
+// states must not wait for a script.
+import.meta.glob("../engine/effects/*.css", { eager: true });
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const pageTitle = title === "alpacode motion" ? title : `${title} — alpacode motion`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <!-- Not published yet (O1): keep it out of search engines until then. -->
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f0f3f9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <div data-read-progress aria-hidden="true"></div>
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import "../gallery/main";
+    </script>
+  </body>
+</html>

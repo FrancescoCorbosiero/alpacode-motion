@@ -1,0 +1,22 @@
+/* ============================================================
+   The site's effects, written per site with config.ts.
+   `effects` are in the main bundle and built on every page, in this
+   order: pinned scenes first, in page order (their pins add space and
+   everything below measures after them), then the rest. A module with
+   nothing to do runs one query and returns.
+   `lazy` ones are fetched only by pages that have their hook, then
+   built in the page's context (D7): tier 2 and 3, and anything that
+   needs a plugin beyond ScrollTrigger and SplitText (DrawSVG,
+   MotionPath). Their CSS still goes in the site's stylesheet: it holds
+   their end state, which must not wait for the chunk.
+   ============================================================ */
+import type { Effect, LazyEffect } from "./core/kit";
+import * as reveal from "./effects/reveal";
+import * as scrub from "./effects/scrub";
+import * as splitLines from "./effects/split-lines";
+
+export const effects: Effect[] = [splitLines, reveal, scrub];
+
+export const lazy: LazyEffect[] = [
+  // { hook: "[data-mark]", load: () => import("./effects/mark-circle") },
+];

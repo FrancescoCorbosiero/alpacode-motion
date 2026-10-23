@@ -1,0 +1,186 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section>
+  <h2>Sei regole prima di muovere qualcosa</h2>
+  <p data-reveal>Valgono per ogni effetto del catalogo…</p>
+  <ol>
+    <li data-reveal>…</li>
+    <li data-reveal>…</li>
+    <li data-reveal>…</li>
+  </ol>
+</section>`;
+
+const rules = [
+  [
+    "Il primo schermo non aspetta",
+    "Sopra la piega il movimento è CSS: la pagina si anima al primo paint, prima ancora che arrivi lo script.",
+  ],
+  [
+    "Niente è nascosto dal CSS",
+    "Gli elementi si nascondono in JavaScript, all'avvio, e solo sotto la piega. Se lo script non parte, la pagina è completa.",
+  ],
+  [
+    "Il controllo torna al foglio di stile",
+    "Finita l'entrata, gli stili inline se ne vanno: passaci sopra, l'hover di questa scheda funziona come prima.",
+  ],
+  [
+    "Una mossa per sezione",
+    "Ogni sezione dice una cosa sola, con un movimento solo. Due sezioni vicine non ripetono la stessa mossa.",
+  ],
+  [
+    "Meno movimento, stessa pagina",
+    "Con la riduzione del movimento non gira niente: ogni blocco è al suo posto, ogni scena al suo stato finale.",
+  ],
+  [
+    "La tastiera prima di tutto",
+    "Un blocco che aspetta di entrare compare subito quando il focus da tastiera ci arriva dentro.",
+  ],
+];
+---
+
+<Entry
+  id="reveal"
+  markup={markup}
+  look="Sei schede nello stesso lotto: lo sfalsamento si spalma su mezzo secondo. Su un telefono entrano a due a due."
+>
+  <section class="rv">
+    <div class="wrap rv-head">
+      <p class="rv-kicker">Il metodo</p>
+      <h2 class="rv-title">Sei regole prima di muovere qualcosa</h2>
+      <p class="rv-lede" data-reveal>
+        Valgono per ogni effetto del catalogo, copiato o nuovo: sono il motivo per cui una pagina resta leggibile anche
+        quando lo script non arriva. <a href="https://github.com/FrancescoCorbosiero/alpacode-motion/blob/main/CLAUDE.md#the-rules-of-motion">Le regole complete</a>.
+      </p>
+    </div>
+    <div class="wrap">
+      <ol class="rv-grid">
+        {
+          rules.map(([title, text], i) => (
+            <li class="rv-card" data-reveal>
+              <span class="rv-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .rv {
+    padding-block: clamp(72px, 12vh, 144px) clamp(96px, 16vh, 180px);
+  }
+  .rv-head {
+    display: grid;
+    gap: 20px;
+    max-width: 1240px;
+    margin-bottom: clamp(40px, 7vh, 72px);
+  }
+  .rv-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .rv-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .rv-title {
+    margin: 0;
+    max-width: 14em;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 5.4vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .rv-lede {
+    margin: 0;
+    max-width: 38em;
+    font-size: clamp(18px, 1.6vw, 21px);
+    line-height: 1.55;
+    color: var(--mute-2);
+  }
+  .rv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 1.4vw, 20px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Each card carries its whole frame: it enters as one object. */
+  .rv-card {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 280px;
+    padding: clamp(24px, 3vw, 40px);
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    transition:
+      transform 0.5s var(--ease-expo),
+      background 0.3s var(--ease);
+  }
+  .rv-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: var(--strut);
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease-expo);
+  }
+  @media (hover: hover) {
+    .rv-card:hover {
+      transform: translateY(-6px);
+      background: #fff;
+    }
+    .rv-card:hover::after {
+      transform: scaleX(1);
+    }
+  }
+  .rv-num {
+    font-family: var(--display);
+    font-size: 15px;
+    color: var(--blue-deep);
+  }
+  .rv-card h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(22px, 1.9vw, 28px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+  .rv-card p {
+    margin: 0;
+    color: var(--mute-2);
+    line-height: 1.55;
+  }
+  @media (max-width: 960px) {
+    .rv-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .rv-grid {
+      grid-template-columns: 1fr;
+    }
+    .rv-card {
+      min-height: 0;
+    }
+  }
+</style>

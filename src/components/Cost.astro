@@ -1,0 +1,17 @@
+---
+/* An entry's cost codes, each with its meaning from the catalog's legend. */
+import { catalog } from "../gallery/data";
+
+interface Props {
+  codes: string[];
+}
+const { codes } = Astro.props;
+const meaning = (code: string): string | undefined => {
+  const base = code.replace(/\s*\(.*\)$/, "");
+  return catalog.legend[base] ?? catalog.legend[code];
+};
+---
+
+<span class="cost">
+  {codes.map((code) => <span class="tag" title={meaning(code)}>{code}</span>)}
+</span>

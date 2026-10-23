@@ -1,0 +1,294 @@
+---
+/* An entry's page: the effect live, the markup to copy, its hook and
+   settings, the files a site copies, its measured weight, its sources.
+   Everything but the demo and the markup is read from the catalog and
+   from the engine's own files, so the page can't drift from either. */
+import Layout from "./Layout.astro";
+import CodeBlock from "./CodeBlock.astro";
+import Status from "./Status.astro";
+import Cost from "./Cost.astro";
+import {
+  catalog,
+  endStateOf,
+  filesOf,
+  hasRules,
+  hookIn,
+  kb,
+  refOf,
+  settingsOf,
+  sitesOf,
+  TIER_LABEL,
+  weight,
+  type SourceRef,
+} from "../gallery/data";
+import { costOf, hookOf, inline, notesOf, whatOf } from "../gallery/catalog.js";
+
+interface Props {
+  id: string;
+  /** The minimal markup a page writes for it. */
+  markup: string;
+  /** Options a page sets per element, beyond the hook. */
+  attributes?: { name: string; value: string; what: string }[];
+  /** What to watch in the demo. */
+  look?: string;
+  /** Show the replay button (default: for effects that play once). */
+  replay?: boolean;
+}
+const { id, markup, attributes = [], look, replay } = Astro.props;
+
+const entry = catalog.entries.get(id);
+if (!entry) throw new Error(`${id}: no row in catalog.md`);
+
+const what = whatOf(entry);
+const cost = costOf(entry);
+const files = filesOf(id);
+const mod = files.find((f) => f.path.endsWith(`/${id}.ts`));
+const css = files.find((f) => f.lang === "css");
+const hook = mod ? hookIn(mod.code) : "";
+const settings = files.filter((f) => f.lang === "ts").flatMap((f) => settingsOf(f.code).map((s) => ({ ...s, file: f.path })));
+const endState = css ? endStateOf(css.code) : "";
+const measured = weight.entries?.[id];
+const plays = replay ?? cost.some((c) => /^(once|batch)\b/.test(c));
+const refs = entry.links.map(refOf).filter((r): r is SourceRef => !!r);
+const sites = sitesOf(entry);
+const notes = notesOf(entry);
+const varName = id.replace(/-([a-z0-9])/g, (_, c: string) => c.toUpperCase());
+const registryLine = `import * as ${varName} from "./effects/${id}";\n\nexport const effects: Effect[] = [/* …, */ ${varName}];`;
+const where = entry.section.group ? `${TIER_LABEL[entry.section.tier]} · ${entry.section.title.replace(/\s*\(.*\)$/, "")}` : TIER_LABEL[entry.section.tier];
+---
+
+<Layout title={id} description={what.replace(/`/g, "")}>
+  <article class="entry">
+    <header class="entry-head wrap">
+      <p class="label" data-intro style="--intro-d: 0.02s">{where}</p>
+      <h1 class="entry-id intro-lines" style={`--chars: ${id.length}`}>
+        <span class="line"><span>{id}</span></span>
+      </h1>
+      <p class="entry-what" data-intro set:html={inline(what)} />
+      <dl class="spec" data-intro style="--intro-d: 0.7s">
+        <div>
+          <dt>Hook</dt>
+          <dd set:html={inline(hookOf(entry))} />
+        </div>
+        <div>
+          <dt>Cost</dt>
+          <dd><Cost codes={cost} /></dd>
+        </div>
+        <div>
+          <dt>Weight</dt>
+          <dd>{measured ? <>{kb(measured.gzip)}{" "}<span class="unit">gzip, its own code</span></> : "not measured yet"}</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd><Status value={entry.status} /></dd>
+        </div>
+        <div>
+          <dt>From</dt>
+          <dd>{sites.join(" · ")}</dd>
+        </div>
+      </dl>
+      <a class="entry-cue" href="#live" data-intro style="--intro-d: 0.9s">
+        <span class="when-motion">Scroll: the demo plays as it enters</span>
+        <span class="when-still">Reduced motion is on: the demo shows its end state</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+      </a>
+    </header>
+
+    <section class="stage" id="live" data-stage aria-label="Live demo">
+      <div class="stage-bar">
+        <div class="wrap stage-bar-row">
+          <p class="label label--on-ink">Live</p>
+          {look && <p class="stage-look">{look}</p>}
+          {
+            plays && (
+              <button type="button" class="btn-replay" data-replay>
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M13 8a5 5 0 1 1-1.6-3.7M13 2v3.2H9.8" fill="none" stroke="currentColor" stroke-width="1.8" />
+                </svg>
+                Replay
+              </button>
+            )
+          }
+        </div>
+      </div>
+      <div class="stage-body" lang="it">
+        <slot />
+      </div>
+    </section>
+
+    <div class="docs wrap">
+      <section class="doc" id="markup">
+        <h2 class="doc-title">Markup</h2>
+        <div class="doc-body">
+          <p>
+            What a page writes. Nothing is hidden by CSS: below the fold the script hides it at init, and a page whose
+            script fails is complete as it is.
+          </p>
+          <CodeBlock code={markup} lang="html" />
+        </div>
+      </section>
+
+      <section class="doc" id="options">
+        <h2 class="doc-title">Hook and settings</h2>
+        <div class="doc-body">
+          <table class="table">
+            <thead>
+              <tr><th scope="col">In the markup</th><th scope="col">Value</th><th scope="col">What it does</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>{hook}</code></td>
+                <td>—</td>
+                <td>The hook: the effect builds on every element that matches it.</td>
+              </tr>
+              {
+                attributes.map((a) => (
+                  <tr>
+                    <td><code>{a.name}</code></td>
+                    <td><code>{a.value}</code></td>
+                    <td set:html={inline(a.what)} />
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+          {
+            settings.length > 0 && (
+              <>
+                <p>
+                  Settings are the site's voice: constants at the top of the module, tuned once when it is copied.
+                  Where the sources differ, the note says how.
+                </p>
+                <table class="table">
+                  <thead>
+                    <tr><th scope="col">Setting</th><th scope="col">Default</th><th scope="col">What, and the sources</th></tr>
+                  </thead>
+                  <tbody>
+                    {settings.map((s) => (
+                      <tr>
+                        <td><code>{s.name}</code>{!s.file.endsWith(`/${id}.ts`) && <span class="in-file">{s.file.split("/").pop()}</span>}</td>
+                        <td><code>{s.value}</code></td>
+                        <td>{s.note}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )
+          }
+        </div>
+      </section>
+
+      <section class="doc" id="reduced">
+        <h2 class="doc-title">Reduced motion</h2>
+        <div class="doc-body">
+          <p class="doc-lede">{endState || "Not stated in its CSS yet."}</p>
+          <p>
+            Under <code>prefers-reduced-motion</code> the engine builds nothing: no Lenis, no scroll animation. If the
+            preference changes during the visit, the page is rebuilt for it.
+          </p>
+        </div>
+      </section>
+
+      <section class="doc" id="copy">
+        <h2 class="doc-title">Copy it</h2>
+        <div class="doc-body">
+          <ol class="steps">
+            <li>
+              The <a href="/core/">core</a>, once per site, if it isn't there yet: <code>src/engine/core/</code> with its
+              CSS, and the site's <code>config.ts</code>.
+            </li>
+            <li>The files below, as they are; then tune the settings to the site.</li>
+            <li>CSS: its rules into the site's stylesheet, with its reduced-motion end state.</li>
+            <li>The site's <code>registry.ts</code>: import it and put it in the list, in build order.</li>
+            <li>Record it in the site's docs: this entry, and the commit of alpacode-motion it came from.</li>
+          </ol>
+          <div class="files">
+          {
+            files.map((f) =>
+              f.lang === "css" && !hasRules(f.code) ? (
+                <p class="file-empty">
+                  <code>{f.path}</code> holds no rules, only its end-state note: nothing to copy.
+                </p>
+              ) : (
+                <details class="file" open={f.path === mod?.path}>
+                  <summary>
+                    <code>{f.path}</code>
+                    <span>{f.role}</span>
+                  </summary>
+                  <CodeBlock code={f.code} lang={f.lang} path={f.path} />
+                </details>
+              )
+            )
+          }
+          <details class="file">
+            <summary>
+              <code>src/engine/registry.ts</code>
+              <span>the line to add</span>
+            </summary>
+            <CodeBlock code={registryLine} lang="ts" path="src/engine/registry.ts" />
+          </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc" id="weight">
+        <h2 class="doc-title">Weight</h2>
+        <div class="doc-body">
+          {
+            measured ? (
+              <>
+                <dl class="figures">
+                  <div>
+                    <dt>Its own code</dt>
+                    <dd>
+                      {kb(measured.gzip)} <span class="unit">gzip</span>
+                    </dd>
+                    <dd class="figure-note">{kb(measured.min)} minified, the libraries left out</dd>
+                  </div>
+                  <div>
+                    <dt>A page with the core and only this</dt>
+                    <dd>
+                      {kb(measured.total)} <span class="unit">gzip</span>
+                    </dd>
+                    <dd class="figure-note">core, this effect and {measured.needs.join(", ")}</dd>
+                  </div>
+                </dl>
+                <p>
+                  Measured by <code>npm run weight</code> on {weight.measured} (esbuild {weight.tools?.esbuild}, bundled,
+                  minified; gzip -9). The fixed cost is the libraries, about the same for five effects or fifty; what
+                  weighs at runtime is in the cost codes above. See <a href="https://github.com/FrancescoCorbosiero/alpacode-motion/blob/main/docs/weight.md">docs/weight.md</a>.
+                </p>
+              </>
+            ) : (
+              <p>Not measured yet: <code>npm run weight</code>.</p>
+            )
+          }
+        </div>
+      </section>
+
+      <section class="doc" id="sources">
+        <h2 class="doc-title">Sources</h2>
+        <div class="doc-body">
+          <ul class="refs">
+            {
+              refs.map((r) => (
+                <li>
+                  <span class="ref-site">{r.site}</span>
+                  <a href={r.url}>
+                    <code>{`${r.path}${r.line ? `:${r.line}` : ""}`}</code>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          {notes && <p class="doc-notes" set:html={inline(notes)} />}
+          <p class="doc-pin">
+            At the commits pinned in the catalog: alpacode-website <code>{catalog.commits.A?.sha}</code>,
+            comunicazionecinofila <code>{catalog.commits.C?.sha}</code>.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</Layout>
