@@ -67,8 +67,10 @@ Weight column of catalog.md.
 | --- | --- | --- | --- | --- |
 | the core (all 13 pieces) | 2.3 KB | 5.3 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
 | `clip` | 569 B | 975 B | gsap, ScrollTrigger | 52.3 KB |
+| `count` | 600 B | 951 B | gsap, ScrollTrigger | 52.4 KB |
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
+| `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `reveal` | 528 B | 974 B | gsap, ScrollTrigger | 52.3 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
 | `split-blur` | 543 B | 900 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
@@ -78,6 +80,7 @@ Weight column of catalog.md.
 | `split-pop` | 576 B | 977 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-wipe` | 538 B | 905 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-words` | 518 B | 877 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `stamp` | 433 B | 642 B | gsap, ScrollTrigger | 52.2 KB |
 | `strut` | 311 B | 443 B | gsap, ScrollTrigger | 52.1 KB |
 <!-- /weight:ported -->
 

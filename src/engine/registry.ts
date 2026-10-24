@@ -12,10 +12,13 @@
    ============================================================ */
 import type { Effect, LazyEffect } from "./core/kit";
 import * as clip from "./effects/clip";
+import * as count from "./effects/count";
 import * as kicker from "./effects/kicker";
 import * as pop from "./effects/pop";
+import * as print from "./effects/print";
 import * as reveal from "./effects/reveal";
 import * as scrub from "./effects/scrub";
+import * as stamp from "./effects/stamp";
 import * as splitBlur from "./effects/split-blur";
 import * as splitChars from "./effects/split-chars";
 import * as splitCycle from "./effects/split-cycle";
@@ -25,7 +28,7 @@ import * as splitWipe from "./effects/split-wipe";
 import * as splitWords from "./effects/split-words";
 import * as strut from "./effects/strut";
 
-export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, scrub];
+export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, scrub];
 
 export const lazy: LazyEffect[] = [
   // { hook: "[data-mark]", load: () => import("./effects/mark-circle") },

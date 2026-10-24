@@ -1,0 +1,117 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<article class="sheet">
+  <h3>reveal</h3>
+  <p>…</p>
+  <span class="stamp" data-stamp aria-hidden="true">Demo</span>
+</article>
+<!-- in a row: each a little later than the one before -->
+<span class="stamp" data-stamp="0.28" aria-hidden="true">Demo</span>`;
+
+const sheets = [
+  ["reveal", "I blocchi salgono a lotti mentre entrano; il controllo torna al foglio di stile.", "0"],
+  ["split-lines", "Ogni riga di un titolo sale dalla sua maschera.", "0.28"],
+  ["scrub", "Le parole di una frase si accendono al passo dello scroll.", "0.56"],
+];
+---
+
+<Entry
+  id="stamp"
+  markup={markup}
+  look="Il timbro cade dall'alto, sempre più veloce, e la scheda accusa il colpo. In fila, ogni timbro arriva un poco dopo il precedente."
+  attributes={[{ name: "data-stamp", value: "0.28", what: "A delay in seconds: stamps in a row land one after another." }]}
+>
+  <section class="sp">
+    <div class="wrap">
+      <p class="sp-kicker">Le prime tre voci con la loro demo</p>
+      <ul class="sp-sheets">
+        {
+          sheets.map(([id, what, delay]) => (
+            <li class="sp-sheet">
+              <code class="sp-id">{id}</code>
+              <p>{what}</p>
+              <span class="sp-stamp" data-stamp={delay === "0" ? "" : delay} aria-hidden="true">
+                Demo
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .sp {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .sp-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 clamp(40px, 6vh, 64px);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .sp-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .sp-sheets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sp-sheet {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 260px;
+    padding: clamp(24px, 3vw, 36px);
+    background: #fff;
+    border: 1px solid var(--rule);
+    box-shadow: 8px 8px 0 var(--paper-3);
+  }
+  .sp-id {
+    justify-self: start;
+    font-size: 15px;
+  }
+  .sp-sheet p {
+    margin: 0;
+    max-width: 22em;
+    color: var(--mute-2);
+    line-height: 1.55;
+  }
+  /* The stamp: its resting tilt is a transform, the stylesheet's. */
+  .sp-stamp {
+    position: absolute;
+    right: 22px;
+    bottom: 26px;
+    padding: 10px 16px 8px;
+    border: 4px double var(--blue-deep);
+    color: var(--blue-deep);
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transform: rotate(-11deg);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  @media (max-width: 860px) {
+    .sp-sheets {
+      grid-template-columns: 1fr;
+    }
+    .sp-sheet {
+      min-height: 200px;
+    }
+  }
+</style>

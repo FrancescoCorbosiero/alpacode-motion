@@ -1,0 +1,9 @@
+/* ============================================================
+   count.
+
+   Reduced motion: every number reads its value, as written. Without
+   JS, the same: the static text is the truth.
+
+   No rules to copy. A figure whose width shouldn't change as it counts
+   can set font-variant-numeric: tabular-nums (the site's CSS).
+   ============================================================ */

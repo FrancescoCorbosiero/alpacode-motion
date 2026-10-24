@@ -1,0 +1,75 @@
+---
+import Entry from "../components/Entry.astro";
+import qr from "./_shared/qr-repo.svg?raw";
+
+const markup = `<div class="qr-tile" data-print>
+  <svg viewBox="0 0 37 37" role="img" aria-label="…">…</svg>
+</div>`;
+const svg = qr.replace("<svg ", '<svg role="img" aria-label="QR code: il repository di alpacode-motion su GitHub" ');
+---
+
+<Entry
+  id="print"
+  markup={markup}
+  look="Il QR si stampa dall'alto, una riga della sua griglia alla volta, sotto una barra di luce che scende e si spegne."
+>
+  <section class="pr">
+    <div class="wrap pr-band">
+      <div class="pr-tile" data-print set:html={svg} />
+      <div class="pr-copy">
+        <h2 class="pr-title">Inquadra il codice</h2>
+        <p>
+          Apre il repository del catalogo. Le righe sono quelle della griglia: 37 moduli, 37 passi; la pagina che lo
+          sostituisce con un QR nuovo lo fa stampare di nuovo, con <code>printQr()</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .pr {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .pr-band {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+  .pr-tile {
+    width: clamp(160px, 16vw, 220px);
+    aspect-ratio: 1;
+    padding: 8px;
+    background: #fff;
+  }
+  .pr-tile :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .pr-title {
+    margin: 0 0 14px;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .pr-copy p {
+    margin: 0;
+    max-width: 30em;
+    color: var(--on-ink-mute);
+    line-height: 1.6;
+  }
+  .pr-copy code {
+    background: rgba(240, 243, 249, 0.12);
+    color: var(--on-ink);
+  }
+  @media (max-width: 640px) {
+    .pr-band {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

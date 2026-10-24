@@ -1,0 +1,31 @@
+/* ============================================================
+   print.
+
+   Reduced motion: the QR is simply there, whole; no scan bar.
+   Without JS, the same.
+
+   The scan bar the script adds to the tile, which it is positioned in.
+   Its colour: --print-scan and --print-glow (the studio's blue).
+
+   Sources: A src/styles/motion.css:355.
+   ============================================================ */
+[data-print] {
+  position: relative;
+}
+.print-scan {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 0;
+  height: 3px;
+  margin-top: -1.5px;
+  background: var(--print-scan, #3b72e9);
+  box-shadow: 0 0 14px 2px var(--print-glow, rgba(59, 114, 233, 0.55));
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .print-scan {
+    display: none;
+  }
+}

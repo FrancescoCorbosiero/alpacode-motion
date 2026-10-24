@@ -165,6 +165,8 @@ and its reason:
 | split-cycle | lines, wipe, words, blur, chars | C lines, pop, wipe, drop, blur | no | the consumer's; C's deck needs split-drop, not ported yet: one setting (`CYCLE`) when it is |
 | clip | square, image from 1.16, insets 12% 5% | C rounded 24px, image still, insets 14% 8% | yes | the consumer's; C's corners and its still image are one attribute each (`round`, `still`), its insets two settings |
 | pop | ±90° alternating, 0.15s after its trigger | C −160°, at once | yes | the consumer's; C's angle is one attribute (`data-pop="-160"`) |
+| stamp | a 21° turn onto its rest, a 5px jolt, `top 55%` | C 45°, a damped −6/5/−3px shake, `top 70%` | no | the consumer's; C's are settings |
+| count | 1.8s, `power2.out` (C's) | A's sticker 1.1s, at page load | no | only C has the scroll counter; A's sticker is a page script in its hero |
 
 ## Naming registry
 

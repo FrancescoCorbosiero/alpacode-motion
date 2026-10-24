@@ -1,0 +1,90 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<p><strong data-count="86">86</strong> effetti nel catalogo</p>
+<!-- decimals and a unit: it counts in the text's own format -->
+<p><strong data-count="53.3">53,3 KB</strong> di librerie</p>`;
+
+const figures = [
+  ["86", "86", "effetti nel catalogo, dai titoli alle scene delle landing"],
+  ["13", "13", "pezzi del core, copiati una volta per sito"],
+  ["53.3", "53,3 KB", "di librerie che ogni pagina con il movimento carica, compresse"],
+];
+---
+
+<Entry
+  id="count"
+  markup={markup}
+  look="Le cifre salgono fino al loro valore, scritte come le scrive la pagina: la virgola dei decimali, l'unità al suo posto. Alla fine resta il testo originale."
+  attributes={[
+    { name: "data-count-from", value: "10", what: "Where it counts from (else 0)." },
+    { name: "data-count-template", value: "{n} KB", what: "The text it counts in; else the element's own, its first number swapped for `{n}`." },
+  ]}
+>
+  <section class="ct">
+    <div class="wrap">
+      <dl class="ct-figures">
+        {
+          figures.map(([value, text, what]) => (
+            <div class="ct-figure">
+              <dt>
+                <span class="ct-n" data-count={value}>
+                  {text}
+                </span>
+              </dt>
+              <dd>{what}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="ct-note">Cifre del catalogo stesso, misurate da <code>npm run weight</code>.</p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .ct {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .ct-figures {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 56px);
+    margin: 0 0 40px;
+  }
+  .ct-figure {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding-top: 22px;
+    border-top: var(--strut) solid var(--blue);
+  }
+  .ct-figure dt {
+    margin: 0;
+  }
+  .ct-n {
+    font-family: var(--display);
+    font-size: clamp(52px, 5.6vw, 96px);
+    white-space: nowrap;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .ct-figure dd {
+    margin: 0;
+    max-width: 18em;
+    color: var(--mute-2);
+    line-height: 1.5;
+  }
+  .ct-note {
+    margin: 0;
+    font-size: 14px;
+    color: var(--mute);
+  }
+  @media (max-width: 860px) {
+    .ct-figures {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+</style>

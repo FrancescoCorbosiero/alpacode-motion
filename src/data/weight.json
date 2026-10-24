@@ -92,6 +92,15 @@
       ],
       "total": 52335
     },
+    "count": {
+      "min": 951,
+      "gzip": 600,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52378
+    },
     "kicker": {
       "min": 678,
       "gzip": 398,
@@ -109,6 +118,15 @@
         "ScrollTrigger"
       ],
       "total": 52171
+    },
+    "print": {
+      "min": 1092,
+      "gzip": 630,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52378
     },
     "reveal": {
       "min": 974,
@@ -198,6 +216,15 @@
         "SplitText"
       ],
       "total": 55339
+    },
+    "stamp": {
+      "min": 642,
+      "gzip": 433,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52223
     },
     "strut": {
       "min": 443,
