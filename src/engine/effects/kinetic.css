@@ -1,0 +1,18 @@
+/* ============================================================
+   kinetic.
+
+   Reduced motion: the lines stand still, where the page put them.
+   Without JS, the same.
+
+   The band clips its lines, each as wide as the band and its words
+   running on past its edge, on one line.
+
+   Sources: A src/styles/landing.css:989.
+   ============================================================ */
+[data-kinetic] {
+  overflow: hidden;
+}
+[data-kinetic-line] {
+  display: block;
+  white-space: nowrap;
+}

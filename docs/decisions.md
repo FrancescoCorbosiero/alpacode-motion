@@ -172,6 +172,9 @@ and its reason:
 | draw | 0.9s a stroke, 0.09s apart, 0.2s in, `top 75%` (A's map) | C one after another (0.75s apart), at once, `top 85%` | no | the consumer's; the demo shows A's two uses, the map and a signature (its slower stroke is the hook's value, `data-draw="1.6"`); C's sequence is a setting |
 | deal | 70px below, 30px aside, 5°, `back.out(1.5)` (FAST's) | — | no | the only source; FAST is alpacode's too |
 | the pen (marks) | 0.85s, `power2.out`, `top 82%`, 0.15s in | C's highlighter 1.1s, `power2.inOut`, `top 78%`; its scrub | yes (the scrub) | the consumer's; C's scrub is one attribute (`data-mark-scrub`); its mechanism, a custom property, became the port's |
+| hero-away | up 14%, dimmed to 0.15 (A's copy) | C down 14%, dimmed to 0.2 | no (A's copy and its lockup, `data-hero-away="22" data-hero-fade="1"`) | the consumer's; C's are the hook's own values (`data-hero-away="14" data-hero-fade="0.2"`) |
+| marquee | 70 px/s (A's home band) | A's referral bands 56; C 60 | yes (56) | the consumer's; a band's pace is one attribute (`data-marquee-speed`), C's a setting |
+| rail | step i lit at i/n, full at `bottom 60%` | C at i/(n−1), full at `bottom 45%` | no | the consumer's: the last step lights while it's still on screen; C's are two settings (`LAST_AT_END`, `END`) |
 
 ## Naming registry
 
@@ -221,8 +224,6 @@ D19's table.
 | --- | --- | --- |
 | tilt | 5° | 10–12° plus a lift |
 | magnetic | 16% of its box, leans 12° | 35% of the pointer's offset, no lean |
-| marquee | 70 (xl) / 56 px/s | 60 px/s |
-| rail | step i at i/n | step i at i/(n−1) |
 | celebrate | brand bits (struts, squares, €, alpaca) | shapes (paws, hearts, bones) |
 
 ## Open

@@ -1,0 +1,84 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div data-marquee aria-hidden="true">
+  <div data-marquee-track>
+    <span>Titoli</span> <span>Rivelazioni</span> … <!-- and the same again -->
+  </div>
+</div>
+<!-- the other way, at its own pace -->
+<div data-marquee="right" data-marquee-speed="56" aria-hidden="true">…</div>`;
+const items = ["Titoli", "Rivelazioni", "La penna", "Scorrimento", "Puntatore", "Funzioni", "Scene", "Ricette"];
+const loop = [...items, ...items];
+---
+
+<Entry
+  id="marquee"
+  markup={markup}
+  look="Le fasce scorrono da sole; scorrendo la pagina accelerano e ne seguono il verso. Con il mouse sopra si fermano."
+  replay={false}
+  attributes={[
+    { name: "data-marquee", value: "right", what: "Drifts the other way." },
+    { name: "data-marquee-speed", value: "56", what: "Its own pace in px/s (default 70)." },
+    { name: "data-marquee-track", value: "—", what: "The track, holding the items twice over: the loop wraps at half its width." },
+  ]}
+>
+  <section class="mq">
+    <div class="mq-band" data-marquee aria-hidden="true" style={`--marquee-time:${items.length * 3.2}s`}>
+      <div class="mq-track" data-marquee-track>
+        {loop.map((t) => <span class="mq-item">{t}</span>)}
+      </div>
+    </div>
+    <div class="mq-band mq-band--slim" data-marquee="right" data-marquee-speed="56" aria-hidden="true" style={`--marquee-time:${items.length * 3.2}s`}>
+      <div class="mq-track" data-marquee-track>
+        {loop.map((t) => <span class="mq-item">{t}</span>)}
+      </div>
+    </div>
+    <p class="wrap mq-note">Sopra: verso sinistra, 70 px al secondo. Sotto: verso destra, 56.</p>
+  </section>
+</Entry>
+
+<style>
+  .mq {
+    display: grid;
+    gap: 18px;
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 26vh, 280px);
+  }
+  .mq-band {
+    border-block: 1px solid var(--ink);
+  }
+  .mq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding: 18px 28px;
+    font-family: var(--display);
+    font-size: clamp(36px, 6vw, 88px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  .mq-item::after {
+    content: "";
+    width: 0.5em;
+    height: 0.12em;
+    background: var(--blue);
+  }
+  .mq-band--slim {
+    background: var(--ink);
+    color: var(--on-ink);
+    border: 0;
+  }
+  .mq-band--slim .mq-item {
+    padding: 14px 24px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+  .mq-note {
+    margin: 22px 0 0;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div class="band" data-skew aria-hidden="true">  <!-- it leans -->
+  <div class="track">…</div>  <!-- its words drift, in CSS -->
+</div>`;
+const words = ["Più veloce", "più inclinata", "ferma", "dritta"];
+const run = [...words, ...words, ...words, ...words];
+---
+
+<Entry
+  id="skew"
+  markup={markup}
+  look="Scorri veloce: la fascia si inclina nel verso dello scroll, di più quanto più è veloce. Quando lo scroll si ferma, si raddrizza."
+  replay={false}
+>
+  <section class="sk">
+    <div class="sk-clip">
+      <div class="sk-band" data-skew aria-hidden="true">
+        <div class="sk-track">{run.map((w) => <span>{w} ·</span>)}</div>
+      </div>
+    </div>
+    <p class="wrap sk-note">
+      Fino a 12 gradi: un grado ogni 250 pixel al secondo di scroll. Le parole scorrono da sole, in CSS: si inclina la fascia che le
+      contiene, mai la riga che scorre.
+    </p>
+  </section>
+</Entry>
+
+<style>
+  .sk {
+    padding-block: clamp(160px, 30vh, 320px) clamp(200px, 36vh, 360px);
+  }
+  .sk-clip {
+    overflow: clip;
+    padding-block: clamp(28px, 4vw, 56px);
+  }
+  .sk-band {
+    width: 104%;
+    margin-left: -2%;
+    padding-block: 20px;
+    overflow: hidden;
+    background: var(--blue);
+    color: #fff;
+    transform: rotate(-2deg);
+  }
+  .sk-track {
+    display: flex;
+    width: max-content;
+    font-family: var(--display);
+    font-size: clamp(30px, 5.5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    animation: sk-drift 28s linear infinite;
+  }
+  .sk-track span {
+    padding-right: 0.5em;
+  }
+  @keyframes sk-drift {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk-track {
+      animation: none;
+    }
+  }
+  .sk-note {
+    margin: 32px 0 0;
+    max-width: 40em;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+</style>

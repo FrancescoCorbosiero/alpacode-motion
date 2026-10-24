@@ -1,0 +1,25 @@
+/* ============================================================
+   rail.
+
+   Reduced motion: the rail is full and every step is lit. Without JS,
+   the same: --p defaults to 1 in the fill's rule, and nothing is
+   dimmed.
+
+   The steps waiting for the fill are dimmed, but only on a rail the
+   script runs (data-rail-live); the fill's own rule is the site's
+   (transform: scaleX(var(--p, 1)), its origin at its start). So is the
+   look of a lit step: write it as the default, and the look of a step
+   still waiting under [data-rail-live] [data-rail-step]:not(.is-reached)
+   (alpacode wrote it the other way round: lit under .is-reached, or
+   html:not(.has-motion)).
+
+   Sources: A src/styles/motion.css:178; C src/styles/sections.css:404.
+   ============================================================ */
+[data-rail-step] {
+  transition:
+    opacity 0.5s var(--ease, ease),
+    color 0.5s var(--ease, ease);
+}
+[data-rail-live] [data-rail-step]:not(.is-reached) {
+  opacity: 0.38;
+}

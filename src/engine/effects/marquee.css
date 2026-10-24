@@ -1,0 +1,40 @@
+/* ============================================================
+   marquee.
+
+   Reduced motion: the band stands still, its first items in view (a
+   band that moves for ever needs a way to stop it, WCAG 2.2.2). Without
+   JS it drifts in CSS, at --marquee-time a loop (alpacode: its items ×
+   3.2s), paused under the pointer or keyboard focus; with motion the
+   script takes over.
+
+   The band clips its track; the track lays its items in a row, twice
+   over, and the loop moves it by half its width.
+
+   Sources: A src/styles/components.css:1318, :1343, :1387;
+   C src/styles/sections.css:48.
+   ============================================================ */
+[data-marquee] {
+  overflow: hidden;
+}
+[data-marquee-track] {
+  display: flex;
+  width: max-content;
+  animation: marquee-drift var(--marquee-time, 30s) linear infinite;
+}
+[data-marquee="right"] [data-marquee-track] {
+  animation-direction: reverse;
+}
+[data-marquee]:hover [data-marquee-track],
+[data-marquee]:focus-within [data-marquee-track] {
+  animation-play-state: paused;
+}
+@keyframes marquee-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-marquee-track] {
+    animation: none;
+  }
+}

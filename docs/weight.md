@@ -74,17 +74,24 @@ Weight column of catalog.md.
 | `deal` | 665 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `draw` | 486 B | 764 B | gsap, ScrollTrigger | 52.3 KB |
 | `hand` | 543 B | 953 B | gsap, DrawSVG, ScrollTrigger | 54.0 KB |
+| `hero-away` | 365 B | 567 B | gsap, ScrollTrigger | 52.1 KB |
+| `hero-settle` | 356 B | 529 B | gsap, ScrollTrigger | 52.1 KB |
+| `hero-video` | 688 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
+| `kinetic` | 337 B | 501 B | gsap, ScrollTrigger | 52.2 KB |
 | `knoll` | 638 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-box` | 1.2 KB | 2.3 KB | gsap, DrawSVG, ScrollTrigger | 54.6 KB |
 | `mark-circle` | 1.4 KB | 2.8 KB | gsap, DrawSVG, ScrollTrigger | 54.8 KB |
 | `mark-highlight` | 632 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-strike` | 628 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-underline` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `marquee` | 772 B | 1.3 KB | gsap, ScrollTrigger | 52.5 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `rail` | 567 B | 961 B | gsap, ScrollTrigger | 52.3 KB |
 | `reveal` | 613 B | 1.2 KB | gsap, ScrollTrigger | 52.3 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
+| `skew` | 367 B | 511 B | gsap, ScrollTrigger | 52.1 KB |
 | `split-blur` | 543 B | 900 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-chars` | 510 B | 857 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
 | `split-cycle` | 686 B | 1.1 KB | gsap, ScrollTrigger, SplitText | 55.5 KB |

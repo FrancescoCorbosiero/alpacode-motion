@@ -1,0 +1,76 @@
+---
+import Entry from "../components/Entry.astro";
+import { plate } from "./_shared/plates";
+
+const markup = `<section data-hero>
+  <div class="frame"><img data-hero-settle src="…" alt="…" /></div>
+  <!-- a background video: closer, no sinking -->
+  <div class="frame"><video data-hero-settle="1.08 0" …></video></div>
+</section>`;
+---
+
+<Entry
+  id="hero-settle"
+  markup={markup}
+  look="Mentre la sezione sale, le immagini si avvicinano di poco nella loro cornice: la prima scende anche un poco, la seconda resta centrata."
+  attributes={[{ name: "data-hero-settle", value: "1.08 0", what: "Its scale, then how far it sinks in % of its height (default `1.07 4`)." }]}
+>
+  <section class="hs" data-hero>
+    <div class="wrap hs-grid">
+      <figure class="hs-item">
+        <div class="hs-frame">
+          <img data-hero-settle src={plate(31)} alt="Una tavola in stile cianografia." width="1200" height="900" />
+        </div>
+        <figcaption><strong>Foto</strong> 1,07, e scende del 4%</figcaption>
+      </figure>
+      <figure class="hs-item">
+        <div class="hs-frame">
+          <img data-hero-settle="1.08 0" src={plate(47)} alt="Una tavola in stile cianografia." width="1200" height="900" />
+        </div>
+        <figcaption><strong>Video di sfondo</strong> 1,08, centrato</figcaption>
+      </figure>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .hs {
+    min-height: 110vh;
+    padding-block: clamp(72px, 12vh, 140px);
+  }
+  .hs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .hs-item {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+  }
+  .hs-frame {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .hs-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hs-item figcaption {
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+  .hs-item figcaption strong {
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .hs-grid {
+      grid-template-columns: 1fr;
+    }
+    .hs-frame {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

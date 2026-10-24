@@ -18,15 +18,22 @@ import * as chat from "./effects/chat";
 import * as count from "./effects/count";
 import * as deal from "./effects/deal";
 import * as draw from "./effects/draw";
+import * as heroAway from "./effects/hero-away";
+import * as heroSettle from "./effects/hero-settle";
+import * as heroVideo from "./effects/hero-video";
 import * as kicker from "./effects/kicker";
+import * as kinetic from "./effects/kinetic";
 import * as markHighlight from "./effects/mark-highlight";
+import * as marquee from "./effects/marquee";
 import * as markStrike from "./effects/mark-strike";
 import * as markUnderline from "./effects/mark-underline";
 import * as knoll from "./effects/knoll";
 import * as pop from "./effects/pop";
 import * as print from "./effects/print";
+import * as rail from "./effects/rail";
 import * as reveal from "./effects/reveal";
 import * as scrub from "./effects/scrub";
+import * as skew from "./effects/skew";
 import * as stamp from "./effects/stamp";
 import * as splitBlur from "./effects/split-blur";
 import * as splitChars from "./effects/split-chars";
@@ -38,7 +45,7 @@ import * as splitWords from "./effects/split-words";
 import * as strut from "./effects/strut";
 import * as wordmark from "./effects/wordmark";
 
-export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, markHighlight, markUnderline, markStrike, scrub];
+export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, markHighlight, markUnderline, markStrike, scrub, heroAway, heroSettle, heroVideo, kinetic, marquee, skew, rail];
 
 export const lazy: LazyEffect[] = [
   { hook: '[data-mark="circle"]', load: () => import("./effects/mark-circle") },

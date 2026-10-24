@@ -1,0 +1,137 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section data-hero>
+  <video data-hero-video muted loop playsinline preload="none" poster="hero.jpg">
+    <source data-src="hero.webm" type="video/webm" />
+    <source data-src="hero.mp4" type="video/mp4" />
+  </video>
+  <button type="button" hidden aria-pressed="false" data-hero-video-toggle
+    data-label-pause="Metti in pausa il video di sfondo" data-label-play="Riprendi il video di sfondo">…</button>
+</section>`;
+const labels = { pause: "Metti in pausa il video di sfondo", play: "Riprendi il video di sfondo" };
+---
+
+<Entry
+  id="hero-video"
+  markup={markup}
+  look="Il video prende le sue fonti solo adesso, e gira finché la sezione è sullo schermo e la scheda è visibile. Il pulsante lo ferma, e la pausa vale per tutta la visita."
+  replay={false}
+>
+  <section class="hv" data-hero>
+    <div class="hv-media" aria-hidden="true">
+      <video class="hv-video" muted loop playsinline disablepictureinpicture preload="none" poster="/media/hero-demo.jpg" data-hero-video>
+        <source data-src="/media/hero-demo.webm" type="video/webm" />
+        <source data-src="/media/hero-demo.mp4" type="video/mp4" />
+      </video>
+      <div class="hv-scrim"></div>
+    </div>
+    <button
+      class="hv-toggle"
+      type="button"
+      hidden
+      aria-pressed="false"
+      aria-label={labels.pause}
+      data-label-pause={labels.pause}
+      data-label-play={labels.play}
+      data-hero-video-toggle
+    >
+      <svg class="hv-pause" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" /></svg>
+      <svg class="hv-play" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 2.2 13.4 8 4 13.8z" /></svg>
+    </button>
+    <div class="wrap hv-copy">
+      <p class="hv-kicker">Lo sfondo che si muove</p>
+      <p class="hv-claim">Si muove solo se è il benvenuto.</p>
+      <p class="hv-lede">
+        Niente fonti con la riduzione del movimento o con il risparmio dati: resta il fotogramma fermo. Fuori schermo, o con la
+        scheda nascosta, si ferma da solo.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .hv {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: 100vh;
+    padding-block: clamp(96px, 16vh, 180px);
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .hv-media {
+    position: absolute;
+    inset: 0;
+  }
+  .hv-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hv-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(11, 14, 20, 0.85), rgba(11, 14, 20, 0.15) 70%);
+  }
+  .hv-toggle {
+    position: absolute;
+    top: 20px;
+    right: var(--gutter);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--on-ink-rule);
+    background: rgba(11, 14, 20, 0.5);
+    color: var(--on-ink);
+    cursor: pointer;
+  }
+  .hv-toggle:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .hv-toggle .hv-play,
+  .hv-toggle[aria-pressed="true"] .hv-pause {
+    display: none;
+  }
+  .hv-toggle[aria-pressed="true"] .hv-play {
+    display: block;
+  }
+  .hv-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 20px;
+  }
+  .hv-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .hv-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .hv-claim {
+    margin: 0;
+    max-width: 12em;
+    font-family: var(--display);
+    font-size: clamp(40px, 6vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  .hv-lede {
+    margin: 0;
+    max-width: 34em;
+    color: var(--on-ink-mute);
+    line-height: 1.6;
+  }
+</style>

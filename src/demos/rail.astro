@@ -1,0 +1,158 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div data-rail>
+  <span class="rail"><span class="fill"></span></span>  <!-- the fill reads --p -->
+  <ol>
+    <li data-rail-step><span data-rail-tile>1</span> …</li>
+    <li data-rail-step><span data-rail-tile>2</span> …</li>
+  </ol>
+</div>
+
+.fill { transform: scaleX(var(--p, 1)); transform-origin: left; }`;
+const steps = [
+  ["Il modulo", "L'effetto, le sue impostazioni, init."],
+  ["Il CSS", "Lo stato finale, prima di tutto."],
+  ["La demo", "L'effetto dal vivo, il markup da copiare."],
+  ["La prova", "Il peso e le schermate."],
+];
+---
+
+<Entry
+  id="rail"
+  markup={markup}
+  look="Il binario si riempie al passo dello scroll; ogni tappa si accende quando la raggiunge e il suo numero fa un piccolo scatto. Tornando su, si spengono."
+  attributes={[
+    { name: "data-rail-step", value: "—", what: "A step: lit (`.is-reached`) once the fill is i/n of the way." },
+    { name: "data-rail-tile", value: "—", what: "Its tile, which springs back from smaller as the step lights up." },
+  ]}
+>
+  <section class="rl">
+    <div class="wrap">
+      <p class="rl-kicker">Il giro di una voce</p>
+      <div class="rl-track" data-rail>
+        <span class="rl-line" aria-hidden="true"><span class="rl-fill"></span></span>
+        <ol class="rl-steps">
+          {
+            steps.map(([title, text], i) => (
+              <li class="rl-step" data-rail-step>
+                <span class="rl-tile" data-rail-tile aria-hidden="true">{i + 1}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .rl {
+    padding-block: clamp(120px, 20vh, 220px) clamp(240px, 40vh, 420px);
+  }
+  .rl-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 clamp(40px, 6vh, 64px);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .rl-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .rl-track {
+    position: relative;
+  }
+  .rl-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 27px;
+    height: 3px;
+    background: var(--rule);
+  }
+  .rl-fill {
+    display: block;
+    height: 100%;
+    background: var(--blue);
+    transform: scaleX(var(--p, 1));
+    transform-origin: left center;
+  }
+  .rl-steps {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rl-step {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+  .rl-tile {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--display);
+    font-size: 20px;
+    transition: background 0.4s var(--ease, ease);
+  }
+  /* Lit is the default (no JS, reduced motion); waiting, only on a rail
+     the script runs. */
+  [data-rail-live] .rl-step:not(.is-reached) .rl-tile {
+    background: var(--ink);
+  }
+  .rl-step h3 {
+    margin: 8px 0 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(20px, 1.8vw, 26px);
+  }
+  .rl-step p {
+    margin: 0;
+    color: var(--mute-2);
+    line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .rl-line {
+      left: 27px;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      height: auto;
+    }
+    .rl-fill {
+      height: 100%;
+      transform: scaleY(var(--p, 1));
+      transform-origin: center top;
+    }
+    .rl-steps {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .rl-step {
+      grid-template-columns: 56px minmax(0, 1fr);
+      column-gap: 20px;
+    }
+    .rl-step h3 {
+      margin: 0;
+      align-self: center;
+    }
+    .rl-step p {
+      grid-column: 2;
+    }
+  }
+</style>

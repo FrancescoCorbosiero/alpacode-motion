@@ -156,6 +156,33 @@
       ],
       "total": 54045
     },
+    "hero-away": {
+      "min": 567,
+      "gzip": 365,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52144
+    },
+    "hero-settle": {
+      "min": 529,
+      "gzip": 356,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52138
+    },
+    "hero-video": {
+      "min": 1241,
+      "gzip": 688,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52395
+    },
     "kicker": {
       "min": 678,
       "gzip": 398,
@@ -164,6 +191,15 @@
         "ScrollTrigger"
       ],
       "total": 52163
+    },
+    "kinetic": {
+      "min": 501,
+      "gzip": 337,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52156
     },
     "knoll": {
       "min": 1068,
@@ -221,6 +257,15 @@
       ],
       "total": 52411
     },
+    "marquee": {
+      "min": 1293,
+      "gzip": 772,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52473
+    },
     "pop": {
       "min": 511,
       "gzip": 370,
@@ -238,6 +283,15 @@
         "ScrollTrigger"
       ],
       "total": 52378
+    },
+    "rail": {
+      "min": 961,
+      "gzip": 567,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52294
     },
     "reveal": {
       "min": 1161,
@@ -257,6 +311,15 @@
         "SplitText"
       ],
       "total": 55183
+    },
+    "skew": {
+      "min": 511,
+      "gzip": 367,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52135
     },
     "split-blur": {
       "min": 900,

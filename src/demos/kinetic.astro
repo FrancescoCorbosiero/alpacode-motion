@@ -1,0 +1,53 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section data-kinetic aria-label="…">
+  <span data-kinetic-line="1" aria-hidden="true">…</span>
+  <span data-kinetic-line="-1" aria-hidden="true">…</span>
+</section>`;
+const words = "Copiato · Accordato · Pesato · Provato · ";
+---
+
+<Entry
+  id="kinetic"
+  markup={markup}
+  look="Mentre la fascia attraversa lo schermo, la riga piena va a sinistra e quella di contorno a destra: sembrano incrociarsi."
+>
+  <section class="kn" data-kinetic aria-label="Copiato, accordato, pesato, provato">
+    <span class="kn-line" data-kinetic-line="1" aria-hidden="true">{words.repeat(3)}</span>
+    <span class="kn-line kn-line--out" data-kinetic-line="-1" aria-hidden="true">{words.repeat(3)}</span>
+  </section>
+  <div class="kn-after wrap">
+    <p>Le due righe sono lo stesso testo ripetuto, più largo della fascia: ognuna percorre un quarto della sua larghezza.</p>
+  </div>
+</Entry>
+
+<style>
+  .kn {
+    margin-top: clamp(120px, 20vh, 220px);
+    padding-block: clamp(64px, 10vh, 120px);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .kn-line {
+    font-family: var(--display);
+    font-size: clamp(56px, 10vw, 180px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+  .kn-line + .kn-line {
+    margin-top: 0.06em;
+  }
+  .kn-line--out {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--on-ink);
+  }
+  .kn-after {
+    padding-block: clamp(48px, 8vh, 96px) clamp(160px, 26vh, 280px);
+  }
+  .kn-after p {
+    margin: 0;
+    max-width: 34em;
+    color: var(--mute-2);
+  }
+</style>

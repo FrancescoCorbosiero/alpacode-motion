@@ -22,6 +22,8 @@ const TYPES = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".json": "application/json",
+  ".webm": "video/webm",
+  ".mp4": "video/mp4",
 };
 
 /** Serve dist/ as a static host would. Resolves to its origin and a stop(). */

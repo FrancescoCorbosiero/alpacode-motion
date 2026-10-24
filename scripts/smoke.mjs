@@ -11,7 +11,10 @@
      the page (and Lenis with it) until the overlay lets go;
    - the heading cycle deals in turn, and a jump doesn't flash letters;
    - the lazy path: a plugin's chunk is fetched only by a page that has
-     its hook, built inside the page, and undone with it.
+     its hook, built inside the page, and undone with it;
+   - loops run only on screen: the marquee stands still off screen; the
+     hero video plays only on screen, and has no sources under reduced
+     motion.
    Prints each check; any failure or page error fails the run.
    ============================================================ */
 import { launch, serve, watchErrors } from "./lib/browser.mjs";
@@ -241,6 +244,52 @@ marks = await circles();
 check("reduced motion: the markup's own circles, whole", marks.every((m) => m.opacity === "1" && m.box === "0 0 100 100"));
 await page.emulateMedia({ reducedMotion: "no-preference" });
 await settle(400);
+
+/* Loops only on screen: the marquee's ticker, the hero video. */
+step = "loops";
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("→ /marquee/ softly", (await navigate("/")) && (await navigate("/marquee/")));
+await page.mouse.move(2, 2); // not over a band: under the mouse it stops
+const drift = async () => {
+  const x = () => page.evaluate(() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector("[data-marquee-track]")).transform).m41);
+  const a = await x();
+  await settle(600);
+  return Math.abs((await x()) - a);
+};
+await page.evaluate(() => document.querySelector("[data-marquee]").scrollIntoView({ block: "center" }));
+await settle(300);
+let moved = await drift();
+check("the marquee drifts on screen", moved > 20, `${moved.toFixed(1)}px in 0.6s`);
+await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
+await settle(300);
+moved = await drift();
+check("…and stands still off screen", moved === 0, `${moved.toFixed(1)}px in 0.6s`);
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("→ /hero-video/ softly", (await navigate("/")) && (await navigate("/hero-video/")));
+const video = () =>
+  page.evaluate(() => {
+    const v = document.querySelector("[data-hero-video]");
+    const sources = [...v.querySelectorAll("source")].filter((s) => s.hasAttribute("src")).length;
+    // networkState 3: no source, the poster stays.
+    return { sources, empty: v.networkState === 3, paused: v.paused, toggle: !document.querySelector("[data-hero-video-toggle]").hidden };
+  });
+let film = await video();
+check("below the fold, the video has its sources but waits", film.sources > 0 && film.paused && film.toggle);
+await page.evaluate(() => document.querySelector("[data-hero]").scrollIntoView({ block: "start" }));
+await settle(600);
+check("…and plays once the hero is on screen", !(await video()).paused);
+await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
+await settle(400);
+check("…and pauses once it's gone", (await video()).paused);
+await page.emulateMedia({ reducedMotion: "reduce" });
+await settle(400);
+film = await video();
+check("reduced motion: no sources, the poster, no toggle", film.sources === 0 && film.empty && film.paused && !film.toggle);
+await page.emulateMedia({ reducedMotion: "no-preference" });
+await settle(400);
+check("…and off again, its sources are back", (await video()).sources > 0);
 
 /* The core page: scroll to, with done; the scroll lock. */
 step = "core";

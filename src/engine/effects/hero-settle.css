@@ -1,0 +1,9 @@
+/* ============================================================
+   hero-settle.
+
+   Reduced motion: the photo or video is at its own size, where the
+   page put it. Without JS, the same.
+
+   No rules to copy: its frame clips it (overflow: hidden or clip), the
+   site's. It grows from its centre.
+   ============================================================ */

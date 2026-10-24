@@ -1,0 +1,79 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section data-hero>
+  <div data-hero-away>…</div>  <!-- drifts up, dims -->
+  <div data-hero-away="22" data-hero-fade="1">…</div>  <!-- sinks -->
+</section>`;
+---
+
+<Entry
+  id="hero-away"
+  markup={markup}
+  look="Quando la cima della sezione tocca il bordo dello schermo, il testo sale e sbiadisce, il marchio in fondo scende: al passo dello scroll, avanti e indietro."
+  attributes={[
+    { name: "data-hero-away", value: "22", what: "How far it drifts, in % of its own height, by the time the hero is gone: negative is up (default −14)." },
+    { name: "data-hero-fade", value: "1", what: "The opacity it dims to (default 0.15; 1: it doesn't)." },
+  ]}
+>
+  <section class="ha" data-hero>
+    <div class="wrap ha-copy" data-hero-away>
+      <p class="ha-kicker">Il catalogo del movimento</p>
+      <p class="ha-claim">Ogni effetto, copiato a mano, pesato prima di spedirlo.</p>
+      <p class="ha-lede">Scorri: il testo se ne va per primo, mentre la pagina sale.</p>
+    </div>
+    <div class="wrap ha-lockup" data-hero-away="22" data-hero-fade="1" aria-hidden="true">motion</div>
+  </section>
+</Entry>
+
+<style>
+  .ha {
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    min-height: 110vh;
+    padding-block: clamp(96px, 16vh, 180px) 0;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .ha-copy {
+    display: grid;
+    gap: 22px;
+  }
+  .ha-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .ha-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .ha-claim {
+    margin: 0;
+    max-width: 12em;
+    font-family: var(--display);
+    font-size: clamp(40px, 6.4vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  .ha-lede {
+    margin: 0;
+    color: var(--on-ink-mute);
+    font-size: clamp(17px, 1.5vw, 20px);
+  }
+  .ha-lockup {
+    font-family: var(--display);
+    font-size: clamp(96px, 22vw, 360px);
+    line-height: 0.74;
+    letter-spacing: -0.05em;
+    color: var(--blue);
+    white-space: nowrap;
+  }
+</style>

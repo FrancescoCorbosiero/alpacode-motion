@@ -1,0 +1,15 @@
+/* ============================================================
+   hero-video.
+
+   Reduced motion: the poster stays, still; the video gets no sources
+   and its toggle stays hidden. Without JS, the same.
+
+   The toggle stays hidden until the script shows it, whatever display
+   the site gives it (an author's display beats the hidden attribute).
+   The video's frame, its scrim and the toggle's look are the site's.
+
+   Sources: A src/styles/components.css:919.
+   ============================================================ */
+[data-hero-video-toggle][hidden] {
+  display: none;
+}
