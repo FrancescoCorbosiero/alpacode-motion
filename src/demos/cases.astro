@@ -1,0 +1,309 @@
+---
+import Entry from "../components/Entry.astro";
+import { site } from "./_shared/plates";
+
+const markup = `<div data-scene="cases" style="--len: 4">  <!-- one screen per case, one for the stage -->
+  <div data-scene-stage>
+    <ol data-cases>
+      <li data-case>
+        <figure data-case-frame>…the site…</figure>
+        <div data-case-text>
+          <h3>…</h3>
+          <p>…the problem…</p>
+          <p>Prima <span>Passaparola<i data-case-strike></i></span></p>
+          <p>Dopo <span data-case-after>Preventivi dal sito</span></p>
+          <a href="…">Vedi il caso</a>
+        </div>
+      </li>
+      …
+    </ol>
+    <div data-cases-progress hidden><span><i></i></span>…</div>
+  </div>
+</div>`;
+
+const cases = [
+  {
+    name: "Una falegnameria",
+    where: "Artigianato · Brianza",
+    problem: "Lavori ottimi, ma li conosceva solo chi li aveva già visti di persona.",
+    before: ["Passaparola", "solo chi conosce"],
+    after: ["Preventivi dal sito", "anche di notte"],
+  },
+  {
+    name: "Una libreria",
+    where: "Commercio · Bologna",
+    problem: "Un pubblico fedele e appassionato, ma fermo ai confini della città.",
+    before: ["In negozio", "vendite locali"],
+    after: ["In tutta Italia", "vendite online"],
+  },
+  {
+    name: "Uno studio legale",
+    where: "Professioni · Milano",
+    problem: "Competenze di alto livello, raccontate da un sito che non rendeva loro giustizia.",
+    before: ["Datato", "poco credibile"],
+    after: ["Chiaro", "per area e per cliente"],
+  },
+];
+---
+
+<Entry
+  id="cases"
+  markup={markup}
+  look="Il palco resta fermo mentre scorri: il 'prima' di ogni caso viene barrato, entra il 'dopo', poi il sito successivo sale nella cornice e il testo passa la mano. Col movimento ridotto, i casi uno sotto l'altro, già barrati."
+>
+  <section class="cs-demo">
+    <div class="wrap cs-head">
+      <p class="cs-k">Casi di studio</p>
+      <h2 class="cs-h">Tre progetti, raccontati prima e dopo.</h2>
+    </div>
+    <div class="cs-scene" data-scene="cases" style={`--len:${cases.length + 1}`}>
+      <div class="cs-stage" data-scene-stage>
+        <div class="wrap">
+          <ol class="cs-list" data-cases>
+            {
+              cases.map((c, i) => (
+                <li class="cs-case" data-case>
+                  <figure class="cs-frame" data-case-frame>
+                    <div class="cs-bar" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                    </div>
+                    <img src={site(51 + i * 11)} alt="Un sito in stile cianografia: la barra, la testata, le schede." width="1440" height="900" />
+                  </figure>
+                  <div class="cs-text" data-case-text>
+                    <p class="cs-meta">
+                      <span>
+                        {String(i + 1).padStart(2, "0")} / {String(cases.length).padStart(2, "0")}
+                      </span>{" "}
+                      {c.where}
+                    </p>
+                    <h3 class="cs-name">{c.name}</h3>
+                    <p class="cs-problem">{c.problem}</p>
+                    <div class="cs-shift">
+                      <p class="cs-col">
+                        <span class="cs-lab">Prima</span>
+                        <span class="cs-v cs-v--before">
+                          {c.before[0]}
+                          <i class="cs-strike" data-case-strike aria-hidden="true" />
+                        </span>
+                        <span class="cs-d">{c.before[1]}</span>
+                      </p>
+                      <span class="cs-ar" aria-hidden="true">
+                        →
+                      </span>
+                      <p class="cs-col">
+                        <span class="cs-lab">Dopo</span>
+                        <span class="cs-v cs-v--after" data-case-after>
+                          {c.after[0]}
+                        </span>
+                        <span class="cs-d">{c.after[1]}</span>
+                      </p>
+                    </div>
+                    <a class="cs-link" href="#live">
+                      Vedi il caso <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+          <div class="cs-progress" data-cases-progress hidden aria-hidden="true">
+            {cases.map(() => <span><i /></span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .cs-demo {
+    padding-block: clamp(96px, 16vh, 180px) clamp(120px, 20vh, 220px);
+  }
+  .cs-head {
+    margin-bottom: 40px;
+  }
+  .cs-k {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+  .cs-h {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 50px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .cs-list {
+    display: grid;
+    gap: 72px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cs-case {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+  }
+  .cs-frame {
+    margin: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .cs-bar {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    height: 28px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .cs-bar i {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+  .cs-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .cs-text {
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+  }
+  .cs-meta {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mute-2);
+  }
+  .cs-meta span {
+    color: var(--blue-deep);
+  }
+  .cs-name {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(28px, 3vw, 46px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .cs-problem {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+  .cs-shift {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    align-items: end;
+    width: 100%;
+    padding: 16px 0;
+    border-block: 1px solid var(--rule);
+  }
+  .cs-col {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+  }
+  .cs-lab {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mute);
+  }
+  .cs-v {
+    position: relative;
+    justify-self: start;
+    font-family: var(--display);
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1;
+  }
+  .cs-v--before {
+    color: var(--mute);
+  }
+  .cs-v--after {
+    color: var(--blue);
+  }
+  .cs-strike {
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: 50%;
+    height: 4px;
+    margin-top: -2px;
+    background: var(--blue);
+  }
+  .cs-d {
+    font-size: 13px;
+    color: var(--mute-2);
+  }
+  .cs-ar {
+    padding-bottom: 22px;
+    font-size: 20px;
+  }
+  .cs-link {
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--blue);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .cs-progress {
+    display: flex;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .cs-progress[hidden] {
+    display: none;
+  }
+  .cs-progress span {
+    flex: 1;
+    height: 3px;
+    overflow: hidden;
+    background: var(--rule);
+  }
+  .cs-progress i {
+    display: block;
+    height: 100%;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  :global(.has-motion) .cs-stage {
+    padding: 72px 0 24px;
+  }
+  :global(.has-motion) .cs-stage > .wrap {
+    width: 100%;
+  }
+  :global(.has-motion) .cs-list {
+    gap: 0;
+  }
+  @media (max-width: 860px) {
+    .cs-case {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-content: start;
+    }
+    .cs-frame img {
+      aspect-ratio: 16 / 9;
+    }
+    .cs-text {
+      gap: 12px;
+    }
+    .cs-problem {
+      font-size: 16px;
+    }
+  }
+</style>

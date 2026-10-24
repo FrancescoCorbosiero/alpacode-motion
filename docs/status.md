@@ -2,6 +2,26 @@
 
 Where the work stands. Updated at the end of every session.
 
+## The house's showcase (2026-10-24, branch `showcase-moves`)
+
+Six entries born on alpacode.it's new showcase (the H source, commit
+`0daaa1e` of `alpacode-website`), written in this repo's contract and
+taken to `demo` here: module, CSS with its end state, registry, demo
+page with neutral content (new plates: `site()`, `page()` in
+`src/demos/_shared/plates.ts`), weight, screenshots.
+
+- Tier 1: `cursor-thumb` (C's index thumb, ported with H's variant as
+  the canonical one: one frame for the list; C's pop and tilt are
+  settings), `frame-scroll`, `flip-filter` (the first entry on Flip,
+  lazy).
+- Tier 3, "The house's showcase (H)": `cases`, `method`, `map` (lazy).
+  The map's dots are worked out at build (`_shared/italy-dots.ts`, from
+  the site's `src/lib/italy-dots.ts`).
+- Assumed, to validate: the stage hook `data-scene-stage` (the canonical
+  `stage` entry, when it's ported, may name it otherwise: then these two
+  scenes take its name); C's per-row thumbs become one list with its
+  frame when C adopts `cursor-thumb`.
+
 ## Now — phase 1 done (2026-10-23)
 
 - **The gallery** (D11, D17): an Astro 6 static site at the root.

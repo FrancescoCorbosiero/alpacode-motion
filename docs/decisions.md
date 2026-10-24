@@ -211,6 +211,9 @@ canonical name.
 | `.site-header` | A, C | `data-header` (the site maps it in `config.ts`) | attributes only |
 | `[data-nav].open` | C | `[data-nav][data-open]` (`config.ts`) | attributes only |
 | `.scroll-progress` | A | `data-read-progress` | attributes only |
+| `data-hover-preview` (one frame for the list) | H | `data-cursor-thumb` (`-row`, `-pic`, `-frame`, `-slot`, `-bar`) | same move as C's thumb; H's variant is the canonical one |
+| `.cases-stage`, `.method-stage` | H | `data-scene-stage` | the sticky stage of a scene; `data-stage` is the gallery's own live section |
+| `data-m`, `data-m-note` | H | `data-method-piece`, `data-method-note` | says what it is |
 
 ## Pending defaults
 

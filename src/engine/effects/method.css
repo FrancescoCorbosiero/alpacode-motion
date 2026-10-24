@@ -1,0 +1,25 @@
+/* ============================================================
+   method.
+
+   Reduced motion: every step shows its own drawing, as laid out.
+   Without JS, the same.
+
+   Under .has-motion the wrapper is --len screens tall and its stage
+   ([data-scene-stage]) sticks. Where the drawings share their place (one
+   over the other) and where the texts stand is the site's layout:
+   alpacode.it puts the steps in a column beside the drawing on a
+   desktop, and in one place under it on a phone.
+
+   Sources: A src/styles/showcase.css (new, the home and /servizi).
+   ============================================================ */
+.has-motion [data-scene="method"] {
+  height: calc(var(--len, 4.2) * 100svh);
+}
+.has-motion [data-scene="method"] > [data-scene-stage] {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100svh;
+  overflow: hidden;
+}

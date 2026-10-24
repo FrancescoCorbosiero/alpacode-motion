@@ -1,0 +1,37 @@
+/* ============================================================
+   cases.
+
+   Reduced motion: the cases stand one under the other, each one's
+   "before" struck through and its "after" in. Without JS, the same.
+
+   Under .has-motion the wrapper is --len screens tall and its stage
+   ([data-scene-stage]) sticks; the cases ([data-cases]) share one place, and
+   only the one on stage takes the pointer. The strike line is laid
+   out drawn: the scene draws it from the left.
+
+   Sources: A src/styles/showcase.css (new, the home).
+   ============================================================ */
+.has-motion [data-scene="cases"] {
+  height: calc(var(--len, 4) * 100svh);
+}
+.has-motion [data-scene="cases"] > [data-scene-stage] {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100svh;
+  overflow: hidden;
+}
+.has-motion [data-scene="cases"] [data-cases] {
+  display: grid;
+  grid-template-areas: "stack";
+}
+.has-motion [data-scene="cases"] [data-case] {
+  grid-area: stack;
+}
+.has-motion [data-scene="cases"] [data-case]:not(.is-active) {
+  pointer-events: none;
+}
+[data-case-strike] {
+  transform-origin: left center;
+}
