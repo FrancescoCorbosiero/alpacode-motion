@@ -1,0 +1,26 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<h2 data-split="words">Parola per parola, ognuna dalla sua maschera.</h2>`;
+---
+
+<HeadingDemo
+  id="split-words"
+  split="words"
+  markup={markup}
+  look="Le parole salgono una dopo l'altra, appena inclinate, e si raddrizzano mentre si posano."
+  blocks={[
+    {
+      kicker: "Uno",
+      title: "Parola per parola, ognuna dalla sua maschera.",
+      text: "Ogni parola sale da una maschera tutta sua, inclinata di poco, e si raddrizza mentre si posa: il titolo si compone nell'ordine in cui si legge.",
+      xl: true,
+    },
+    {
+      kicker: "Due",
+      title: "Regge i titoli lunghi, dove le lettere una a una stancherebbero.",
+      text: "È la mossa che il ciclo dei titoli dà al posto delle lettere quando un titolo supera i ventisei caratteri.",
+      side: true,
+    },
+  ]}
+/>

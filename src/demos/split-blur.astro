@@ -1,0 +1,26 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<h2 data-split="blur">Prima sfocato, poi a fuoco.</h2>`;
+---
+
+<HeadingDemo
+  id="split-blur"
+  split="blur"
+  markup={markup}
+  look="Ogni riga sale di poco mentre torna nitida. A fine corsa il filtro se ne va: è il più caro da dipingere."
+  blocks={[
+    {
+      kicker: "Uno",
+      title: "Prima sfocato, poi a fuoco.",
+      text: "Ogni riga sale di poco mentre torna nitida, una dopo l'altra: la più morbida delle entrate dei titoli.",
+      xl: true,
+    },
+    {
+      kicker: "Due",
+      title: "Una volta per pagina, dove il titolo chiede calma.",
+      text: "La sfocatura costa al browser a ogni fotogramma in cui dura: finita l'entrata il filtro viene tolto, e la riga torna testo semplice.",
+      side: true,
+    },
+  ]}
+/>

@@ -161,6 +161,7 @@ and its reason:
 | split-lines | stagger 0.085s | C 0.09s | no | a two-hundredth of a second doesn't show |
 | scrub | lit by `bottom 48%` | C `bottom 50%` | no | the consumer's; two points of screen don't show |
 | split-wipe | 1.3s | C 1.2s | no | a tenth of a second doesn't show |
+| split-pop | ±10°, `back.out(2)` | C ±12°, `back.out(2.2)` | no | the consumer's; two degrees and a touch of spring don't read as another move |
 
 ## Naming registry
 

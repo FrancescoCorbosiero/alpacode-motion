@@ -1,0 +1,17 @@
+/* ============================================================
+   split-words.
+
+   Reduced motion: nothing is split; the heading is plain text, laid
+   out by the site's own CSS. Without JS, the same.
+
+   The masks SplitText wraps the words in clip their overflow: grow
+   each one enough to keep accents and descenders, and the edges of a
+   tilted word, without touching the layout. Tune to the display face
+   (A sets Archivo Black).
+
+   Sources: A src/styles/motion.css:148.
+   ============================================================ */
+.split-word-mask {
+  padding: 0.1em 0.02em 0.12em;
+  margin: -0.1em -0.02em -0.12em;
+}

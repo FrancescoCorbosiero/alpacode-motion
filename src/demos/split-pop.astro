@@ -1,0 +1,26 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<h2 data-split="pop">Le parole saltano su.</h2>`;
+---
+
+<HeadingDemo
+  id="split-pop"
+  split="pop"
+  markup={markup}
+  look="Ogni parola arriva con una molla: da più piccola e inclinata a caso, supera il suo posto e ci torna."
+  blocks={[
+    {
+      kicker: "Uno",
+      title: "Le parole saltano su.",
+      text: "Ogni parola arriva con una molla, da più piccola e inclinata a caso, supera il suo posto e ci torna: la più vivace delle entrate dei titoli.",
+      xl: true,
+    },
+    {
+      kicker: "Due",
+      title: "Solo su richiesta: il ciclo di alpacode non la distribuisce.",
+      text: "Si chiede per nome, dove un titolo può permettersi di giocare. Sul programma referral chiude la pagina, non la apre.",
+      side: true,
+    },
+  ]}
+/>

@@ -1,0 +1,26 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<h2 data-split="chars">Lettera per lettera.</h2>`;
+---
+
+<HeadingDemo
+  id="split-chars"
+  split="chars"
+  markup={markup}
+  look="Le lettere salgono e si posano una alla volta; le parole restano intere, così una riga non va mai a capo a metà."
+  blocks={[
+    {
+      kicker: "Uno",
+      title: "Lettera per lettera.",
+      text: "Le lettere salgono e si posano una alla volta. Si legge bene su poche parole: oltre i ventisei caratteri il ciclo dei titoli passa alle parole.",
+      xl: true,
+    },
+    {
+      kicker: "Due",
+      title: "Per i titoli corti.",
+      text: "Una parola o due, un nome, una cifra: dove ogni lettera merita il suo tempo.",
+      side: true,
+    },
+  ]}
+/>

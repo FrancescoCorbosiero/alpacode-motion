@@ -13,10 +13,14 @@
 import type { Effect, LazyEffect } from "./core/kit";
 import * as reveal from "./effects/reveal";
 import * as scrub from "./effects/scrub";
+import * as splitBlur from "./effects/split-blur";
+import * as splitChars from "./effects/split-chars";
 import * as splitLines from "./effects/split-lines";
+import * as splitPop from "./effects/split-pop";
 import * as splitWipe from "./effects/split-wipe";
+import * as splitWords from "./effects/split-words";
 
-export const effects: Effect[] = [splitLines, splitWipe, reveal, scrub];
+export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, reveal, scrub];
 
 export const lazy: LazyEffect[] = [
   // { hook: "[data-mark]", load: () => import("./effects/mark-circle") },

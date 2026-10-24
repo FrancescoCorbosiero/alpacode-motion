@@ -102,6 +102,26 @@
       ],
       "total": 55158
     },
+    "split-blur": {
+      "min": 808,
+      "gzip": 493,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55287
+    },
+    "split-chars": {
+      "min": 777,
+      "gzip": 467,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55262
+    },
     "split-lines": {
       "min": 777,
       "gzip": 465,
@@ -112,6 +132,16 @@
       ],
       "total": 55265
     },
+    "split-pop": {
+      "min": 818,
+      "gzip": 497,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55300
+    },
     "split-wipe": {
       "min": 850,
       "gzip": 502,
@@ -121,6 +151,16 @@
         "SplitText"
       ],
       "total": 55298
+    },
+    "split-words": {
+      "min": 794,
+      "gzip": 478,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55277
     }
   }
 }

@@ -1,0 +1,9 @@
+/* ============================================================
+   split-blur.
+
+   Reduced motion: nothing is split; the heading is plain text, laid
+   out by the site's own CSS. Without JS, the same.
+
+   No rules to copy: the blur is set by the script and cleared when the
+   line has landed.
+   ============================================================ */
