@@ -599,6 +599,11 @@ a.row-id:hover {
 .stage {
   border-top: var(--strut) solid var(--blue);
 }
+/* The demos clip their sides, as the sites' pages do (A's .lnd, FAST's
+   body): effects that come in from the side never widen the page. */
+.stage-body {
+  overflow-x: clip;
+}
 .stage-bar {
   background: var(--ink);
   color: var(--on-ink);

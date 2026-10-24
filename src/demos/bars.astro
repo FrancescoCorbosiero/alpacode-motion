@@ -1,0 +1,93 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div data-bars>
+  <span>gsap</span> <i data-bars-item style="--v: 0.43"></i> <b>27,7 KB</b>
+  <span>+ ScrollTrigger</span> <i data-bars-item style="--v: 0.71"></i> <b>45,3 KB</b>
+</div>`;
+
+// docs/weight.md, the libraries (gzip), as npm run weight measured them.
+const rows = [
+  ["gsap core", 27.7],
+  ["+ ScrollTrigger", 45.3],
+  ["+ SplitText e Lenis", 53.3],
+  ["+ DrawSVG e MotionPath", 64.1],
+] as const;
+const top = 64.1;
+const kb = (v: number) => `${v.toLocaleString("it-IT", { minimumFractionDigits: 1 })} KB`;
+---
+
+<Entry
+  id="bars"
+  markup={markup}
+  look="Ogni barra cresce fino al suo valore, una dopo l'altra. Senza script le barre sono già alla loro misura."
+  attributes={[{ name: "data-bars-item", value: "style=\"--v: 0.42\"", what: "A bar, and its value from 0 to 1: its CSS draws it that long." }]}
+>
+  <section class="bs">
+    <div class="wrap bs-wrap">
+      <h2 class="bs-title">Il costo fisso è delle librerie</h2>
+      <div class="bs-chart" data-bars>
+        {
+          rows.map(([name, v]) => (
+            <>
+              <span class="bs-name">{name}</span>
+              <i class="bs-bar" data-bars-item style={`--v: ${(v / top).toFixed(3)}`} />
+              <b class="bs-value">{kb(v)}</b>
+            </>
+          ))
+        }
+      </div>
+      <p class="bs-note">Compresse, misurate da <code>npm run weight</code>: il peso di una pagina con il movimento, prima del primo effetto.</p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .bs {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .bs-wrap {
+    display: grid;
+    gap: clamp(28px, 4vh, 44px);
+    max-width: 1040px;
+  }
+  .bs-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .bs-chart {
+    display: grid;
+    grid-template-columns: minmax(120px, max-content) minmax(0, 1fr) 72px;
+    align-items: center;
+    gap: 16px 18px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .bs-bar {
+    display: block;
+    height: 14px;
+    background: var(--blue);
+  }
+  .bs-value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .bs-note {
+    margin: 0;
+    font-size: 14px;
+    color: var(--mute);
+  }
+  @media (max-width: 560px) {
+    .bs-chart {
+      grid-template-columns: minmax(0, 1fr) 72px;
+    }
+    .bs-name {
+      grid-column: 1 / -1;
+      margin-bottom: -8px;
+    }
+  }
+</style>

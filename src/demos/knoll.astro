@@ -1,0 +1,109 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<ul data-knoll>
+  <li>…</li>
+  <li>…</li>
+  <li>…</li>
+</ul>`;
+
+const tools = [
+  ["GSAP", "Il motore: tween e timeline.", '<path d="M8 32 20 8l12 24"/><path d="M13 23h14"/>'],
+  ["ScrollTrigger", "Lega un movimento allo scroll.", '<path d="M20 6v28"/><path d="m12 26 8 8 8-8"/>'],
+  ["SplitText", "Divide un titolo in righe, parole, lettere.", '<path d="M6 12h28M6 20h20M6 28h12"/>'],
+  ["Lenis", "Lo scroll morbido, con mouse e trackpad.", '<path d="M6 26c8-12 20-12 28 0"/>'],
+  ["DrawSVG", "I tratti della penna, solo dove servono.", '<path d="M8 30c6-14 10 4 16-10s6-8 8-12"/>'],
+  ["CSS", "Il primo schermo, e ogni stato finale.", '<rect x="8" y="8" width="24" height="24"/>'],
+];
+---
+
+<Entry
+  id="knoll"
+  markup={markup}
+  look="Gli attrezzi arrivano sparsi, spostati e girati, e si mettono in fila al loro posto, in ordine sparso. La dispersione è la stessa a ogni visita."
+>
+  <section class="kn">
+    <div class="wrap">
+      <p class="kn-kicker">Gli attrezzi del catalogo</p>
+      <ul class="kn-tools" data-knoll>
+        {
+          tools.map(([name, text, icon]) => (
+            <li class="kn-tool">
+              <svg class="kn-icon" viewBox="0 0 40 40" aria-hidden="true" set:html={icon} />
+              <h3>{name}</h3>
+              <p>{text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .kn {
+    padding-block: clamp(120px, 20vh, 220px);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .kn-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 clamp(40px, 6vh, 64px);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .kn-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .kn-tools {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 2vw, 28px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kn-tool {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: clamp(22px, 2.4vw, 32px);
+    border: 1.5px solid var(--on-ink-rule);
+    background: rgba(240, 243, 249, 0.04);
+  }
+  .kn-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 2.4;
+    stroke-linecap: square;
+  }
+  .kn-tool h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(20px, 1.8vw, 26px);
+  }
+  .kn-tool p {
+    margin: 0;
+    color: var(--on-ink-mute);
+    line-height: 1.5;
+  }
+  @media (max-width: 1024px) {
+    .kn-tools {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .kn-tools {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -66,14 +66,18 @@ Weight column of catalog.md.
 |  | Its own code, gzip | minified | Needs | A page with the core and only it |
 | --- | --- | --- | --- | --- |
 | the core (all 13 pieces) | 2.3 KB | 5.3 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
+| `alternate` | 625 B | 1.1 KB | gsap, ScrollTrigger | 52.3 KB |
+| `bars` | 411 B | 577 B | gsap, ScrollTrigger | 52.2 KB |
 | `chat` | 630 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `clip` | 569 B | 975 B | gsap, ScrollTrigger | 52.3 KB |
 | `count` | 600 B | 951 B | gsap, ScrollTrigger | 52.4 KB |
+| `deal` | 665 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `draw` | 486 B | 764 B | gsap, ScrollTrigger | 52.3 KB |
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
+| `knoll` | 638 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
-| `reveal` | 528 B | 974 B | gsap, ScrollTrigger | 52.3 KB |
+| `reveal` | 613 B | 1.2 KB | gsap, ScrollTrigger | 52.3 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
 | `split-blur` | 543 B | 900 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-chars` | 510 B | 857 B | gsap, ScrollTrigger, SplitText | 55.3 KB |

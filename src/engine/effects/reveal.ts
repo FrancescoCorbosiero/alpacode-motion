@@ -11,7 +11,8 @@
    landed, control goes back to the stylesheet (clearProps), so its
    hover transforms keep working. A block keyboard focus has already
    shown is left alone when its batch comes (neither source does this:
-   the batch re-tweened it, slower).
+   the batch re-tweened it, slower), and a batch plays in page order
+   (the blocks of a grid row could land out of turn).
    Sources: A src/lib/motion.ts:600; C src/scripts/motion.ts:448;
    FAST fast/src/lib/motion.ts:23 (data-rise).
    ============================================================ */
@@ -19,6 +20,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { inFirstView, skipIntro } from "../core/guards";
 import type { Kit } from "../core/kit";
+import { inPageOrder } from "./_batch";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,7 +47,9 @@ export function init(kit: Kit): void {
     onEnter: (batch) => {
       // A block keyboard focus has already shown (core-focus-reveal) is
       // left to that: re-tweening it would slow it down again.
-      const els = (batch as HTMLElement[]).filter((el) => el.hasAttribute("data-motion-pending"));
+      // In page order: a row's blocks share a trigger position, and the
+      // sorted triggers keep no order among equals.
+      const els = (batch as HTMLElement[]).filter((el) => el.hasAttribute("data-motion-pending")).sort(inPageOrder);
       els.forEach((el) => el.removeAttribute("data-motion-pending"));
       const passed = els.filter((el) => el.getBoundingClientRect().bottom < 0);
       const entering = els.filter((el) => !passed.includes(el));

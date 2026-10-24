@@ -83,6 +83,24 @@
     "total": 51880
   },
   "entries": {
+    "alternate": {
+      "min": 1095,
+      "gzip": 625,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52343
+    },
+    "bars": {
+      "min": 577,
+      "gzip": 411,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52169
+    },
     "chat": {
       "min": 1158,
       "gzip": 630,
@@ -110,6 +128,15 @@
       ],
       "total": 52378
     },
+    "deal": {
+      "min": 1163,
+      "gzip": 665,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52367
+    },
     "draw": {
       "min": 764,
       "gzip": 486,
@@ -127,6 +154,15 @@
         "ScrollTrigger"
       ],
       "total": 52163
+    },
+    "knoll": {
+      "min": 1068,
+      "gzip": 638,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52409
     },
     "pop": {
       "min": 511,
@@ -147,13 +183,13 @@
       "total": 52378
     },
     "reveal": {
-      "min": 974,
-      "gzip": 528,
+      "min": 1161,
+      "gzip": 613,
       "needs": [
         "gsap",
         "ScrollTrigger"
       ],
-      "total": 52260
+      "total": 52325
     },
     "scrub": {
       "min": 531,

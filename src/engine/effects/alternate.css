@@ -1,0 +1,9 @@
+/* ============================================================
+   alternate.
+
+   Reduced motion: every row is in its place. Without JS, the same.
+
+   No rules to copy. The page clips its sides (overflow-x: clip, as
+   alpacode's .lnd and FAST's body do): a row starts up to 120px off to
+   the side, and would widen a page that doesn't.
+   ============================================================ */

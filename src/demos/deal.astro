@@ -1,0 +1,107 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<ul data-deal>
+  <li>…</li>
+  <li>…</li>
+  <li>…</li>
+</ul>`;
+
+const cards = [
+  ["Il modulo", "L'effetto in un file: il suo hook, le impostazioni in cima, init."],
+  ["Il suo CSS", "Lo stato finale per chi riduce il movimento."],
+  ["Il registro", "Una riga, nell'ordine in cui la pagina lo costruisce."],
+  ["La demo", "La pagina della voce: l'effetto dal vivo e il markup da copiare."],
+  ["La prova", "Il peso misurato e le schermate, a due larghezze e senza movimento."],
+];
+---
+
+<Entry
+  id="deal"
+  markup={markup}
+  look="Le carte arrivano come una mano distribuita: dal basso, da un lato e dall'altro, inclinate, e si posano dritte con un piccolo rimbalzo."
+>
+  <section class="dl">
+    <div class="wrap">
+      <p class="dl-kicker">Il giro di una voce</p>
+      <ol class="dl-cards" data-deal>
+        {
+          cards.map(([title, text], i) => (
+            <li class="dl-card">
+              <span class="dl-n">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .dl {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .dl-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 clamp(40px, 6vh, 64px);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .dl-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .dl-cards {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(12px, 1.6vw, 20px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dl-card {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    min-height: 240px;
+    padding: clamp(20px, 2vw, 28px);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .dl-n {
+    font-family: var(--display);
+    color: var(--blue);
+  }
+  .dl-card h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(20px, 1.6vw, 24px);
+    line-height: 1.05;
+  }
+  .dl-card p {
+    margin: 0;
+    color: var(--on-ink-mute);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  @media (max-width: 1024px) {
+    .dl-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .dl-cards {
+      grid-template-columns: 1fr;
+    }
+    .dl-card {
+      min-height: 0;
+    }
+  }
+</style>
