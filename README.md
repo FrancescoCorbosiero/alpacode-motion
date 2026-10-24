@@ -10,7 +10,7 @@ adapted. A site ships only the effects it uses.
 
 | | |
 | --- | --- |
-| [`catalog.md`](catalog.md) | the index: 85 effects (and the core they stand on), their hooks, costs, and where their code lives |
+| [`catalog.md`](catalog.md) | the index: 86 effects (and the core they stand on), their hooks, costs, and where their code lives |
 | [`docs/decisions.md`](docs/decisions.md) | how the catalog is organised, the naming registry, what's still open |
 | [`docs/weight.md`](docs/weight.md) | what motion costs a page: the libraries, the engines, the runtime |
 | [`docs/status.md`](docs/status.md) | where the work stands, the phases, the assumptions to validate |
@@ -23,7 +23,7 @@ adapted. A site ships only the effects it uses.
 
 - **Core** — the engine skeleton, not an effect: lifecycle, Lenis,
   scrolling, header, guards. Copied once per site.
-- **Tier 1, primitives** (62) — a hook on any element, or a function:
+- **Tier 1, primitives** (63) — a hook on any element, or a function:
   headings, reveals, the pen, scroll-linked effects, pointer play.
 - **Tier 2, parametric scenes** (8) — sections with a markup contract:
   the sticky stage, Venn, fan, card stack, stories, horizontal gallery,

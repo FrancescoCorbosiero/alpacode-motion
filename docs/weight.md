@@ -68,12 +68,13 @@ Weight column of catalog.md.
 | the core (all 13 pieces) | 2.3 KB | 5.2 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
 | `reveal` | 528 B | 974 B | gsap, ScrollTrigger | 52.2 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
-| `split-blur` | 493 B | 808 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
-| `split-chars` | 467 B | 777 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
-| `split-lines` | 465 B | 777 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
-| `split-pop` | 497 B | 818 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
-| `split-wipe` | 502 B | 850 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
-| `split-words` | 478 B | 794 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-blur` | 543 B | 900 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-chars` | 510 B | 857 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-cycle` | 686 B | 1.1 KB | gsap, ScrollTrigger, SplitText | 55.4 KB |
+| `split-lines` | 504 B | 847 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-pop` | 576 B | 977 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
+| `split-wipe` | 538 B | 905 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-words` | 518 B | 877 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
 <!-- /weight:ported -->
 
 "Its own code" is the module bundled alone, the libraries and the core

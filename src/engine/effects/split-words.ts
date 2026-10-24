@@ -10,9 +10,8 @@
    the deck split-cycle deals from.
    Sources: A src/lib/motion.ts:533.
    ============================================================ */
-import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="words"]';
 
@@ -27,7 +26,12 @@ const EASE = "power3.out"; // a quick rise, a soft landing (A)
 export const move: HeadingMove = {
   split: { type: "words,lines", mask: "words" },
   play: (split, scrollTrigger) =>
-    gsap.from(split.words, { yPercent: RISE, rotate: TILT, duration: DURATION, ease: EASE, stagger: STAGGER, scrollTrigger }),
+    enter(
+      split.words,
+      { yPercent: RISE, rotation: TILT },
+      { yPercent: 0, rotation: 0, duration: DURATION, ease: EASE, stagger: STAGGER },
+      scrollTrigger,
+    ),
 };
 addMove("words", hook, move);
 

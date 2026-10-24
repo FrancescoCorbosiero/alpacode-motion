@@ -9,9 +9,8 @@
    deals from.
    Sources: A src/lib/motion.ts:527; C src/scripts/motion.ts:383.
    ============================================================ */
-import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="wipe"]';
 
@@ -25,10 +24,11 @@ const BLEED = "-20%"; // how far the clip reaches above and below a line (A and 
 export const move: HeadingMove = {
   split: { type: "lines" },
   play: (split, scrollTrigger) =>
-    gsap.fromTo(
+    enter(
       split.lines,
       { clipPath: `inset(${BLEED} 100% ${BLEED} 0%)` },
-      { clipPath: `inset(${BLEED} 0% ${BLEED} 0%)`, duration: DURATION, ease: EASE, stagger: STAGGER, clearProps: "clipPath", scrollTrigger },
+      { clipPath: `inset(${BLEED} 0% ${BLEED} 0%)`, duration: DURATION, ease: EASE, stagger: STAGGER, clearProps: "clipPath" },
+      scrollTrigger,
     ),
 };
 addMove("wipe", hook, move);

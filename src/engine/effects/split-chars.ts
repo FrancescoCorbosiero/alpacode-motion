@@ -9,9 +9,8 @@
    Not C's chars, which drop from above: that is split-drop.
    Sources: A src/lib/motion.ts:553.
    ============================================================ */
-import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="chars"]';
 
@@ -25,7 +24,7 @@ const EASE = "power3.out"; // a quick rise, a soft landing (A)
 export const move: HeadingMove = {
   split: { type: "chars,words" },
   play: (split, scrollTrigger) =>
-    gsap.from(split.chars, { opacity: 0, yPercent: RISE, duration: DURATION, ease: EASE, stagger: STAGGER, scrollTrigger }),
+    enter(split.chars, { opacity: 0, yPercent: RISE }, { opacity: 1, yPercent: 0, duration: DURATION, ease: EASE, stagger: STAGGER }, scrollTrigger),
 };
 addMove("chars", hook, move);
 

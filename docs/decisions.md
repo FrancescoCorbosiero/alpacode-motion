@@ -162,6 +162,7 @@ and its reason:
 | scrub | lit by `bottom 48%` | C `bottom 50%` | no | the consumer's; two points of screen don't show |
 | split-wipe | 1.3s | C 1.2s | no | a tenth of a second doesn't show |
 | split-pop | ±10°, `back.out(2)` | C ±12°, `back.out(2.2)` | no | the consumer's; two degrees and a touch of spring don't read as another move |
+| split-cycle | lines, wipe, words, blur, chars | C lines, pop, wipe, drop, blur | no | the consumer's; C's deck needs split-drop, not ported yet: one setting (`CYCLE`) when it is |
 
 ## Naming registry
 
@@ -209,7 +210,6 @@ D19's table.
 
 | Entry | A | C (or FAST) |
 | --- | --- | --- |
-| split cycle | lines, wipe, words, blur, chars | lines, pop, wipe, chars (drop), blur |
 | pop | ±90° alternating, delay 0.15s | −160° |
 | clip | square, inner zoom from 1.16 | rounded 24px, no inner zoom |
 | tilt | 5° | 10–12° plus a lift |
@@ -241,7 +241,7 @@ For the owner.
   it; there is no drag code. A stale comment, or an effect to build
   (Draggable + Inertia)?
 - **O8 — Screenshots in git.** The sheets are committed (WebP, about
-  200 KB per entry: some 17 MB once all 85 are `demo`, more with every
+  200 KB per entry: some 17 MB once all 86 are `demo`, more with every
   reshoot). Keep them in the repo, or move them to CI artifacts?
 - **O9 — The smoke test in CI.** `npm run smoke` needs a Chrome, which
   GitHub's runners have (about 30 s). Add it to CI next to check and

@@ -8,9 +8,8 @@
    split-cycle deals from.
    Sources: A src/lib/motion.ts:542; C src/scripts/motion.ts:399.
    ============================================================ */
-import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="blur"]';
 
@@ -25,16 +24,12 @@ const EASE = "power2.out"; // a soft landing (A and C)
 export const move: HeadingMove = {
   split: { type: "lines" },
   play: (split, scrollTrigger) =>
-    gsap.from(split.lines, {
-      opacity: 0,
-      y: RISE,
-      filter: `blur(${BLUR}px)`,
-      duration: DURATION,
-      ease: EASE,
-      stagger: STAGGER,
-      clearProps: "filter",
+    enter(
+      split.lines,
+      { opacity: 0, y: RISE, filter: `blur(${BLUR}px)` },
+      { opacity: 1, y: 0, filter: "blur(0px)", duration: DURATION, ease: EASE, stagger: STAGGER, clearProps: "filter" },
       scrollTrigger,
-    }),
+    ),
 };
 addMove("blur", hook, move);
 

@@ -7,9 +7,8 @@
    the deck split-cycle deals from: the first move of the cycle.
    Sources: A src/lib/motion.ts:573; C src/scripts/motion.ts:410.
    ============================================================ */
-import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="lines"]';
 
@@ -23,7 +22,7 @@ const EASE = "power4.out"; // the long, soft landing (A and C)
 export const move: HeadingMove = {
   split: { type: "lines", mask: "lines" },
   play: (split, scrollTrigger) =>
-    gsap.from(split.lines, { yPercent: RISE, duration: DURATION, ease: EASE, stagger: STAGGER, scrollTrigger }),
+    enter(split.lines, { yPercent: RISE }, { yPercent: 0, duration: DURATION, ease: EASE, stagger: STAGGER }, scrollTrigger),
 };
 addMove("lines", hook, move);
 

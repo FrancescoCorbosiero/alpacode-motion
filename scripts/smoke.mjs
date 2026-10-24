@@ -157,6 +157,47 @@ const lit = await page.evaluate(() => {
 });
 check("read to the end, its last word is lit", Number(lit) > 0.95, `opacity ${lit}`);
 
+/* The heading cycle: bare headings dealt in turn, an asked one kept, its
+   neighbour dealt past it. Each move leaves its trace in the split. */
+step = "split-cycle";
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("→ /split-cycle/ softly", (await navigate("/")) && (await navigate("/split-cycle/")));
+const dealt = await page.evaluate(() =>
+  [...document.querySelectorAll("[data-stage] h2[data-split]")].map((h) => {
+    if (h.querySelector(".split-line-mask")) return "lines";
+    if (h.querySelector(".split-word-mask")) return "words";
+    if (h.querySelector(".split-char")) return "chars";
+    const line = h.querySelector(".split-line");
+    if (!line) return "none";
+    if (line.style.clipPath) return "wipe";
+    if (line.style.filter) return "blur";
+    return "?";
+  }),
+);
+const expected = ["lines", "wipe", "words", "blur", "chars", "wipe", "words"];
+check(
+  "bare headings are dealt in turn, the asked one keeps its move, its neighbour isn't dealt it again",
+  dealt.join() === expected.join(),
+  dealt.join(", "),
+);
+// A jump down the page starts five headings at once: while the letters
+// play, the ones whose turn hasn't come keep their start state (a
+// staggered from() lost it now and then: the letters flashed).
+await page.evaluate(() => {
+  const h = [...document.querySelectorAll("[data-stage] h2[data-split]")][4];
+  window.scrollTo({ top: h.getBoundingClientRect().top + scrollY - innerHeight * 0.7, behavior: "instant" });
+});
+let stripped = 0;
+for (let k = 0; k < 4; k++) {
+  await page.waitForTimeout(30);
+  stripped += await page.evaluate(() => {
+    const h = [...document.querySelectorAll("[data-stage] h2[data-split]")][4];
+    return [...h.querySelectorAll(".split-char")].filter((c) => c.style.opacity === "").length;
+  });
+}
+check("after a jump, the letters waiting their turn stay hidden until it comes", stripped === 0, `${stripped} lost their start`);
+
 /* The core page: scroll to, with done; the scroll lock. */
 step = "core";
 await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));

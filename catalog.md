@@ -7,7 +7,7 @@ in the gallery, and the Status column follows them (see
 [`docs/status.md`](docs/status.md)). The gallery's index is built from this
 file, and `npm run check` keeps the two in step.
 
-**85 effects**: 62 tier-1 primitives, 8 tier-2 scenes, 15 tier-3 showcase
+**86 effects**: 63 tier-1 primitives, 8 tier-2 scenes, 15 tier-3 showcase
 entries — plus 13 core pieces (the engine, not effects) and 61 CSS
 keyframes (listed at the end). When two sources do the same move, they are
 one entry and the differences are in Notes.
@@ -115,22 +115,21 @@ layout contract beyond the element itself.
 
 Shared by every variant: SplitText with `autoSplit` (re-splits when
 fonts or widths change), one ScrollTrigger at `top 88%`, once; skipped in
-the first view and inside CSS intros. A heading that doesn't ask for a
-variant gets the next one in turn down the page, so two neighbouring
-sections never repeat the same move (A deals lines, wipe, words, blur,
-chars; C deals lines, pop, wipe, chars, blur). Letter-by-letter falls back
-to words beyond 26–28 characters. Sites also map their own heading
-selectors ([AM 104](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L104), [CM 106](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L106)).
+the first view and inside CSS intros (`effects/_headings.ts`). A heading
+that doesn't ask for a variant is dealt the next one in turn down the
+page (`split-cycle`), so two neighbouring sections never repeat the same
+move. Sites map their own heading selectors onto it ([AM 104](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L104), [CM 106](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L106)).
 
 | id | Status | Hook | What | Sources | Cost | Weight | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| split-lines | `demo` | `data-split="lines"` | Each line rises out of its mask | [AM 573](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L573) · [CM 410](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L410) | once, split | 465 B | Identical but for the stagger: A 0.085s, C 0.09s (the port keeps A's). What every split-* entry shares is `effects/_headings.ts` |
-| split-wipe | `demo` | `data-split="wipe"` | Each line is uncovered left to right | [AM 527](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L527) · [CM 383](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L383) | once, split | 502 B | A 1.3s, C 1.2s: the port keeps A's (D19). In the deck split-cycle deals from |
-| split-words | `demo` | `data-split="words"` | Words pop up out of their own masks, slightly tilted | [AM 533](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L533) | once, split | 478 B | A only. Its masks need its CSS (`.split-word-mask`, A motion.css:148). In the deck split-cycle deals from: the cycle gives it to a heading too long for letters |
-| split-blur | `demo` | `data-split="blur"` | Lines come into focus while drifting up | [AM 542](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L542) · [CM 399](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L399) | once, split | 493 B | Identical. The blur filter is the costliest variant to paint: it is cleared when a line has landed. In the deck split-cycle deals from |
-| split-chars | `demo` | `data-split="chars"` | Letters rise and settle one by one | [AM 553](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L553) | once, split | 467 B | A's `chars`. Short headings only: split-cycle deals it only up to 26 characters (asked for by name, it plays on any). Words stay whole, so a line never breaks inside one. In the deck split-cycle deals from |
+| split-cycle | `demo` | `data-split` (no value) | A heading that doesn't ask for a variant is dealt the next one in turn down the page, so neighbouring sections never repeat a move | [AM 503](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L503) [AM 584](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L584) · [CM 350](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L350) [CM 415](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L415) | once, split | 686 B | A deals lines, wipe, words, blur, chars; C lines, pop, wipe, chars (drop), blur: the port keeps A's (D19). Letters go to short headings only: beyond 26 characters A deals words instead (C: pop, beyond 28). The deck is the split-* entries a site copied, in `CYCLE`'s order; a heading asked for by name keeps its move and takes its turn. Both sources count that turn, so the next bare heading could repeat its neighbour's move: the port deals it the following one (D15). A maps its section titles onto it ([AM 104](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L104)): `.section-head h2`, `.pitch-lead`, `.cta-final .display`, `.sus-limits-title`, `.rep-boundary-title`, `.clb-pact-head h2`, `.svc-group-verb`, `.pp-h2`, `.pp-pitch-lead`; C its own ([CM 106](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L106)) |
+| split-lines | `demo` | `data-split="lines"` | Each line rises out of its mask | [AM 573](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L573) · [CM 410](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L410) | once, split | 504 B | Identical but for the stagger: A 0.085s, C 0.09s (the port keeps A's, D19). What every split-* entry shares is `effects/_headings.ts`; the first move in split-cycle's deck |
+| split-wipe | `demo` | `data-split="wipe"` | Each line is uncovered left to right | [AM 527](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L527) · [CM 383](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L383) | once, split | 538 B | A 1.3s, C 1.2s: the port keeps A's (D19). In the deck split-cycle deals from |
+| split-words | `demo` | `data-split="words"` | Words pop up out of their own masks, slightly tilted | [AM 533](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L533) | once, split | 518 B | A only. Its masks need its CSS (`.split-word-mask`, A motion.css:148). In the deck split-cycle deals from: the cycle gives it to a heading too long for letters |
+| split-blur | `demo` | `data-split="blur"` | Lines come into focus while drifting up | [AM 542](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L542) · [CM 399](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L399) | once, split | 543 B | Identical. The blur filter is the costliest variant to paint: it is cleared when a line has landed. In the deck split-cycle deals from |
+| split-chars | `demo` | `data-split="chars"` | Letters rise and settle one by one | [AM 553](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L553) | once, split | 510 B | A's `chars`. Short headings only: split-cycle deals it only up to 26 characters (asked for by name, it plays on any). Words stay whole, so a line never breaks inside one. In the deck split-cycle deals from |
 | split-drop | `src` | `data-split="drop"` | Letters fall from above, tilted at random, and land with an elastic bounce | [CM 389](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L389) | once, split | — | C's `chars`, renamed: same name, other move |
-| split-pop | `demo` | `data-split="pop"` | Words jump in with a spring, a scale and a random tilt | [AM 562](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L562) · [CM 372](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L372) | once, split | 497 B | One move: A `back.out(2)` ±10°, C `back.out(2.2)` ±12°: the port keeps A's (D19). A uses it only when asked; C deals it in turn, which is split-cycle's `CYCLE`. In the deck split-cycle deals from |
+| split-pop | `demo` | `data-split="pop"` | Words jump in with a spring, a scale and a random tilt | [AM 562](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L562) · [CM 372](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L372) | once, split | 576 B | One move: A `back.out(2)` ±10°, C `back.out(2.2)` ±12°: the port keeps A's (D19). A uses it only when asked; C deals it in turn, which is split-cycle's `CYCLE`. In the deck split-cycle deals from |
 | split-accent | `src` | `data-accent`, inside a split heading | The accent word (the handwritten one) lands last, with its underline drawn by hand | [CM 428](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L428) · CSS [CMC 76](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/motion.css#L76) | once | — | C hooks it on `.script`, the Caveat class |
 
 ### Reveals
@@ -392,6 +391,20 @@ Open:
 - The rail's thresholds (A `i/n`, C `i/(n−1)`) and the other tuning
   differences listed in Notes are decided with the demos (decisions.md,
   pending defaults).
+
+Fixed in the port (phase 2):
+
+- Every split heading in both sources plays a staggered `gsap.from()` on
+  its trigger. GSAP re-renders such a tween's start state as it begins,
+  and when several headings start at once (a jump down the page, a load
+  scrolled down) the pieces whose turn hadn't come could show their end
+  state until it did: the letters flashed in, vanished and rose
+  (intermittent, about one jump in ten). The port sets the start at init
+  and plays a `fromTo` from it (`enter()` in `_headings.ts`); the smoke
+  test guards it.
+- Both sources count a heading asked for by name in the deal, so the
+  bare heading after it could repeat its move: `split-cycle` deals it
+  the next one.
 
 Fixed in the port (phase 1):
 

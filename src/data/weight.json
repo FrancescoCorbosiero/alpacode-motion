@@ -103,38 +103,38 @@
       "total": 55158
     },
     "split-blur": {
-      "min": 808,
-      "gzip": 493,
+      "min": 900,
+      "gzip": 543,
       "needs": [
         "gsap",
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55287
+      "total": 55330
     },
     "split-chars": {
-      "min": 777,
-      "gzip": 467,
+      "min": 857,
+      "gzip": 510,
       "needs": [
         "gsap",
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55262
+      "total": 55301
+    },
+    "split-cycle": {
+      "min": 1150,
+      "gzip": 686,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55449
     },
     "split-lines": {
-      "min": 777,
-      "gzip": 465,
-      "needs": [
-        "gsap",
-        "ScrollTrigger",
-        "SplitText"
-      ],
-      "total": 55265
-    },
-    "split-pop": {
-      "min": 818,
-      "gzip": 497,
+      "min": 847,
+      "gzip": 504,
       "needs": [
         "gsap",
         "ScrollTrigger",
@@ -142,25 +142,35 @@
       ],
       "total": 55300
     },
-    "split-wipe": {
-      "min": 850,
-      "gzip": 502,
+    "split-pop": {
+      "min": 977,
+      "gzip": 576,
       "needs": [
         "gsap",
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55298
+      "total": 55355
+    },
+    "split-wipe": {
+      "min": 905,
+      "gzip": 538,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55331
     },
     "split-words": {
-      "min": 794,
-      "gzip": 478,
+      "min": 877,
+      "gzip": 518,
       "needs": [
         "gsap",
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55277
+      "total": 55315
     }
   }
 }

@@ -1,0 +1,68 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<!-- No variant asked: dealt lines, wipe, words, blur, chars, and round again -->
+<h2 data-split>Ogni sezione racconta una cosa sola.</h2>
+<h2 data-split>Due sezioni vicine non ripetono la stessa mossa.</h2>
+<!-- Asked for by name: it plays wipe, and takes its turn -->
+<h2 data-split="wipe">Questo titolo sceglie da sé.</h2>`;
+---
+
+<HeadingDemo
+  id="split-cycle"
+  split=""
+  markup={markup}
+  look="Sette titoli, e solo il sesto chiede una variante. Gli altri ricevono la mossa del loro turno; il settimo salta quella del vicino."
+  blocks={[
+    {
+      kicker: "Primo",
+      note: "riceve lines",
+      title: "Ogni sezione racconta una cosa sola.",
+      text: "Il titolo non chiede una variante: il ciclo gli dà la prima del giro, le righe che salgono.",
+      xl: true,
+    },
+    {
+      kicker: "Secondo",
+      note: "riceve wipe",
+      title: "Due sezioni vicine non ripetono la stessa mossa.",
+      text: "Il secondo riceve la successiva: le righe si scoprono da sinistra.",
+      side: true,
+    },
+    {
+      kicker: "Terzo",
+      note: "riceve words",
+      title: "Il giro va avanti da solo, titolo dopo titolo.",
+      text: "Nessuna variante da scegliere a mano: un titolo con data-split, o una classe che il sito mappa sul ciclo, e la pagina varia da sé.",
+      xl: true,
+    },
+    {
+      kicker: "Quarto",
+      note: "riceve blur",
+      title: "Ogni mossa aspetta il suo turno.",
+      text: "Il quarto va a fuoco salendo. Il mazzo sono le varianti che il sito ha copiato, nell'ordine che dice il ciclo.",
+      side: true,
+    },
+    {
+      kicker: "Quinto",
+      note: "riceve chars",
+      title: "Corto, a lettere.",
+      text: "Le lettere toccano solo ai titoli brevi: oltre i ventisei caratteri, a questo turno, il ciclo dà le parole.",
+      xl: true,
+    },
+    {
+      kicker: "Sesto",
+      note: "chiede wipe",
+      split: "wipe",
+      title: "Questo titolo sceglie da sé.",
+      text: "Chi chiede una variante per nome la ottiene, e il giro conta anche il suo turno.",
+      side: true,
+    },
+    {
+      kicker: "Settimo",
+      note: "riceve words, non wipe",
+      title: "E il vicino non la ripete.",
+      text: "Al settimo toccherebbe wipe, la stessa mossa del titolo prima: il ciclo gli dà la successiva.",
+      xl: true,
+    },
+  ]}
+/>

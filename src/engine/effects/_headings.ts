@@ -28,6 +28,22 @@ export interface HeadingMove {
   play: (split: SplitText, scrollTrigger: ScrollTrigger.Vars) => gsap.core.Animation;
 }
 
+/** A move's pieces wait in their start state from init, and the tween
+ *  plays them from it as the heading enters. The start is set here, not
+ *  left to a staggered from(): GSAP re-renders a from() tween's start as
+ *  it begins, and when several headings start at once (a jump down the
+ *  page) the pieces whose turn hadn't come could show their end state
+ *  until it did — a flash, intermittent, in both sources. */
+export function enter(
+  pieces: Element[],
+  from: gsap.TweenVars,
+  to: gsap.TweenVars,
+  scrollTrigger: ScrollTrigger.Vars,
+): gsap.core.Tween {
+  gsap.set(pieces, { ...from });
+  return gsap.fromTo(pieces, { ...from }, { ...to, immediateRender: false, scrollTrigger });
+}
+
 /** Split a heading and play its move as it enters. */
 export function splitHeading(el: HTMLElement, move: HeadingMove): void {
   if (skipIntro(el) || inFirstView(el)) return;

@@ -44,7 +44,7 @@ the session's branch.
 > docs/status.md, poi segui la skill add-effect.
 >
 > Fase 2a: porta le voci del tier 1 nelle sezioni Headings, Reveals e The
-> pen (31 voci). Dove due fonti fanno la stessa mossa, metti le varianti
+> pen (32 voci). Dove due fonti fanno la stessa mossa, metti le varianti
 > una accanto all'altra nella demo e scegli il default (docs/decisions.md,
 > Pending defaults): scrivi cosa hai scelto e perché.
 

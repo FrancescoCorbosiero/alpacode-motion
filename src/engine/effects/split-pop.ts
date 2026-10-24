@@ -12,7 +12,7 @@
    ============================================================ */
 import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { addMove, splitHeading, type HeadingMove } from "./_headings";
+import { addMove, enter, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="pop"]';
 
@@ -27,17 +27,16 @@ const EASE = "back.out(2)"; // the spring: it overshoots, then settles (A back.o
 /** The move, also for headings dealt it in turn. */
 export const move: HeadingMove = {
   split: { type: "words,lines" },
-  play: (split, scrollTrigger) =>
-    gsap.from(split.words, {
-      opacity: 0,
-      y: RISE,
-      scale: SCALE,
-      rotation: () => gsap.utils.random(-TILT, TILT),
-      duration: DURATION,
-      ease: EASE,
-      stagger: STAGGER,
+  play: (split, scrollTrigger) => {
+    // One tilt per word, the same for the wait and the start of the move.
+    const tilts = split.words.map(() => gsap.utils.random(-TILT, TILT));
+    return enter(
+      split.words,
+      { opacity: 0, y: RISE, scale: SCALE, rotation: (i: number) => tilts[i] ?? 0 },
+      { opacity: 1, y: 0, scale: 1, rotation: 0, duration: DURATION, ease: EASE, stagger: STAGGER },
       scrollTrigger,
-    }),
+    );
+  },
 };
 addMove("pop", hook, move);
 

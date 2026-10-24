@@ -1,0 +1,9 @@
+/* ============================================================
+   split-cycle.
+
+   Reduced motion: nothing is split; every heading is plain text, laid
+   out by the site's own CSS. Without JS, the same.
+
+   No rules of its own: the CSS of each move it deals comes with that
+   move's entry (split-lines' and split-words' masks).
+   ============================================================ */

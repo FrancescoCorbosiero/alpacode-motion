@@ -38,7 +38,7 @@ Where the work stands. Updated at the end of every session.
 | --- | --- | --- |
 | 0 | catalog, decisions, weight, prompts | done, 2026-10-23 |
 | 1 | the gallery (Astro), the core, the effect contract, the weight and screenshot scripts; `reveal`, `split-lines`, `scrub` end to end; the add-effect skill | done, 2026-10-23 |
-| 2a | tier 1: headings, reveals, the pen (31) | all `demo`; their pending defaults decided |
+| 2a | tier 1: headings, reveals, the pen (32) | all `demo`; their pending defaults decided |
 | 2b | tier 1: scroll-linked, pointer, functions (31) | all `demo`; their porting notes fixed |
 | 3 | tier 2 (8), on the sticky stage where the demo agrees (D6) | all `demo`, every stage fits 390×664 |
 | 4 | tier 3: recipes for the 12 landing scenes, the alpaca's rig and moves, demos for a few | recipes written, demos up |
