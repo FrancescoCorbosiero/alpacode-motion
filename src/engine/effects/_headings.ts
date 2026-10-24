@@ -3,7 +3,10 @@
    every split-* entry: SplitText with autoSplit (it splits again when
    fonts or widths change, and hands the new split the tween's
    progress), one ScrollTrigger at top 88%, once; skipped in the first
-   view and inside CSS intros. Each entry brings its own split and tween.
+   view and inside CSS intros. Each entry brings its own split and tween,
+   and adds it to the deck as it loads: split-cycle deals a heading that
+   doesn't ask for a variant the next move in turn from the deck, so the
+   deck is exactly the split-* entries a site copied.
    Not an entry: copied with whichever split-* entry needs it.
    Sources: A src/lib/motion.ts:584; C src/scripts/motion.ts:415.
    ============================================================ */
@@ -32,7 +35,25 @@ export function splitHeading(el: HTMLElement, move: HeadingMove): void {
     ...move.split,
     linesClass: "split-line",
     wordsClass: "split-word",
+    charsClass: "split-char",
     autoSplit: true,
     onSplit: (self) => move.play(self, { trigger: el, start: START, once: true }),
   });
 }
+
+/** A move in the deck: its name (the value of data-split that asks for
+ *  it) and the hook its entry answers to. */
+export interface DeckMove {
+  hook: string;
+  move: HeadingMove;
+}
+
+const deck = new Map<string, DeckMove>();
+
+/** Each split-* entry adds its move as it loads. */
+export function addMove(name: string, hook: string, move: HeadingMove): void {
+  deck.set(name, { hook, move });
+}
+
+/** The moves the site copied, by name. */
+export const movesOf = (): ReadonlyMap<string, DeckMove> => deck;

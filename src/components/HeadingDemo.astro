@@ -1,0 +1,117 @@
+---
+/* The headings' demos: a few sections, each a kicker, a heading that
+   moves and a line of text, in two layouts (a big heading on its own, a
+   heading beside its text). Only the heading moves: one move per
+   section, the rest of the page stays still. */
+import Entry from "./Entry.astro";
+
+interface Block {
+  kicker: string;
+  title: string;
+  text: string;
+  /** The heading's data-split: the page's variant unless given; "" asks for nothing. */
+  split?: string;
+  /** A short note beside the kicker, as code (the cycle: what the heading gets). */
+  note?: string;
+  /** The big heading on its own. */
+  xl?: boolean;
+  /** The heading beside its text. */
+  side?: boolean;
+}
+
+interface Props {
+  id: string;
+  /** The variant every block asks for, unless a block says otherwise. */
+  split: string;
+  markup: string;
+  look: string;
+  blocks: Block[];
+}
+const { id, split, markup, look, blocks } = Astro.props;
+---
+
+<Entry id={id} markup={markup} look={look}>
+  <section class="hd">
+    {
+      blocks.map((b) => (
+        <div class:list={["wrap hd-block", { "hd-block--side": b.side }]}>
+          <p class="hd-kicker">
+            {b.kicker}
+            {b.note && <code class="hd-note">{b.note}</code>}
+          </p>
+          <h2 class:list={["hd-title", { "hd-title--xl": b.xl }]} data-split={b.split ?? split}>
+            {b.title}
+          </h2>
+          <p class="hd-text">{b.text}</p>
+        </div>
+      ))
+    }
+  </section>
+</Entry>
+
+<style>
+  .hd {
+    display: grid;
+    gap: clamp(120px, 24vh, 260px);
+    padding-block: clamp(80px, 14vh, 160px) clamp(120px, 20vh, 220px);
+  }
+  .hd-block {
+    display: grid;
+    gap: 24px;
+  }
+  .hd-block--side {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(32px, 6vw, 96px);
+    align-items: end;
+  }
+  .hd-block--side .hd-kicker {
+    grid-column: 1 / -1;
+  }
+  .hd-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .hd-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .hd-note {
+    font-weight: 400;
+    color: var(--mute-2);
+  }
+  .hd-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 4.8vw, 72px);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .hd-title--xl {
+    max-width: 9.5em;
+    font-size: clamp(44px, 9.6vw, 152px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .hd-text {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.6;
+    color: var(--mute-2);
+  }
+  @media (max-width: 860px) {
+    .hd-block--side {
+      grid-template-columns: 1fr;
+      row-gap: 24px;
+    }
+  }
+</style>

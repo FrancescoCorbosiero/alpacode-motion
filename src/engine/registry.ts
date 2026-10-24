@@ -14,8 +14,9 @@ import type { Effect, LazyEffect } from "./core/kit";
 import * as reveal from "./effects/reveal";
 import * as scrub from "./effects/scrub";
 import * as splitLines from "./effects/split-lines";
+import * as splitWipe from "./effects/split-wipe";
 
-export const effects: Effect[] = [splitLines, reveal, scrub];
+export const effects: Effect[] = [splitLines, splitWipe, reveal, scrub];
 
 export const lazy: LazyEffect[] = [
   // { hook: "[data-mark]", load: () => import("./effects/mark-circle") },

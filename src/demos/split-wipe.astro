@@ -1,0 +1,26 @@
+---
+import HeadingDemo from "../components/HeadingDemo.astro";
+
+const markup = `<h2 data-split="wipe">Si apre nel verso in cui si legge.</h2>`;
+---
+
+<HeadingDemo
+  id="split-wipe"
+  split="wipe"
+  markup={markup}
+  look="Ogni riga si scopre da sinistra a destra, una dopo l'altra. A fine corsa il ritaglio sparisce e la riga torna testo."
+  blocks={[
+    {
+      kicker: "Uno",
+      title: "Si apre nel verso in cui si legge.",
+      text: "Ogni riga si scopre da sinistra a destra, una dopo l'altra: l'occhio arriva sulla parola mentre la parola arriva.",
+      xl: true,
+    },
+    {
+      kicker: "Due",
+      title: "Finito il movimento, il ritaglio se ne va e resta il testo.",
+      text: "Il ritaglio esiste solo mentre la riga si apre: poi la riga torna testo semplice, con gli stili del sito, selezionabile e leggibile come prima.",
+      side: true,
+    },
+  ]}
+/>

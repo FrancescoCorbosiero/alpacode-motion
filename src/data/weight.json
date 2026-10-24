@@ -1,5 +1,5 @@
 {
-  "measured": "2026-10-23",
+  "measured": "2026-10-24",
   "tools": {
     "esbuild": "0.27.7",
     "gsap": "3.15.0",
@@ -103,14 +103,24 @@
       "total": 55158
     },
     "split-lines": {
-      "min": 681,
-      "gzip": 422,
+      "min": 777,
+      "gzip": 465,
       "needs": [
         "gsap",
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55222
+      "total": 55265
+    },
+    "split-wipe": {
+      "min": 850,
+      "gzip": 502,
+      "needs": [
+        "gsap",
+        "ScrollTrigger",
+        "SplitText"
+      ],
+      "total": 55298
     }
   }
 }

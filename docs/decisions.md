@@ -140,6 +140,28 @@ docs; demo copy is Italian (`lang="it"`) and speaks about the catalog's
 own craft, so it stays neutral (O1). Speaking each site's voice is O5.
 Pages live at `/<id>/`, the core at `/core/`; `noindex` until O1.
 
+**D18 — The catalog's engine runs the sites** (owner, 2026-10-24).
+alpacode.it and its subdomains (studio.alpacode.it first, more later)
+drop their own engines and copy this one — copied, never installed (D1
+holds) — and adopt the canonical `data-*` hooks: O4 is decided, yes. A
+site's own classes stay only where it maps them, in its `config.ts`.
+Every entry a site uses is ported here end to end before it switches.
+
+**D19 — Defaults: A's tuning** (phase 2, 2026-10-24). With alpacode as
+the consumer (D18), where the sources differ A's tuning is the default;
+C's (or FAST's) becomes a setting or a per-element variant (D9). The
+demo shows the variants side by side where a variant costs one
+attribute; otherwise the setting's comment names the other source's
+value, so a site in that voice tunes it once when copying. Each choice
+and its reason:
+
+| Entry | Default (A) | The other source | Side by side | Why |
+| --- | --- | --- | --- | --- |
+| reveal | 44px, 1.1s | C 44px, 1.0s; FAST 34px, 0.8s | no | the consumer's; FAST's shorter rise is FAST's voice, two settings |
+| split-lines | stagger 0.085s | C 0.09s | no | a two-hundredth of a second doesn't show |
+| scrub | lit by `bottom 48%` | C `bottom 50%` | no | the consumer's; two points of screen don't show |
+| split-wipe | 1.3s | C 1.2s | no | a tenth of a second doesn't show |
+
 ## Naming registry
 
 The renames and the conflicts found while indexing. "Now" is the
@@ -181,17 +203,11 @@ canonical name.
 
 ## Pending defaults
 
-Decided in phase 2 with the variants side by side in the demo.
-
-Phase 1 ported `reveal`, `split-lines` and `scrub` with A's values; 2a
-confirms or changes them with the variants side by side.
+Decided in phase 2 (D19), each with its entry; a decided row moves to
+D19's table.
 
 | Entry | A | C (or FAST) |
 | --- | --- | --- |
-| reveal | 44px, 1.1s | C 44px, 1.0s; FAST 34px, 0.8s |
-| split-lines | stagger 0.085s | 0.09s |
-| scrub | lit by `bottom 48%` | `bottom 50%` |
-| split-wipe | 1.3s | 1.2s |
 | split cycle | lines, wipe, words, blur, chars | lines, pop, wipe, chars (drop), blur |
 | pop | ±90° alternating, delay 0.15s | −160° |
 | clip | square, inner zoom from 1.16 | rounded 24px, no inner zoom |
@@ -214,8 +230,6 @@ For the owner.
   (docs/weight.md).
 - **O3 — Lenis by default on new sites?** Both sites use it; it costs
   5.4 KB gzip and a little main-thread time on every frame.
-- **O4 — Do the sites adopt the canonical names?** Default: no refactor;
-  a site adopts them when an effect is touched.
 - **O5 — The demo theme.** Neutral, or switchable between the brands
   (studio, FAST, C) to show an effect in each voice.
 - **O6 — Astro 6 for the gallery** (assumed, D11). Every 6.x release

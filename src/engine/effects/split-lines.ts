@@ -3,12 +3,13 @@
    Markup: data-split="lines" on a heading.
    Below the fold only, once, as the heading enters (_headings.ts). The
    lines are measured where they wrap, so the move follows the layout
-   at every width and splits again when the fonts arrive.
+   at every width and splits again when the fonts arrive. It is also in
+   the deck split-cycle deals from: the first move of the cycle.
    Sources: A src/lib/motion.ts:573; C src/scripts/motion.ts:410.
    ============================================================ */
 import { gsap } from "gsap";
 import type { Kit } from "../core/kit";
-import { splitHeading, type HeadingMove } from "./_headings";
+import { addMove, splitHeading, type HeadingMove } from "./_headings";
 
 export const hook = '[data-split="lines"]';
 
@@ -24,6 +25,7 @@ export const move: HeadingMove = {
   play: (split, scrollTrigger) =>
     gsap.from(split.lines, { yPercent: RISE, duration: DURATION, ease: EASE, stagger: STAGGER, scrollTrigger }),
 };
+addMove("lines", hook, move);
 
 export function init(kit: Kit): void {
   kit.query(hook).forEach((el) => splitHeading(el, move));

@@ -2,7 +2,7 @@
 
 What motion costs a page. Measured with `npm run weight` (esbuild 0.27.7:
 bundled, minified, ESM; gzip -9), gsap 3.15.0 and lenis 1.3.27, on
-2026-10-23; the script rewrites the tables marked as its own. Gzip is
+2026-10-24; the script rewrites the tables marked as its own. Gzip is
 what travels; the browser parses and runs the minified size, about three
 times as much. 1 KB = 1000 bytes.
 
@@ -68,7 +68,8 @@ Weight column of catalog.md.
 | the core (all 13 pieces) | 2.3 KB | 5.2 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
 | `reveal` | 528 B | 974 B | gsap, ScrollTrigger | 52.2 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
-| `split-lines` | 422 B | 681 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
+| `split-lines` | 465 B | 777 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `split-wipe` | 502 B | 850 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
 <!-- /weight:ported -->
 
 "Its own code" is the module bundled alone, the libraries and the core
