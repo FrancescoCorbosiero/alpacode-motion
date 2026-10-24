@@ -163,6 +163,8 @@ and its reason:
 | split-wipe | 1.3s | C 1.2s | no | a tenth of a second doesn't show |
 | split-pop | ±10°, `back.out(2)` | C ±12°, `back.out(2.2)` | no | the consumer's; two degrees and a touch of spring don't read as another move |
 | split-cycle | lines, wipe, words, blur, chars | C lines, pop, wipe, drop, blur | no | the consumer's; C's deck needs split-drop, not ported yet: one setting (`CYCLE`) when it is |
+| clip | square, image from 1.16, insets 12% 5% | C rounded 24px, image still, insets 14% 8% | yes | the consumer's; C's corners and its still image are one attribute each (`round`, `still`), its insets two settings |
+| pop | ±90° alternating, 0.15s after its trigger | C −160°, at once | yes | the consumer's; C's angle is one attribute (`data-pop="-160"`) |
 
 ## Naming registry
 
@@ -210,8 +212,6 @@ D19's table.
 
 | Entry | A | C (or FAST) |
 | --- | --- | --- |
-| pop | ±90° alternating, delay 0.15s | −160° |
-| clip | square, inner zoom from 1.16 | rounded 24px, no inner zoom |
 | tilt | 5° | 10–12° plus a lift |
 | magnetic | 16% of its box, leans 12° | 35% of the pointer's offset, no lean |
 | marquee | 70 (xl) / 56 px/s | 60 px/s |

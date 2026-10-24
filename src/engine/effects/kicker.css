@@ -1,0 +1,16 @@
+/* ============================================================
+   kicker.
+
+   Reduced motion: every label and its strut are there, the strut at
+   its full length (--kick defaults to 1). Without JS, the same.
+
+   The strut is the label's ::before, scaled by --kick from its left
+   edge; its look (width, height, colour) is the site's. alpacode's
+   .sec-num, .label and .eyebrow already have this rule (A base.css).
+
+   Sources: A src/styles/base.css:104.
+   ============================================================ */
+[data-kicker]::before {
+  transform: scaleX(var(--kick, 1));
+  transform-origin: left center;
+}

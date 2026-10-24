@@ -1,0 +1,84 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<li>
+  <span class="strut" data-strut></span>
+  <h3>Il modulo</h3>
+  <p>…</p>
+</li>`;
+
+const steps = [
+  ["Il modulo", "L'effetto in un file: il suo hook, le impostazioni in cima, init che lo costruisce sulla pagina."],
+  ["Il suo CSS", "Lo stato finale per chi riduce il movimento, e solo le regole che servono all'effetto."],
+  ["La prova", "La demo, il peso misurato, le schermate a due larghezze: senza, la voce non è pronta."],
+];
+---
+
+<Entry id="strut" markup={markup} look="Le barre si disegnano da sinistra mentre i passi entrano; il testo sotto resta fermo.">
+  <section class="st">
+    <div class="wrap">
+      <ol class="st-steps">
+        {
+          steps.map(([title, text]) => (
+            <li class="st-step">
+              <span class="st-strut" data-strut />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <span class="st-rule" data-strut></span>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .st {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .st-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 56px);
+    margin: 0 0 clamp(72px, 12vh, 140px);
+    padding: 0;
+    list-style: none;
+  }
+  .st-step {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+  }
+  .st-strut {
+    display: block;
+    width: 88px;
+    height: var(--strut);
+    margin-bottom: 10px;
+    background: var(--blue);
+  }
+  .st-step h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.2vw, 32px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+  .st-step p {
+    margin: 0;
+    max-width: 26em;
+    color: var(--mute-2);
+    line-height: 1.55;
+  }
+  .st-rule {
+    display: block;
+    height: 2px;
+    background: var(--ink);
+  }
+  @media (max-width: 760px) {
+    .st-steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

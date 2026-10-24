@@ -1,0 +1,106 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<span class="icon" data-pop aria-hidden="true"><svg>…</svg></span>
+<!-- one way, from −160° (cinofila's) -->
+<span class="icon" data-pop="-160" aria-hidden="true"><svg>…</svg></span>`;
+
+const icons = [
+  ["Il peso", '<rect x="7" y="7" width="26" height="26"/>'],
+  ["Il costo", '<circle cx="20" cy="20" r="13"/>'],
+  ["Le fonti", '<path d="M20 6 34 32H6Z"/>'],
+  ["Lo stato", '<path d="M20 6v28M6 20h28"/>'],
+];
+const rows = [
+  { who: "alpacode", note: "±90°, un'icona da un lato e la successiva dall'altro", pop: "" },
+  { who: "cinofila", note: "−160°, tutte dallo stesso lato", pop: "-160" },
+];
+---
+
+<Entry
+  id="pop"
+  markup={markup}
+  look="Le icone crescono dal nulla girando su sé stesse e atterrano su una molla. Sopra si alternano i lati; sotto ruotano tutte da −160°."
+  attributes={[{ name: "data-pop", value: "-160", what: "The angle it twists in from, the same for every icon (cinofila's), instead of ±90° alternating." }]}
+>
+  <section class="pp">
+    {
+      rows.map((row) => (
+        <div class="wrap pp-row">
+          <p class="pp-who">
+            <strong>{row.who}</strong> {row.note}
+          </p>
+          <ul class="pp-icons">
+            {icons.map(([label, shape]) => (
+              <li>
+                <span class="pp-icon" data-pop={row.pop} aria-hidden="true">
+                  <svg viewBox="0 0 40 40" set:html={shape} />
+                </span>
+                <span class="pp-label">{label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+</Entry>
+
+<style>
+  .pp {
+    display: grid;
+    gap: clamp(96px, 16vh, 180px);
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .pp-row {
+    display: grid;
+    gap: 28px;
+  }
+  .pp-who {
+    margin: 0;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+  .pp-who strong {
+    color: var(--ink);
+  }
+  .pp-icons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(16px, 2.4vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pp-icons li {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    padding: clamp(20px, 2.6vw, 32px);
+    border: 1px solid var(--rule);
+  }
+  .pp-icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    background: var(--blue);
+    color: #fff;
+  }
+  .pp-icon svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+  }
+  .pp-label {
+    font-family: var(--display);
+    font-size: clamp(18px, 1.6vw, 22px);
+  }
+  @media (max-width: 760px) {
+    .pp-icons {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

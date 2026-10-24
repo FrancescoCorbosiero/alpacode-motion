@@ -1,0 +1,14 @@
+/* ============================================================
+   clip.
+
+   Reduced motion: every photo is simply there, its frame whole and its
+   image at its own scale. Without JS, the same: the script sets the
+   clip at init, never the CSS.
+
+   The frame clips its image, which settles from a little larger.
+
+   Sources: A src/lib/motion.ts:679; C src/scripts/motion.ts:482.
+   ============================================================ */
+[data-clip] {
+  overflow: clip;
+}

@@ -1,0 +1,86 @@
+---
+import Entry from "../components/Entry.astro";
+import { plate } from "./_shared/plates";
+
+const markup = `<figure data-clip>
+  <img src="…" alt="…" width="1200" height="900" />
+</figure>
+<!-- rounded corners while it opens, the image unzoomed -->
+<figure data-clip="round still">…</figure>`;
+---
+
+<Entry
+  id="clip"
+  markup={markup}
+  look="La prima si apre ad angoli vivi e l'immagine si assesta da un poco più grande; la seconda si apre ad angoli tondi e l'immagine resta ferma."
+  attributes={[
+    { name: "data-clip", value: "round", what: "Opens with rounded corners (cinofila's)." },
+    { name: "data-clip", value: "still", what: "The image doesn't settle from a zoom: when it has its own motion (cinofila's parallax)." },
+  ]}
+>
+  <section class="cl">
+    <div class="wrap cl-grid">
+      <figure class="cl-item">
+        <div class="cl-frame" data-clip>
+          <img src={plate(7)} alt="Una tavola in stile cianografia: un cerchio, il suo centro blu, un riquadro." width="1200" height="900" />
+        </div>
+        <figcaption><strong>alpacode</strong> Angoli vivi, l'immagine si assesta da 1,16.</figcaption>
+      </figure>
+      <figure class="cl-item">
+        <div class="cl-frame" data-clip="round still">
+          <img src={plate(19)} alt="Una tavola in stile cianografia: un cerchio, il suo centro blu, un riquadro." width="1200" height="900" />
+        </div>
+        <figcaption><strong>cinofila</strong> Angoli tondi mentre si apre, l'immagine ferma.</figcaption>
+      </figure>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .cl {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .cl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    align-items: start;
+  }
+  .cl-item {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+  .cl-item:nth-child(2) {
+    margin-top: clamp(48px, 12vh, 140px);
+  }
+  .cl-frame {
+    aspect-ratio: 4 / 3;
+    background: var(--paper-2);
+  }
+  .cl-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cl-item figcaption {
+    display: grid;
+    gap: 4px;
+    max-width: 30em;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--mute-2);
+  }
+  .cl-item figcaption strong {
+    color: var(--ink);
+  }
+  @media (max-width: 720px) {
+    .cl-grid {
+      grid-template-columns: 1fr;
+      gap: clamp(72px, 14vh, 120px);
+    }
+    .cl-item:nth-child(2) {
+      margin-top: 0;
+    }
+  }
+</style>

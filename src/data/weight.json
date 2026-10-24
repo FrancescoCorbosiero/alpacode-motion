@@ -78,11 +78,38 @@
     }
   ],
   "core": {
-    "min": 5225,
-    "gzip": 2314,
-    "total": 51852
+    "min": 5291,
+    "gzip": 2349,
+    "total": 51880
   },
   "entries": {
+    "clip": {
+      "min": 975,
+      "gzip": 569,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52335
+    },
+    "kicker": {
+      "min": 678,
+      "gzip": 398,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52163
+    },
+    "pop": {
+      "min": 511,
+      "gzip": 370,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52171
+    },
     "reveal": {
       "min": 974,
       "gzip": 528,
@@ -90,7 +117,7 @@
         "gsap",
         "ScrollTrigger"
       ],
-      "total": 52233
+      "total": 52260
     },
     "scrub": {
       "min": 531,
@@ -100,7 +127,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55158
+      "total": 55183
     },
     "split-blur": {
       "min": 900,
@@ -110,7 +137,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55330
+      "total": 55356
     },
     "split-chars": {
       "min": 857,
@@ -120,7 +147,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55301
+      "total": 55326
     },
     "split-cycle": {
       "min": 1150,
@@ -130,7 +157,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55449
+      "total": 55479
     },
     "split-lines": {
       "min": 847,
@@ -140,7 +167,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55300
+      "total": 55326
     },
     "split-pop": {
       "min": 977,
@@ -150,7 +177,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55355
+      "total": 55386
     },
     "split-wipe": {
       "min": 905,
@@ -160,7 +187,7 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55331
+      "total": 55353
     },
     "split-words": {
       "min": 877,
@@ -170,7 +197,16 @@
         "ScrollTrigger",
         "SplitText"
       ],
-      "total": 55315
+      "total": 55339
+    },
+    "strut": {
+      "min": 443,
+      "gzip": 311,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52117
     }
   }
 }

@@ -1,0 +1,75 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<!-- its strut is the label's ::before, in the site's CSS -->
+<p class="kicker" data-kicker>Il metodo</p>
+<h2>Prima la storia, poi la mossa.</h2>`;
+
+const heads = [
+  ["Il metodo", "Prima la storia, poi la mossa.", "Che cosa deve capire chi legge? La risposta sceglie il movimento."],
+  ["Il costo", "Ogni effetto si pesa prima di spedirlo.", "Il peso del suo codice, e quello che fa a ogni fotogramma."],
+];
+---
+
+<Entry
+  id="kicker"
+  markup={markup}
+  look="L'etichetta appare mentre il suo tratto blu si disegna da sinistra; il titolo sotto resta fermo."
+>
+  <section class="kk">
+    {
+      heads.map(([kicker, title, text]) => (
+        <div class="wrap kk-head">
+          <p class="kk-kicker" data-kicker>
+            {kicker}
+          </p>
+          <h2 class="kk-title">{title}</h2>
+          <p class="kk-text">{text}</p>
+        </div>
+      ))
+    }
+  </section>
+</Entry>
+
+<style>
+  .kk {
+    display: grid;
+    gap: clamp(96px, 18vh, 200px);
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .kk-head {
+    display: grid;
+    gap: 20px;
+  }
+  .kk-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .kk-kicker::before {
+    content: "";
+    flex: none;
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .kk-title {
+    margin: 0;
+    max-width: 14em;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .kk-text {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.6;
+    color: var(--mute-2);
+  }
+</style>
