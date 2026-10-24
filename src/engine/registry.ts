@@ -50,4 +50,5 @@ export const lazy: LazyEffect[] = [
   { hook: '[data-scene="cases"]', load: () => import("./effects/cases") },
   { hook: '[data-scene="method"]', load: () => import("./effects/method") },
   { hook: '[data-scene="map"]', load: () => import("./effects/map") },
+  { hook: '[data-scene="meter"]', load: () => import("./effects/meter") },
 ];

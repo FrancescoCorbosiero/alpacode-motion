@@ -265,6 +265,16 @@
       ],
       "total": 52411
     },
+    "meter": {
+      "min": 1307,
+      "gzip": 694,
+      "needs": [
+        "gsap",
+        "ScrambleText",
+        "ScrollTrigger"
+      ],
+      "total": 56127
+    },
     "method": {
       "min": 2289,
       "gzip": 1143,

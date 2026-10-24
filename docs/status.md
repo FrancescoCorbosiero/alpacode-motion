@@ -14,7 +14,9 @@ page with neutral content (new plates: `site()`, `page()` in
   the canonical one: one frame for the list; C's pop and tilt are
   settings), `frame-scroll`, `flip-filter` (the first entry on Flip,
   lazy).
-- Tier 3, "The house's showcase (H)": `cases`, `method`, `map` (lazy).
+- Tier 3, "The house's showcase (H)": `cases`, `method`, `map` (lazy);
+  and `meter` (FAST's, now on Alpacode Studio's crash-course page),
+  the first of "Two more" ported (lazy, ScrambleText).
   The map's dots are worked out at build (`_shared/italy-dots.ts`, from
   the site's `src/lib/italy-dots.ts`).
 - Assumed, to validate: the stage hook `data-scene-stage` (the canonical

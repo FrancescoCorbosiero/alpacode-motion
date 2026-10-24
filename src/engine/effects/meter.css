@@ -1,0 +1,30 @@
+/* ============================================================
+   meter.
+
+   Reduced motion: the needle rests at the far end (its transform in
+   the markup), on the last beat's word; the beats read one after the
+   other. Without JS, the same.
+
+   Under .has-motion the wrapper is --len screens tall and its stage
+   ([data-scene-stage]) sticks; the beats share one place.
+
+   Sources: AF fast/src/styles/fast.css; H sites/studio/src/styles/studio.css.
+   ============================================================ */
+.has-motion [data-scene="meter"] {
+  height: calc(var(--len, 3) * 100svh);
+}
+.has-motion [data-scene="meter"] > [data-scene-stage] {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100svh;
+  overflow: hidden;
+}
+.has-motion [data-scene="meter"] [data-meter-beats] {
+  display: grid;
+  grid-template-areas: "beat";
+}
+.has-motion [data-scene="meter"] [data-meter-beat] {
+  grid-area: beat;
+}

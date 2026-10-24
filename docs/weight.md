@@ -86,6 +86,7 @@ Weight column of catalog.md.
 | `mark-highlight` | 632 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-strike` | 628 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-underline` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `meter` | 694 B | 1.3 KB | gsap, ScrambleText, ScrollTrigger | 56.1 KB |
 | `method` | 1.1 KB | 2.3 KB | gsap, ScrollTrigger | 52.8 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
