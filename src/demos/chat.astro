@@ -1,0 +1,103 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div class="screen" data-chat>
+  <p class="bubble bubble--in">…</p>
+  <p class="bubble bubble--out" data-chat-bubble>…</p>
+</div>`;
+---
+
+<Entry
+  id="chat"
+  markup={markup}
+  look="Tre puntini scrivono dove arriverà il messaggio, poi se ne vanno e la bolla si apre dal suo angolo, con una molla."
+>
+  <section class="ch">
+    <div class="wrap ch-grid">
+      <div class="ch-copy">
+        <h2 class="ch-title">Il messaggio, prima che parta</h2>
+        <p>
+          Un'anteprima mostra come arriverà un messaggio: prima i puntini di chi scrive, poi la bolla. I puntini li aggiunge
+          lo script e se ne vanno con la pagina; senza script, la bolla è già lì.
+        </p>
+      </div>
+      <div class="ch-phone">
+        <div class="ch-screen" data-chat>
+          <p class="ch-head">Il team</p>
+          <p class="ch-bubble ch-bubble--in">Hai la pagina della voce chat?</p>
+          <p class="ch-bubble ch-bubble--out" data-chat-bubble>Eccola: la demo, il markup da copiare e il suo peso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .ch {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .ch-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+  .ch-title {
+    margin: 0 0 16px;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .ch-copy p {
+    margin: 0;
+    max-width: 30em;
+    color: var(--mute-2);
+    line-height: 1.6;
+  }
+  .ch-phone {
+    padding: 14px;
+    background: var(--ink);
+  }
+  .ch-screen {
+    /* the dots sit where the sent message lands */
+    --chat-typing-top: 136px;
+    --chat-typing-right: 18px;
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 320px;
+    padding: 0 18px 24px;
+    background: var(--paper);
+  }
+  .ch-head {
+    margin: 0 -18px 8px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .ch-bubble {
+    max-width: 80%;
+    margin: 0;
+    padding: 12px 14px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .ch-bubble--in {
+    justify-self: start;
+    background: #fff;
+    border: 1px solid var(--rule);
+  }
+  .ch-bubble--out {
+    justify-self: end;
+    background: var(--blue-fill);
+    color: #fff;
+  }
+  @media (max-width: 760px) {
+    .ch-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

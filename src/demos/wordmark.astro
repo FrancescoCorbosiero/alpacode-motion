@@ -1,0 +1,103 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div class="wordmark" data-wordmark aria-hidden="true">
+  <span class="mask"><span data-wordmark-char>m</span></span>
+  <span class="mask"><span data-wordmark-char>o</span></span>
+  …
+  <span class="spot"><svg data-wordmark-mascot>…</svg></span>
+</div>
+<!-- the other variant: letters spring in, the mascot drops on them -->
+<div class="wordmark" data-wordmark="bounce" aria-hidden="true">…</div>`;
+
+const word = [..."motion"];
+const mascot = `<svg viewBox="0 0 40 46" aria-hidden="true"><rect x="2" y="12" width="36" height="34" fill="currentColor"/><rect x="2" y="2" width="22" height="6" fill="currentColor"/></svg>`;
+---
+
+<Entry
+  id="wordmark"
+  markup={markup}
+  look="Sopra, le lettere salgono dalle loro maschere e il segno sale da dietro la t un attimo dopo; sotto, saltano su inclinate e il segno ci cade sopra."
+  attributes={[
+    { name: "data-wordmark", value: "bounce", what: "Letters jump up tilted at random and spring in; the mascot drops onto them (cinofila's). Default: `rise`." },
+    { name: "data-wordmark-char", value: "—", what: "Each letter. For `rise`, in a clip of its own (an `overflow: clip` wrapper)." },
+    { name: "data-wordmark-mascot", value: "—", what: "The mascot, if any: for `rise`, in a clip of its own too, above the letters." },
+  ]}
+>
+  <section class="wm">
+    <div class="wrap wm-block">
+      <p class="wm-who"><strong>alpacode</strong> rise</p>
+      <div class="wm-word" data-wordmark aria-hidden="true">
+        {word.map((ch) => <span class="wm-mask"><span class="wm-char" data-wordmark-char>{ch}</span></span>)}
+        <span class="wm-spot"><span class="wm-mascot" data-wordmark-mascot set:html={mascot} /></span>
+      </div>
+    </div>
+    <div class="wrap wm-block">
+      <p class="wm-who"><strong>cinofila</strong> bounce</p>
+      <div class="wm-word wm-word--bounce" data-wordmark="bounce" aria-hidden="true">
+        {word.map((ch) => <span class="wm-char" data-wordmark-char>{ch}</span>)}
+        <span class="wm-drop"><span class="wm-mascot" data-wordmark-mascot set:html={mascot} /></span>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .wm {
+    display: grid;
+    gap: clamp(120px, 22vh, 240px);
+    padding-block: clamp(120px, 20vh, 220px) clamp(96px, 14vh, 160px);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .wm-block {
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(48px, 8vh, 96px);
+  }
+  .wm-who {
+    margin: 0;
+    font-size: 15px;
+    color: var(--on-ink-mute);
+  }
+  .wm-who strong {
+    color: var(--on-ink);
+  }
+  .wm-word {
+    position: relative;
+    font-family: var(--display);
+    font-size: calc(100cqi / 3.9);
+    line-height: 0.74;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .wm-mask {
+    display: inline-block;
+    overflow: clip;
+    padding: 0.04em 0.06em 0.06em;
+    margin: -0.04em -0.06em -0.06em;
+  }
+  .wm-char {
+    display: inline-block;
+  }
+  /* The mascot stands on the t's top: it rises from behind it, so its
+     spot clips below its own foot. */
+  .wm-spot,
+  .wm-drop {
+    position: absolute;
+    bottom: calc(100% - 0.03em);
+    left: 1.6em;
+    width: 0.16em;
+    color: var(--blue);
+  }
+  .wm-spot {
+    clip-path: inset(-60% -50% 0 -50%);
+  }
+  .wm-mascot,
+  .wm-mascot :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

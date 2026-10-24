@@ -1,0 +1,10 @@
+/* ============================================================
+   draw.
+
+   Reduced motion: every stroke is drawn, whole. Without JS, the same:
+   the script hides the strokes at init, never the CSS.
+
+   No rules to copy. (alpacode's map drew its routes in CSS, from
+   [data-draw] and [data-drawn]: those rules go when it switches, or
+   they hide the routes by CSS.)
+   ============================================================ */

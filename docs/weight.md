@@ -66,8 +66,10 @@ Weight column of catalog.md.
 |  | Its own code, gzip | minified | Needs | A page with the core and only it |
 | --- | --- | --- | --- | --- |
 | the core (all 13 pieces) | 2.3 KB | 5.3 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
+| `chat` | 630 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `clip` | 569 B | 975 B | gsap, ScrollTrigger | 52.3 KB |
 | `count` | 600 B | 951 B | gsap, ScrollTrigger | 52.4 KB |
+| `draw` | 486 B | 764 B | gsap, ScrollTrigger | 52.3 KB |
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
@@ -82,6 +84,7 @@ Weight column of catalog.md.
 | `split-words` | 518 B | 877 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
 | `stamp` | 433 B | 642 B | gsap, ScrollTrigger | 52.2 KB |
 | `strut` | 311 B | 443 B | gsap, ScrollTrigger | 52.1 KB |
+| `wordmark` | 643 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 <!-- /weight:ported -->
 
 "Its own code" is the module bundled alone, the libraries and the core

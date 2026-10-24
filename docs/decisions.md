@@ -167,6 +167,9 @@ and its reason:
 | pop | ±90° alternating, 0.15s after its trigger | C −160°, at once | yes | the consumer's; C's angle is one attribute (`data-pop="-160"`) |
 | stamp | a 21° turn onto its rest, a 5px jolt, `top 55%` | C 45°, a damped −6/5/−3px shake, `top 70%` | no | the consumer's; C's are settings |
 | count | 1.8s, `power2.out` (C's) | A's sticker 1.1s, at page load | no | only C has the scroll counter; A's sticker is a page script in its hero |
+| wordmark | letters rise in their masks; the mascot rises | C letters bounce, tilted; the mascot drops | yes | the consumer's; C's is one attribute (`bounce`) |
+| chat | plays at every width | A from 1025px up | no | A's query is its layout's guard (the preview only exists there), not the move: one setting, `MEDIA` |
+| draw | 0.9s a stroke, 0.09s apart, 0.2s in, `top 75%` (A's map) | C one after another (0.75s apart), at once, `top 85%` | no | the consumer's; the demo shows A's two uses, the map and a signature (its slower stroke is the hook's value, `data-draw="1.6"`); C's sequence is a setting |
 
 ## Naming registry
 
@@ -218,7 +221,6 @@ D19's table.
 | magnetic | 16% of its box, leans 12° | 35% of the pointer's offset, no lean |
 | marquee | 70 (xl) / 56 px/s | 60 px/s |
 | rail | step i at i/n | step i at i/(n−1) |
-| wordmark | letters rise; mascot rises | letters bounce, tilted; mascot drops |
 | celebrate | brand bits (struts, squares, €, alpaca) | shapes (paws, hearts, bones) |
 
 ## Open

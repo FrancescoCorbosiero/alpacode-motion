@@ -1,0 +1,132 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<svg data-draw viewBox="0 0 600 360">
+  <line data-draw-path x1="300" y1="180" x2="120" y2="70" />
+  …
+</svg>
+<!-- one stroke, slower: a signature -->
+<svg data-draw="1.6" viewBox="0 0 320 90"><path d="…" /></svg>`;
+
+const center = { x: 300, y: 180 };
+const nodes = [
+  { x: 110, y: 74, label: "Titoli" },
+  { x: 300, y: 36, label: "Rivelazioni" },
+  { x: 490, y: 74, label: "La penna" },
+  { x: 490, y: 286, label: "Scorrimento" },
+  { x: 300, y: 324, label: "Puntatore" },
+  { x: 110, y: 286, label: "Funzioni" },
+];
+const sign =
+  "M8 62C22 30 40 18 52 40S58 78 74 60 96 22 108 44 116 74 132 58 156 30 170 48C178 58 184 66 196 54S214 30 230 46 250 70 268 50 296 34 312 40";
+---
+
+<Entry
+  id="draw"
+  markup={markup}
+  look="Le linee partono dal centro quasi insieme, ognuna dal suo inizio alla sua fine; sotto, la firma si scrive in un tratto solo, più lento."
+  attributes={[
+    { name: "data-draw", value: "1.6", what: "The seconds each stroke takes: a signature is slower than a route." },
+    { name: "data-draw-path", value: "—", what: "The strokes that draw, when not every path should (a map's routes, not its land)." },
+  ]}
+>
+  <section class="dr">
+    <div class="wrap dr-grid">
+      <figure class="dr-map">
+        <svg data-draw viewBox="0 0 600 360" role="img" aria-label="Il core al centro, collegato alle sei sezioni del tier 1">
+          {nodes.map((n) => <line class="dr-route" data-draw-path x1={center.x} y1={center.y} x2={n.x} y2={n.y} />)}
+          {nodes.map((n) => <circle class="dr-node" cx={n.x} cy={n.y} r="6" />)}
+          {
+            nodes.map((n) => (
+              <text class="dr-label" x={n.x} y={n.y < center.y ? n.y - 16 : n.y + 28} text-anchor="middle">
+                {n.label}
+              </text>
+            ))
+          }
+          <rect class="dr-core" x={center.x - 34} y={center.y - 16} width="68" height="32" />
+          <text class="dr-core-label" x={center.x} y={center.y + 6} text-anchor="middle">core</text>
+        </svg>
+        <figcaption>Le rotte disegnano, il resto della mappa no: sono loro a portare <code>data-draw-path</code>.</figcaption>
+      </figure>
+      <figure class="dr-sign">
+        <svg data-draw="1.6" viewBox="0 0 320 90" aria-hidden="true">
+          <path d={sign} />
+        </svg>
+        <span class="dr-sign-line" aria-hidden="true"></span>
+        <figcaption>Un tratto solo, in un secondo e sei decimi.</figcaption>
+      </figure>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .dr {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .dr-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: end;
+  }
+  .dr-map,
+  .dr-sign {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+  .dr-map svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .dr-route {
+    stroke: var(--blue);
+    stroke-width: 2;
+  }
+  .dr-node {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+  .dr-label {
+    font: 700 15px var(--sans);
+    fill: var(--ink);
+  }
+  .dr-core {
+    fill: var(--ink);
+  }
+  .dr-core-label {
+    font: 400 16px var(--display);
+    fill: var(--paper);
+  }
+  .dr-sign svg {
+    width: min(100%, 320px);
+    height: auto;
+    overflow: visible;
+  }
+  .dr-sign path {
+    fill: none;
+    stroke: var(--blue-deep);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dr-sign-line {
+    display: block;
+    height: 2px;
+    margin-top: -18px;
+    background: var(--ink);
+  }
+  figcaption {
+    font-size: 15px;
+    color: var(--mute-2);
+    line-height: 1.5;
+  }
+  @media (max-width: 860px) {
+    .dr-grid {
+      grid-template-columns: 1fr;
+      gap: clamp(72px, 12vh, 120px);
+    }
+  }
+</style>

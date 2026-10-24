@@ -1,0 +1,36 @@
+/* ============================================================
+   chat.
+
+   Reduced motion: the message is simply there in its bubble; no
+   typing dots. Without JS, the same.
+
+   The screen is the dots' positioning box; the dots sit where the
+   message will land (--chat-typing-top, --chat-typing-right). Square
+   dots: the studio has no round corners (round them for a site that
+   does). Their colours: --chat-typing-bg, --chat-typing-dot.
+
+   Sources: A src/styles/motion.css:370.
+   ============================================================ */
+[data-chat] {
+  position: relative;
+}
+.chat-typing {
+  position: absolute;
+  top: var(--chat-typing-top, 22px);
+  right: var(--chat-typing-right, 18px);
+  display: inline-flex;
+  gap: 5px;
+  padding: 12px 13px;
+  background: var(--chat-typing-bg, #d9e5fb);
+}
+.chat-typing i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--chat-typing-dot, #465065);
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-typing {
+    display: none;
+  }
+}

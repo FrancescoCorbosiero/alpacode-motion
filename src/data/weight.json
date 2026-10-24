@@ -83,6 +83,15 @@
     "total": 51880
   },
   "entries": {
+    "chat": {
+      "min": 1158,
+      "gzip": 630,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52374
+    },
     "clip": {
       "min": 975,
       "gzip": 569,
@@ -100,6 +109,15 @@
         "ScrollTrigger"
       ],
       "total": 52378
+    },
+    "draw": {
+      "min": 764,
+      "gzip": 486,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52259
     },
     "kicker": {
       "min": 678,
@@ -234,6 +252,15 @@
         "ScrollTrigger"
       ],
       "total": 52117
+    },
+    "wordmark": {
+      "min": 1198,
+      "gzip": 643,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52415
     }
   }
 }
