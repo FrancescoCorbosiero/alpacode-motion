@@ -1,0 +1,71 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<p>Il movimento <mark data-mark="highlight">racconta</mark>, non decora.</p>
+<!-- tied to the scroll: it grows and shrinks with it -->
+<p>… <mark data-mark="highlight" data-mark-scrub>una mossa sola</mark> …</p>`;
+---
+
+<Entry
+  id="mark-highlight"
+  markup={markup}
+  look="Sopra, l'evidenziatore passa sulle parole una volta, mentre entrano. Sotto, va al passo dello scroll: tornando su, si ritira."
+  attributes={[
+    { name: "data-mark-scrub", value: "—", what: "The sweep keeps pace with the scroll, back and forth (cinofila's)." },
+    { name: "data-mark-delay", value: "0.4", what: "Seconds to wait once it's on screen: a beat after its block." },
+  ]}
+>
+  <section class="mh">
+    <div class="wrap mh-block">
+      <p class="mh-who"><strong>Una volta</strong> mentre entra</p>
+      <p class="mh-text">
+        Ogni sezione dice una cosa sola, e il movimento <mark data-mark="highlight">la racconta invece di decorarla</mark>. La
+        penna dello studio passa solo sulle parole che <mark data-mark="highlight" data-mark-delay="0.45">chi legge deve
+        portarsi via</mark>.
+      </p>
+    </div>
+    <div class="wrap mh-block">
+      <p class="mh-who"><strong>Al passo</strong> dello scroll</p>
+      <p class="mh-text mh-text--xl">
+        Prima la storia, poi <mark data-mark="highlight" data-mark-scrub>una mossa sola</mark>, fatta bene, una volta.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mh {
+    display: grid;
+    gap: clamp(120px, 22vh, 240px);
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 30vh, 320px);
+  }
+  .mh-block {
+    display: grid;
+    gap: 22px;
+  }
+  .mh-who {
+    margin: 0;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+  .mh-who strong {
+    color: var(--ink);
+  }
+  .mh-text {
+    margin: 0;
+    max-width: 26em;
+    font-size: clamp(22px, 2.4vw, 34px);
+    line-height: 1.4;
+  }
+  .mh-text--xl {
+    max-width: 16em;
+    font-family: var(--display);
+    font-size: clamp(32px, 4.6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  .mh-text mark {
+    color: inherit;
+    background-color: transparent;
+  }
+</style>

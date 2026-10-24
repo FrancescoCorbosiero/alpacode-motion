@@ -8,7 +8,10 @@
    - the replay rebuilds a page; switching reduced motion on mid-visit
      puts everything in its end state, and off again rebuilds it;
    - scrollToTarget runs its `done` on arrival; the scroll lock stops
-     the page (and Lenis with it) until the overlay lets go.
+     the page (and Lenis with it) until the overlay lets go;
+   - the heading cycle deals in turn, and a jump doesn't flash letters;
+   - the lazy path: a plugin's chunk is fetched only by a page that has
+     its hook, built inside the page, and undone with it.
    Prints each check; any failure or page error fails the run.
    ============================================================ */
 import { launch, serve, watchErrors } from "./lib/browser.mjs";
@@ -20,6 +23,11 @@ const page = await context.newPage();
 let step = "start";
 const errors = watchErrors(page, () => step);
 let failed = 0;
+// The lazy chunks (registry.ts) and the plugin they bring.
+const lazyFetched = [];
+page.on("request", (r) => {
+  if (/\/_astro\/(mark-circle|mark-box|hand|_loops|DrawSVGPlugin)[.-]/.test(r.url())) lazyFetched.push(r.url());
+});
 
 function check(name, ok, detail = "") {
   console.log(`${ok ? "ok  " : "FAIL"} ${name}${detail ? ` (${detail})` : ""}`);
@@ -197,6 +205,42 @@ for (let k = 0; k < 4; k++) {
   });
 }
 check("after a jump, the letters waiting their turn stay hidden until it comes", stripped === 0, `${stripped} lost their start`);
+
+/* The lazy path: DrawSVG and the pen's drawn marks only where they are. */
+step = "lazy";
+check("pages without a lazy hook fetched no lazy chunk", lazyFetched.length === 0, lazyFetched.join(", "));
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("→ /mark-circle/ softly", (await navigate("/")) && (await navigate("/mark-circle/")));
+await settle(400);
+check(
+  "a page with the hook fetches its chunk and the plugin",
+  lazyFetched.some((u) => /mark-circle/.test(u)) && lazyFetched.some((u) => /DrawSVGPlugin/.test(u)),
+  `${lazyFetched.length} fetched`,
+);
+const circles = () =>
+  page.evaluate(() =>
+    [...document.querySelectorAll('[data-mark="circle"]')].map((m) => {
+      const svg = m.querySelector("svg");
+      return { box: svg.getAttribute("viewBox"), opacity: getComputedStyle(svg.querySelector("path")).opacity };
+    }),
+  );
+let marks = await circles();
+check("…built in the page: below the fold, its circles wait undrawn", marks.length > 0 && marks.every((m) => m.opacity === "0"));
+await page.evaluate(() => document.querySelector('[data-mark="circle"]').scrollIntoView({ block: "center" }));
+await settle(1800);
+marks = await circles();
+check(
+  "…and draws them as they enter, redrawn at the word's own size",
+  marks.some((m) => m.opacity === "1" && m.box !== "0 0 100 100"),
+  marks.map((m) => m.box).join(" | "),
+);
+await page.emulateMedia({ reducedMotion: "reduce" });
+await settle(400);
+marks = await circles();
+check("reduced motion: the markup's own circles, whole", marks.every((m) => m.opacity === "1" && m.box === "0 0 100 100"));
+await page.emulateMedia({ reducedMotion: "no-preference" });
+await settle(400);
 
 /* The core page: scroll to, with done; the scroll lock. */
 step = "core";

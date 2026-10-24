@@ -146,6 +146,16 @@
       ],
       "total": 52259
     },
+    "hand": {
+      "min": 953,
+      "gzip": 543,
+      "needs": [
+        "gsap",
+        "DrawSVG",
+        "ScrollTrigger"
+      ],
+      "total": 54045
+    },
     "kicker": {
       "min": 678,
       "gzip": 398,
@@ -163,6 +173,53 @@
         "ScrollTrigger"
       ],
       "total": 52409
+    },
+    "mark-box": {
+      "min": 2335,
+      "gzip": 1229,
+      "needs": [
+        "gsap",
+        "DrawSVG",
+        "ScrollTrigger"
+      ],
+      "total": 54641
+    },
+    "mark-circle": {
+      "min": 2770,
+      "gzip": 1445,
+      "needs": [
+        "gsap",
+        "DrawSVG",
+        "ScrollTrigger"
+      ],
+      "total": 54838
+    },
+    "mark-highlight": {
+      "min": 1090,
+      "gzip": 632,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52411
+    },
+    "mark-strike": {
+      "min": 1087,
+      "gzip": 628,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52408
+    },
+    "mark-underline": {
+      "min": 1090,
+      "gzip": 630,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52411
     },
     "pop": {
       "min": 511,

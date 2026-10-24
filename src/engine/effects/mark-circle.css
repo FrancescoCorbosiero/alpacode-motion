@@ -1,0 +1,35 @@
+/* ============================================================
+   mark-circle.
+
+   Reduced motion: the loop is round its word, as the markup draws it.
+   Without JS, the same.
+
+   The mark holds a word or two on one line; its SVG goes round it, a
+   little wider and taller, and its stroke (--mark-color, the landing's
+   accent) stays even however the drawing is stretched. The script
+   redraws it at the word's real size.
+
+   Sources: A src/styles/landing.css:217, :245.
+   ============================================================ */
+[data-mark="circle"] {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+[data-mark="circle"] > svg {
+  position: absolute;
+  inset: -0.22em -0.3em;
+  display: block;
+  width: calc(100% + 0.6em);
+  height: calc(100% + 0.44em);
+  overflow: visible;
+  pointer-events: none;
+}
+[data-mark="circle"] > svg path {
+  fill: none;
+  stroke: var(--mark-color, #3b72e9);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}

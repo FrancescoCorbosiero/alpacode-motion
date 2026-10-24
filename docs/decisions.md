@@ -171,6 +171,7 @@ and its reason:
 | chat | plays at every width | A from 1025px up | no | A's query is its layout's guard (the preview only exists there), not the move: one setting, `MEDIA` |
 | draw | 0.9s a stroke, 0.09s apart, 0.2s in, `top 75%` (A's map) | C one after another (0.75s apart), at once, `top 85%` | no | the consumer's; the demo shows A's two uses, the map and a signature (its slower stroke is the hook's value, `data-draw="1.6"`); C's sequence is a setting |
 | deal | 70px below, 30px aside, 5°, `back.out(1.5)` (FAST's) | — | no | the only source; FAST is alpacode's too |
+| the pen (marks) | 0.85s, `power2.out`, `top 82%`, 0.15s in | C's highlighter 1.1s, `power2.inOut`, `top 78%`; its scrub | yes (the scrub) | the consumer's; C's scrub is one attribute (`data-mark-scrub`); its mechanism, a custom property, became the port's |
 
 ## Naming registry
 

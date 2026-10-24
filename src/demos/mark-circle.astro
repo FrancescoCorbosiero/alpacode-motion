@@ -1,0 +1,50 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<span data-mark="circle">una volta<svg viewBox="0 0 100 100" preserveAspectRatio="none"
+  aria-hidden="true" focusable="false"><path d="M51 5 C 81 3, …" /></svg></span>`;
+const loop = "M51 5 C 81 3, 98 22, 97 50 C 96 79, 74 97, 48 96 C 20 95, 3 76, 4 48 C 5 22, 25 4, 57 8";
+const words = [
+  ["Il catalogo si copia, non si installa: ", "una volta", " per sito, il core; poi solo le voci che servono."],
+  ["Ogni voce porta il suo ", "peso", ", misurato prima che entri in una pagina."],
+  ["E le sue ", "schermate", ": a due larghezze, e senza movimento."],
+];
+---
+
+<Entry
+  id="mark-circle"
+  markup={markup}
+  look="Ogni cerchio viene ridisegnato alla misura vera della parola, un po' più di un giro, mai chiuso, e tracciato intorno. Uno diverso per parola, lo stesso a ogni visita."
+  attributes={[{ name: "data-mark-delay", value: "0.4", what: "Seconds to wait once it's on screen." }]}
+>
+  <section class="mc">
+    <div class="wrap mc-block">
+      {
+        words.map(([before, word, after]) => (
+          <p class="mc-text">
+            {before}
+            <span data-mark="circle">{word}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d={loop} /></svg></span>{after}
+          </p>
+        ))
+      }
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mc {
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 26vh, 280px);
+  }
+  .mc-block {
+    display: grid;
+    gap: clamp(36px, 6vh, 64px);
+  }
+  .mc-text {
+    margin: 0;
+    max-width: 22em;
+    font-family: var(--display);
+    font-size: clamp(26px, 3.2vw, 46px);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+</style>

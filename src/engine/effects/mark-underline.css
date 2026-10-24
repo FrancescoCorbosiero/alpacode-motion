@@ -1,0 +1,24 @@
+/* ============================================================
+   mark-underline.
+
+   Reduced motion: the line is under its words, whole. Without JS, the
+   same (--mark-sweep defaults to 100%).
+
+   The line: a stroke at the foot of each line, its colour --mark-color
+   (the landing's accent: A's --ac). It grows across through
+   --mark-sweep, the script's.
+
+   Sources: A src/styles/landing.css:234.
+   ============================================================ */
+[data-mark="underline"] {
+  background-image: linear-gradient(
+    transparent 88%,
+    var(--mark-color, #3b72e9) 88%,
+    var(--mark-color, #3b72e9) 97%,
+    transparent 97%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--mark-sweep, 100%) 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

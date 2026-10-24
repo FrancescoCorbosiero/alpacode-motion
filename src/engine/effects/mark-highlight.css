@@ -1,0 +1,27 @@
+/* ============================================================
+   mark-highlight.
+
+   Reduced motion: the band is behind its words, whole. Without JS, the
+   same (--mark-sweep defaults to 100%).
+
+   The band: a soft stroke across the lower half of each line, its
+   colour --mark-soft (the landing's accent, softened: A's --ac-soft).
+   It grows across through --mark-sweep, the script's. C's highlighter
+   (a band of 80% at 75%, rounded) is this rule with its own gradient.
+
+   Sources: A src/styles/landing.css:217, :229; C src/styles/sections.css:578.
+   ============================================================ */
+[data-mark="highlight"] {
+  padding-inline: 0.06em;
+  margin-inline: -0.06em;
+  background-image: linear-gradient(
+    transparent 56%,
+    var(--mark-soft, rgba(59, 114, 233, 0.26)) 56%,
+    var(--mark-soft, rgba(59, 114, 233, 0.26)) 92%,
+    transparent 92%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--mark-sweep, 100%) 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

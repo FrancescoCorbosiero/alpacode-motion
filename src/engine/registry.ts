@@ -19,6 +19,9 @@ import * as count from "./effects/count";
 import * as deal from "./effects/deal";
 import * as draw from "./effects/draw";
 import * as kicker from "./effects/kicker";
+import * as markHighlight from "./effects/mark-highlight";
+import * as markStrike from "./effects/mark-strike";
+import * as markUnderline from "./effects/mark-underline";
 import * as knoll from "./effects/knoll";
 import * as pop from "./effects/pop";
 import * as print from "./effects/print";
@@ -35,8 +38,10 @@ import * as splitWords from "./effects/split-words";
 import * as strut from "./effects/strut";
 import * as wordmark from "./effects/wordmark";
 
-export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, scrub];
+export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, markHighlight, markUnderline, markStrike, scrub];
 
 export const lazy: LazyEffect[] = [
-  // { hook: "[data-mark]", load: () => import("./effects/mark-circle") },
+  { hook: '[data-mark="circle"]', load: () => import("./effects/mark-circle") },
+  { hook: '[data-mark="box"]', load: () => import("./effects/mark-box") },
+  { hook: "[data-hand]", load: () => import("./effects/hand") },
 ];

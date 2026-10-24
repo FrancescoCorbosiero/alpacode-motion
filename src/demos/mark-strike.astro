@@ -1,0 +1,51 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<p>Il movimento <del data-mark="strike">decora</del> <ins>racconta</ins>.</p>`;
+---
+
+<Entry
+  id="mark-strike"
+  markup={markup}
+  look="Il tratto passa sulla parola, da sinistra a destra; la correzione accanto è già lì, ferma."
+  attributes={[{ name: "data-mark-delay", value: "0.4", what: "Seconds to wait once it's on screen." }]}
+>
+  <section class="ms">
+    <div class="wrap ms-block">
+      <p class="ms-line">Il movimento <del data-mark="strike">decora</del> <ins>racconta</ins>.</p>
+      <p class="ms-line ms-line--sm">
+        Un effetto che costa più di quel che dice <del data-mark="strike" data-mark-delay="0.3">si tiene per dopo</del>
+        <ins>resta fuori</ins>.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .ms {
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 26vh, 280px);
+  }
+  .ms-block {
+    display: grid;
+    gap: clamp(48px, 8vh, 88px);
+  }
+  .ms-line {
+    margin: 0;
+    max-width: 14em;
+    font-family: var(--display);
+    font-size: clamp(36px, 5.4vw, 84px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .ms-line--sm {
+    max-width: 22em;
+    font-size: clamp(24px, 2.8vw, 40px);
+  }
+  .ms-line del {
+    color: var(--mute);
+  }
+  .ms-line ins {
+    color: var(--blue-deep);
+    text-decoration: none;
+  }
+</style>

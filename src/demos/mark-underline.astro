@@ -1,0 +1,47 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<h2>Si copia a mano, <span data-mark="underline">si adatta al sito</span>.</h2>`;
+---
+
+<Entry
+  id="mark-underline"
+  markup={markup}
+  look="La linea si traccia sotto le parole, da sinistra a destra; se la frase va a capo, ogni riga ha la sua."
+  attributes={[{ name: "data-mark-delay", value: "0.4", what: "Seconds to wait once it's on screen." }]}
+>
+  <section class="mu">
+    <div class="wrap mu-block">
+      <h2 class="mu-title">Nessun sito installa il catalogo: si copia a mano, <span data-mark="underline">si adatta al sito</span>.</h2>
+      <p class="mu-text">
+        Il codice di un effetto entra nel sito come file suo, <span data-mark="underline">con le impostazioni accordate alla sua
+        voce</span>, e il sito annota da quale commit del catalogo viene.
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mu {
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 26vh, 280px);
+  }
+  .mu-block {
+    display: grid;
+    gap: clamp(32px, 5vh, 56px);
+  }
+  .mu-title {
+    margin: 0;
+    max-width: 15em;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 4.8vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+  .mu-text {
+    margin: 0;
+    max-width: 30em;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.45;
+  }
+</style>

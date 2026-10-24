@@ -73,8 +73,14 @@ Weight column of catalog.md.
 | `count` | 600 B | 951 B | gsap, ScrollTrigger | 52.4 KB |
 | `deal` | 665 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `draw` | 486 B | 764 B | gsap, ScrollTrigger | 52.3 KB |
+| `hand` | 543 B | 953 B | gsap, DrawSVG, ScrollTrigger | 54.0 KB |
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
 | `knoll` | 638 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `mark-box` | 1.2 KB | 2.3 KB | gsap, DrawSVG, ScrollTrigger | 54.6 KB |
+| `mark-circle` | 1.4 KB | 2.8 KB | gsap, DrawSVG, ScrollTrigger | 54.8 KB |
+| `mark-highlight` | 632 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `mark-strike` | 628 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `mark-underline` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `reveal` | 613 B | 1.2 KB | gsap, ScrollTrigger | 52.3 KB |

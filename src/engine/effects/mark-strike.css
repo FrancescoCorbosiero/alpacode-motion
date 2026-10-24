@@ -1,0 +1,29 @@
+/* ============================================================
+   mark-strike.
+
+   Reduced motion: the words are struck through, whole. Without JS,
+   the same (--mark-sweep defaults to 100%).
+
+   The stroke: across the middle of each line, its colour --mark-color
+   (the landing's accent: A's --ac). It grows across through
+   --mark-sweep, the script's. A strike changes what the words mean:
+   say it in the text too (a <del>, or the correction beside it).
+
+   Sources: A src/styles/landing.css:237.
+   ============================================================ */
+[data-mark="strike"] {
+  background-image: linear-gradient(
+    transparent 50%,
+    var(--mark-color, #3b72e9) 50%,
+    var(--mark-color, #3b72e9) 60%,
+    transparent 60%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--mark-sweep, 100%) 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* A <del> keeps its meaning; the drawn stroke replaces its own. */
+del[data-mark="strike"] {
+  text-decoration: none;
+}

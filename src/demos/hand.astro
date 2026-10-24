@@ -1,0 +1,129 @@
+---
+import "@fontsource/caveat/600.css";
+import Entry from "../components/Entry.astro";
+
+const markup = `<p class="note" data-hand>Qui si decide il default
+  <svg viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 26 C 18 12, …" /></svg>
+</p>`;
+const arrows = {
+  right: "M4 26 C 18 12, 38 8, 58 15 M49 7 L 59 15 L 49 22",
+  down: "M10 4 C 30 6, 44 18, 46 36 M38 29 L 46 37 L 53 28",
+};
+---
+
+<Entry
+  id="hand"
+  markup={markup}
+  look="La nota si scrive da sinistra a destra, poco oltre i suoi bordi; prima che finisca, la sua freccia si traccia dalla coda alla punta."
+>
+  <section class="hn">
+    <div class="wrap hn-grid">
+      <div class="hn-sheet">
+        <p class="hn-k">Impostazioni</p>
+        <table class="hn-table">
+          <tbody>
+            <tr><td><code>RISE</code></td><td>44</td><td>px</td></tr>
+            <tr><td><code>DURATION</code></td><td>1.1</td><td>s</td></tr>
+            <tr><td><code>STAGGER</code></td><td>0.09</td><td>s</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hn-note hn-note--a" data-hand>
+        Si accordano una volta, quando si copia
+        <svg viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d={arrows.down} /></svg>
+      </p>
+      <p class="hn-note hn-note--b" data-hand>
+        <svg viewBox="0 0 64 40" aria-hidden="true" focusable="false" class="hn-flip"><path d={arrows.right} /></svg>
+        la voce del sito, non dell'effetto
+      </p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .hn {
+    padding-block: clamp(120px, 20vh, 220px) clamp(160px, 26vh, 280px);
+  }
+  .hn-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+  .hn-sheet {
+    grid-row: 2;
+    padding: clamp(24px, 3vw, 40px);
+    background: #fff;
+    border: 1px solid var(--rule);
+    box-shadow: 8px 8px 0 var(--paper-3);
+  }
+  .hn-k {
+    margin: 0 0 14px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .hn-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .hn-table td {
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .hn-table td:nth-child(2) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    padding-right: 8px;
+  }
+  .hn-table td:nth-child(3) {
+    width: 2.5em;
+    color: var(--mute);
+  }
+  .hn-note {
+    display: inline-block;
+    justify-self: start;
+    margin: 0;
+    font-family: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    font-weight: 600;
+    font-size: clamp(26px, 2.6vw, 36px);
+    line-height: 1;
+    color: var(--blue-deep);
+    transform: rotate(-2.5deg);
+    transform-origin: 0 100%;
+  }
+  .hn-note--a {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .hn-note--b {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .hn-note svg {
+    display: inline-block;
+    width: 64px;
+    height: 40px;
+    vertical-align: middle;
+    overflow: visible;
+  }
+  .hn-note path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .hn-flip {
+    transform: scaleX(-1);
+  }
+  @media (max-width: 760px) {
+    .hn-grid {
+      grid-template-columns: 1fr;
+    }
+    .hn-note--b {
+      grid-column: 1;
+      grid-row: 3;
+    }
+  }
+</style>

@@ -1,0 +1,10 @@
+/* ============================================================
+   hand.
+
+   Reduced motion: every note is written, its arrow drawn. Without JS,
+   the same.
+
+   No rules to copy: the note's hand (A sets Caveat, tilted), its arrow
+   (a stroke, no fill) and their colours are the site's. The note is
+   inline-block or a block: the clip that writes it in is its box.
+   ============================================================ */
