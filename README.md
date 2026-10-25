@@ -54,6 +54,6 @@ npm run shots     # each entry's screenshots (after build)
 npm run weight    # each entry's weight, into the catalog and the docs
 ```
 
-Status: phase 1 done — the gallery, the core, the effect contract and the
-first three entries (`reveal`, `split-lines`, `scrub`). Next, tier 1
-(`docs/status.md`).
+Status: phase 2 — every tier-1 entry alpacode has, and tier 2's sticky
+`stage`, are `demo` (46 entries); the engine runs the sites (D18). Next,
+the site switch and the rest of tier 2 (`docs/status.md`).

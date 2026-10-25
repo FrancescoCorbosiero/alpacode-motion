@@ -217,6 +217,22 @@ canonical name.
 | `.site-header` | A, C | `data-header` (the site maps it in `config.ts`) | attributes only |
 | `[data-nav].open` | C | `[data-nav][data-open]` (`config.ts`) | attributes only |
 | `.scroll-progress` | A | `data-read-progress` | attributes only |
+| `[data-hero-content]`, `[data-hero-lockup]` | A | `data-hero-away`, `data-hero-away="22" data-hero-fade="1"` | two values of one move (C's name) |
+| `.ticker-track`; `.marquee-track` | A; C | `[data-marquee-track]` | attributes only |
+| `[data-progress-step]`, `[data-progress-tile]`; `[data-progress-fill]` | A | `[data-rail-step]`, `[data-rail-tile]`; none (`--p` is set on the rail) | C's names; the fill reads `--p` by inheritance |
+| `.has-motion` as a live layout's switch | A, C | `[data-rail-live]`, `[data-scene-live]` | set by the script on what it runs: a first-view element or a chunk that didn't load keeps the end state |
+| `.foot-char`, `.foot-alpaca`; `[data-foot-dog]` | A; C | `[data-wordmark-char]`, `[data-wordmark-mascot]` | attributes only, brand-neutral |
+| `.rf-bubble`, `.rf-typing` | A | `[data-chat-bubble]`, `.chat-typing` (made by the script) | attributes only |
+| `.qr-scan` | A | `.print-scan` (made by the script) | the entry's name |
+| `data-delay` (a mark's) | A | `data-mark-delay` | scoped to the pen |
+| `--hl`; `--ac` (a mark's colour) | C; A | `--mark-sweep`; `--mark-color` | one pen |
+| `.lnd-vs i` | A | `[data-bars-item]` | attributes only |
+| `line.map-line` | A (map) | `[data-draw-path]` | attributes only |
+| `.rf-payout-icon` | A | `[data-coin-icon]` | attributes only |
+| `.rf-faq-a` | A | none: the box after the `<summary>` | the structure says it |
+| `[data-card]` (the scramble's hover) | FAST | none: the text's closest link or button | the structure says it |
+| the fields in `panelEnter()`, `stepEnter()` | A, C | `[data-panel-field]` (or `config.selectors`) | no site classes in an effect (D5) |
+| `.lnd-stage`, `.lnd-beats`, `.lnd-beat`, `.lnd-progress`, `.lnd-aside-sm` | A | `[data-scene-stage]`, `[data-scene-beats]`, `[data-scene-beat]`, `[data-scene-progress]`, `[data-scene-aside]` | attributes only |
 
 ## Pending defaults
 

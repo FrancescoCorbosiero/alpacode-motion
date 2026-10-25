@@ -2,7 +2,50 @@
 
 Where the work stands. Updated at the end of every session.
 
-## Now — phase 1 done (2026-10-23)
+## Now — phase 2: alpacode's tier 1 and the stage done (2026-10-25)
+
+- **43 entries to `demo`** in this phase (46 with phase 1's), each with
+  its module and CSS, its place in the registry, its page, its measured
+  weight and its screenshots: every tier-1 entry alpacode (or FAST) has,
+  in Headings (`split-wipe`, `split-words`, `split-blur`, `split-chars`,
+  `split-pop`, and the new `split-cycle`, the deal), Reveals (`clip`,
+  `strut`, `kicker`, `pop`, `stamp`, `count`, `print`, `wordmark`,
+  `chat`, `draw`, `knoll`, `alternate`, `bars`, `deal`), The pen (the
+  six), Scroll-linked (`hero-away`, `hero-settle`, `hero-video`,
+  `kinetic`, `marquee`, `skew`, `rail`), Pointer and input (`tilt`,
+  `magnetic`, `coin`, `accordion`), Functions (`celebrate`, `scramble`,
+  `panel-enter`, `reveal-panel`, `nudge`), and tier 2's `stage`.
+- **Left at `src`**, as asked: the tier-1 entries only cinofila has
+  (`split-drop`, `split-accent`, `reveal-stagger`, `sticker-wall`,
+  `parallax`, `parallax-cover`, `peek`, `spin`, `float`, `cursor-trail`,
+  `lens`, `pet`, `roll`, `swing`, `step-progress`, `success-burst`),
+  `speed` (no markup uses it), tier 3 and the rest of tier 2.
+  `cursor-thumb` and `meter` are ported on the `showcase-moves` branch.
+- **Decisions**: D18 (O4 decided: the catalog's engine runs the sites,
+  which adopt its hooks) and D19 (alpacode's tuning is the default; the
+  other sources' become settings or one-attribute variants, shown side
+  by side), its table one row per entry that differed. The pending
+  defaults are all decided.
+- **The lazy path is in use** (D7): `mark-circle`, `mark-box` and `hand`
+  bring DrawSVG in their chunks, `stage` is tier 2; the smoke test checks
+  both ways.
+- **Port fixes beyond the sources** (catalog.md, Porting notes, and each
+  row's Notes): the staggered `from()` flash of the split headings; batch
+  order; jolts and keyframed shakes that left an inline transform; the
+  marquee's ticker off screen and its jump back to the start; the hero
+  video off screen; scrubs that read their start at build; first-view
+  rails, bands and stages; FAST's skew on an animated element; the
+  transition that fought the pointer play; the accordion's fold.
+- **The smoke test** now also guards the heading deal and the letters'
+  flash, the lazy chunks, the marquee and hero video off screen, the
+  stage, and the pointer play (with a mouse, handed back; still on touch).
+- **The gallery**: a heading demo layout (`HeadingDemo.astro`), seeded
+  blueprint plates and a real QR for the demos (`src/demos/_shared/`),
+  demo media drawn with ffmpeg (`public/media/hero-demo.*`), Caveat for
+  the hand's notes, an entry page that can describe a function's hook
+  (`hookWhat`).
+
+## Phase 1 (2026-10-23)
 
 - **The gallery** (D11, D17): an Astro 6 static site at the root.
   `npm run dev`; pages: the index, built from `catalog.md` (`/`), the
@@ -38,9 +81,9 @@ Where the work stands. Updated at the end of every session.
 | --- | --- | --- |
 | 0 | catalog, decisions, weight, prompts | done, 2026-10-23 |
 | 1 | the gallery (Astro), the core, the effect contract, the weight and screenshot scripts; `reveal`, `split-lines`, `scrub` end to end; the add-effect skill | done, 2026-10-23 |
-| 2a | tier 1: headings, reveals, the pen (32) | all `demo`; their pending defaults decided |
-| 2b | tier 1: scroll-linked, pointer, functions (31) | all `demo`; their porting notes fixed |
-| 3 | tier 2 (8), on the sticky stage where the demo agrees (D6) | all `demo`, every stage fits 390×664 |
+| 2a | tier 1: headings, reveals, the pen (32) | alpacode's and FAST's 26 `demo`, 2026-10-25 (with phase 1's); the 6 cinofila-only left; defaults decided (D19) |
+| 2b | tier 1: scroll-linked, pointer, functions (31) | alpacode's and FAST's 16 `demo`, 2026-10-25 (`cursor-thumb` on its own branch); the cinofila-only and `speed` left; porting notes fixed for the ported |
+| 3 | tier 2 (8), on the sticky stage where the demo agrees (D6) | `stage` `demo`, 2026-10-25; the 7 scenes left; every stage fits 390×664 |
 | 4 | tier 3: recipes for the 12 landing scenes, the alpaca's rig and moves, demos for a few | recipes written, demos up |
 | 5 | adoption: the sites point at the catalog | a line in each site's CLAUDE.md |
 
@@ -70,7 +113,7 @@ From phase 1:
   `scrub`, focus wins over the batch in `reveal`, one context per effect,
   the reduced-motion switch rebuilding the page.
 - A's tuning kept for the three ported entries until 2a decides
-  (decisions.md, pending defaults).
+  (decisions.md, pending defaults): decided in phase 2, D19.
 - The proof (D16): screenshots as six-frame sheets plus a reduced-motion
   sheet, WebP, committed (O8); weight measured per module alone, 1 KB =
   1000 B; esbuild 0.27 (Astro's) instead of phase 0's 0.25.
@@ -79,18 +122,52 @@ From phase 1:
   installed Chrome.
 - Pages at `/<id>/`; `noindex` until publishing is decided (O1).
 
+From phase 2:
+
+- `split-cycle` is an entry of its own (86 effects): the deal that hands
+  bare headings the next move (alpacode's lines, wipe, words, blur,
+  chars), the moves registered by their modules.
+- The canonical sub-hooks the ports named, proposals like the rest
+  (veto any): `data-marquee-track`, `data-marquee-speed`,
+  `data-rail-step`, `data-rail-tile`, `data-rail-live`, `data-hero-fade`,
+  `data-wordmark-char`, `data-wordmark-mascot`, `data-chat-bubble`,
+  `data-bars-item`, `data-draw-path`, `data-mark-delay`,
+  `data-mark-scrub`, `data-mark-manual`, `data-coin-icon`,
+  `data-coin-option`, `data-panel-field`, `data-nudge-field`,
+  `data-scene-stage`, `data-scene-beats`, `data-scene-beat`,
+  `data-scene-progress`, `data-scene-aside`, `data-scene-at`,
+  `data-scene-live`; the variants `data-clip="round still"`,
+  `data-pop="<angle>"`, `data-wordmark="bounce"`, `data-tilt="card"`,
+  `data-magnetic="flat"`, `data-marquee="right"`.
+- Declarative hooks for three functions, beyond the sources:
+  `data-celebrate` (a burst per click), `data-reveal-panel` (a panel
+  shown by removing `hidden`), `data-nudge` (the fields the browser
+  flags); the functions stay for page scripts.
+- Live layouts switch on the script's own attribute (`data-rail-live`,
+  `data-scene-live`), not on `.has-motion`; the state classes stay
+  alpacode's (`.is-reached`, `.is-closing`, `.is-pinned`).
+- `chat` plays at every width (alpacode's 1025px is its layout's guard:
+  the setting `MEDIA`); the pen's sweep is a custom property
+  (`--mark-sweep`, cinofila's mechanism) that a site's band must read.
+- `stage` is lazy though light (822 B), as D7 says for tier 2.
+- The demos' media are drawn here (blueprint plates, the hero clip with
+  ffmpeg), never a client's (O1); Caveat is a dependency of the gallery
+  for the hand's notes.
+
 ## Known limits
 
-- The lazy path (`registry.lazy`) is built but no entry uses it yet: the
-  first that needs a plugin (2a: `mark-circle`, `mark-box`, `hand`) will,
-  with a smoke check.
-- The heading cycle (a bare `data-split` dealt the next variant down the
-  page) comes with the other variants in 2a; until then only
-  `data-split="lines"` is handled.
+- Pointer, input and function entries can't be judged from the scroll
+  shots (they need a pointer, a click, a submit): their sheets show the
+  layout; probes in the session and the smoke test (pointer play) cover
+  the behaviour.
 - CI runs check and build; the smoke test and the screenshots run in a
   session (O9).
 
 ## Next
 
-Phase 2a, in a new chat: the prompt is in `docs/prompts.md`; the loop is
-the add-effect skill.
+- Merge `showcase-moves` (`cursor-thumb`, `frame-scroll`, `flip-filter`,
+  `meter`, the house's showcase).
+- The site switch: alpacode.it copies the engine and adopts its hooks
+  (the markup contract per entry is in each row's Notes).
+- Phase 3, the rest of tier 2 on the stage (D6); the cinofila-only tier-1
+  entries when cinofila adopts the engine.

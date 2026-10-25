@@ -92,6 +92,10 @@ the session's branch.
 > una riga che rimanda al catalogo (CLAUDE.md di alpacode-motion, "Using
 > the catalog on a site"), e registra nei loro docs quali voci del
 > catalogo vengono da quel sito. Nessun refactor dei nomi (O4).
+>
+> (Superata da D18, 2026-10-24: O4 è deciso, i siti adottano gli hook
+> canonici e copiano `src/engine/`; il contratto di markup di ogni voce
+> è nelle sue Notes in catalog.md.)
 
 ## Animating a site with the catalog
 
