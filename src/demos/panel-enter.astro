@@ -1,0 +1,171 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div role="tabpanel" id="p-2" hidden>
+  <h3 data-panel-field>…</h3>
+  <label data-panel-field>… <input /></label>
+  <button data-panel-field>…</button>
+</div>
+
+<script>
+  import { panelEnter } from "../engine/effects/panel-enter";
+  // the page's tabs: show the panel, then
+  panelEnter(panel, to > from ? 1 : -1);
+</script>`;
+const tabs = [
+  { id: "site", tab: "Un sito", title: "Il sito che hai in mente", fields: ["Che cosa deve fare", "Per quando ti serve"] },
+  { id: "soft", tab: "Un software", title: "Il lavoro da togliere di mezzo", fields: ["Che cosa fate oggi a mano", "Chi lo usa"] },
+  { id: "corso", tab: "Un corso", title: "Che cosa vuoi imparare", fields: ["L'argomento", "Per quante persone"] },
+];
+---
+
+<Entry
+  id="panel-enter"
+  markup={markup}
+  look="Cambia scheda: il pannello entra dal lato della scheda da cui arrivi, a destra andando avanti e a sinistra tornando indietro, e i suoi campi lo seguono uno dopo l'altro."
+  replay={false}
+  hookWhat="What follows the panel in, in a cascade (or the site's selectors for it in `config.ts`); the page's script calls `panelEnter(panel, dir, fields?)`."
+>
+  <section class="pe">
+    <div class="wrap pe-box">
+      <div class="pe-tabs" role="tablist" aria-label="Che cosa ti serve">
+        {
+          tabs.map((t, i) => (
+            <button
+              class="pe-tab"
+              type="button"
+              role="tab"
+              id={`pe-tab-${t.id}`}
+              aria-controls={`pe-panel-${t.id}`}
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? 0 : -1}
+              data-try-tab
+            >
+              {t.tab}
+            </button>
+          ))
+        }
+      </div>
+      {
+        tabs.map((t, i) => (
+          <div class="pe-panel" role="tabpanel" id={`pe-panel-${t.id}`} aria-labelledby={`pe-tab-${t.id}`} hidden={i !== 0}>
+            <h3 class="pe-title" data-panel-field>{t.title}</h3>
+            {t.fields.map((f) => (
+              <label class="pe-field" data-panel-field>
+                <span>{f}</span>
+                <input type="text" />
+              </label>
+            ))}
+            <button class="pe-next" type="button" data-panel-field>Avanti</button>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Entry>
+
+<script>
+  import { panelEnter } from "../engine/effects/panel-enter";
+
+  // The demo's tabs, the way alpacode's referral tabs work: once per
+  // visit, on the document.
+  const select = (tab: HTMLElement, focus = false): void => {
+    const list = [...(tab.closest("[role='tablist']")?.querySelectorAll<HTMLElement>("[role='tab']") ?? [])];
+    const from = list.findIndex((t) => t.getAttribute("aria-selected") === "true");
+    const to = list.indexOf(tab);
+    list.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute("aria-controls") ?? "");
+      if (panel) panel.hidden = !on;
+      if (panel && on && from !== to) panelEnter(panel, to > from ? 1 : -1);
+    });
+    if (focus) tab.focus();
+  };
+  document.addEventListener("click", (e) => {
+    const tab = e.target instanceof Element ? e.target.closest<HTMLElement>("[data-try-tab]") : null;
+    if (tab) select(tab);
+  });
+  document.addEventListener("keydown", (e) => {
+    const tab = e.target instanceof Element ? e.target.closest<HTMLElement>("[data-try-tab]") : null;
+    if (!tab || (e.key !== "ArrowRight" && e.key !== "ArrowLeft")) return;
+    const list = [...(tab.closest("[role='tablist']")?.querySelectorAll<HTMLElement>("[role='tab']") ?? [])];
+    const next = list[(list.indexOf(tab) + (e.key === "ArrowRight" ? 1 : -1) + list.length) % list.length];
+    if (next) select(next, true);
+  });
+</script>
+
+<style>
+  .pe {
+    padding-block: clamp(120px, 20vh, 220px);
+    overflow-x: clip;
+  }
+  .pe-box {
+    max-width: 720px;
+  }
+  .pe-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pe-tab {
+    position: relative;
+    padding: 16px 22px;
+    border: 0;
+    background: none;
+    color: var(--mute-2);
+    font: 700 15px var(--sans);
+    cursor: pointer;
+  }
+  .pe-tab[aria-selected="true"] {
+    color: var(--ink);
+  }
+  .pe-tab[aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .pe-tab:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+  .pe-panel {
+    display: grid;
+    gap: 18px;
+    padding: clamp(24px, 3vw, 36px) 0 0;
+  }
+  .pe-panel[hidden] {
+    display: none;
+  }
+  .pe-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.05;
+  }
+  .pe-field {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .pe-field input {
+    padding: 14px 16px;
+    border: 1.5px solid var(--ink);
+    background: #fff;
+    font: 15px var(--sans);
+  }
+  .pe-next {
+    justify-self: start;
+    padding: 14px 24px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 15px var(--sans);
+  }
+</style>

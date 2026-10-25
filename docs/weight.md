@@ -69,6 +69,7 @@ Weight column of catalog.md.
 | `accordion` | 531 B | 980 B | gsap | 52.3 KB |
 | `alternate` | 625 B | 1.1 KB | gsap, ScrollTrigger | 52.3 KB |
 | `bars` | 411 B | 577 B | gsap, ScrollTrigger | 52.2 KB |
+| `celebrate` | 1.5 KB | 2.8 KB | gsap | 53.3 KB |
 | `chat` | 630 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `clip` | 569 B | 975 B | gsap, ScrollTrigger | 52.3 KB |
 | `coin` | 443 B | 737 B | gsap | 52.2 KB |
@@ -89,10 +90,14 @@ Weight column of catalog.md.
 | `mark-strike` | 628 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `mark-underline` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `marquee` | 772 B | 1.3 KB | gsap, ScrollTrigger | 52.5 KB |
+| `nudge` | 402 B | 562 B | gsap | 52.2 KB |
+| `panel-enter` | 476 B | 783 B | gsap | 52.2 KB |
 | `pop` | 370 B | 511 B | gsap, ScrollTrigger | 52.2 KB |
 | `print` | 630 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
 | `rail` | 567 B | 961 B | gsap, ScrollTrigger | 52.3 KB |
 | `reveal` | 613 B | 1.2 KB | gsap, ScrollTrigger | 52.3 KB |
+| `reveal-panel` | 416 B | 604 B | gsap | 52.2 KB |
+| `scramble` | 646 B | 944 B | gsap | 52.4 KB |
 | `scrub` | 353 B | 531 B | gsap, ScrollTrigger, SplitText | 55.2 KB |
 | `skew` | 367 B | 511 B | gsap, ScrollTrigger | 52.1 KB |
 | `split-blur` | 543 B | 900 B | gsap, ScrollTrigger, SplitText | 55.4 KB |

@@ -109,6 +109,14 @@
       ],
       "total": 52169
     },
+    "celebrate": {
+      "min": 2790,
+      "gzip": 1501,
+      "needs": [
+        "gsap"
+      ],
+      "total": 53317
+    },
     "chat": {
       "min": 1158,
       "gzip": 630,
@@ -290,6 +298,22 @@
       ],
       "total": 52473
     },
+    "nudge": {
+      "min": 562,
+      "gzip": 402,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52157
+    },
+    "panel-enter": {
+      "min": 783,
+      "gzip": 476,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52182
+    },
     "pop": {
       "min": 511,
       "gzip": 370,
@@ -325,6 +349,22 @@
         "ScrollTrigger"
       ],
       "total": 52325
+    },
+    "reveal-panel": {
+      "min": 604,
+      "gzip": 416,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52165
+    },
+    "scramble": {
+      "min": 944,
+      "gzip": 646,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52417
     },
     "scrub": {
       "min": 531,

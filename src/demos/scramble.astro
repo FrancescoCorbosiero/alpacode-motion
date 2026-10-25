@@ -1,0 +1,162 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<a class="card" href="…">… <span data-scramble>SPLIT</span></a>
+
+<script>
+  import { scramble } from "../engine/effects/scramble";
+  scramble(input, "esempio.it/invito/K7QP2M", 1.25);  // an <input>: its value
+  scramble(code, "K7QP2M", 1);
+</script>`;
+const cards = [
+  { href: "/split-lines/", title: "Le intestazioni", kw: "SPLIT" },
+  { href: "/reveal/", title: "Le rivelazioni", kw: "REVEAL" },
+  { href: "/scrub/", title: "Le frasi", kw: "SCRUB" },
+];
+---
+
+<Entry
+  id="scramble"
+  markup={markup}
+  look="Passa con il mouse sulle carte: la parola chiave si decodifica di nuovo. Poi genera un link: il testo e il codice si decodificano da sinistra a destra, punti e barre fermi al loro posto."
+  replay={false}
+  hookWhat="With a mouse, the pointer entering its link or button decodes it again; a page script calls `scramble(el, text, duration)`."
+>
+  <section class="sc">
+    <div class="wrap">
+      <ul class="sc-cards">
+        {
+          cards.map((c) => (
+            <li>
+              <a class="sc-card" href={c.href}>
+                <strong>{c.title}</strong>
+                <span class="sc-hook">
+                  Hook: <span class="sc-kw" data-scramble>{c.kw}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="sc-make">
+        <label class="sc-label" for="sc-link">Il link</label>
+        <div class="sc-row">
+          <input class="sc-input" id="sc-link" type="text" readonly value="esempio.it/invito/K7QP2M" />
+          <button class="sc-btn" type="button" data-try-scramble>Genera</button>
+        </div>
+        <p class="sc-code-row">Il codice: <code class="sc-code" data-try-code>K7QP2M</code></p>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<script>
+  import { scramble } from "../engine/effects/scramble";
+
+  const LETTERS = "ABCDEFGHJKMNPQRSTVWXYZ23456789";
+  const code = (): string => Array.from({ length: 6 }, () => LETTERS.charAt(Math.floor(Math.random() * LETTERS.length))).join("");
+
+  // The demo's page script: once per visit, on the document.
+  document.addEventListener("click", (e) => {
+    const button = e.target instanceof Element ? e.target.closest("[data-try-scramble]") : null;
+    const input = document.querySelector<HTMLInputElement>("#sc-link");
+    const out = document.querySelector<HTMLElement>("[data-try-code]");
+    if (!button || !input || !out) return;
+    const next = code();
+    scramble(input, `esempio.it/invito/${next}`, 1.25);
+    scramble(out, next, 1);
+  });
+</script>
+
+<style>
+  .sc {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .sc-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 1.6vw, 20px);
+    margin: 0 0 clamp(56px, 8vh, 96px);
+    padding: 0;
+    list-style: none;
+  }
+  .sc-card {
+    display: grid;
+    align-content: space-between;
+    gap: 28px;
+    min-height: 180px;
+    padding: clamp(20px, 2vw, 28px);
+    background: var(--ink);
+    color: var(--on-ink);
+    text-decoration: none;
+    transition: background 0.3s var(--ease);
+  }
+  .sc-card:hover {
+    background: var(--blue-deep);
+  }
+  .sc-card strong {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.05;
+  }
+  .sc-hook {
+    font-size: 14px;
+    color: var(--on-ink-mute);
+  }
+  .sc-kw {
+    font-family: var(--mono);
+    color: #fff;
+  }
+  .sc-make {
+    display: grid;
+    gap: 12px;
+    max-width: 640px;
+  }
+  .sc-label {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .sc-row {
+    display: flex;
+    gap: 10px;
+  }
+  .sc-input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1.5px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    font: 15px var(--mono);
+  }
+  .sc-btn {
+    padding: 14px 22px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 15px var(--sans);
+    cursor: pointer;
+  }
+  .sc-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .sc-code-row {
+    margin: 4px 0 0;
+    color: var(--mute-2);
+  }
+  .sc-code {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--ink);
+  }
+  @media (max-width: 760px) {
+    .sc-cards {
+      grid-template-columns: 1fr;
+    }
+    .sc-card {
+      min-height: 120px;
+    }
+  }
+</style>

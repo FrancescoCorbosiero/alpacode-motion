@@ -1,0 +1,10 @@
+/* ============================================================
+   scramble.
+
+   Reduced motion: the text is written at once, as it is. Without a
+   mouse, or without JS, the hover does nothing.
+
+   No rules to copy: a decoding text keeps its width only in a
+   monospaced or tabular face; elsewhere the line may breathe a little
+   while it decodes (A's link and code are set in a mono face).
+   ============================================================ */

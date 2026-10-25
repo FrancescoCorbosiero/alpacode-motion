@@ -177,6 +177,7 @@ and its reason:
 | rail | step i lit at i/n, full at `bottom 60%` | C at i/(n−1), full at `bottom 45%` | no | the consumer's: the last step lights while it's still on screen; C's are two settings (`LAST_AT_END`, `END`) |
 | tilt | 5° at the edges | C 10–12°, risen 8px and a touch larger | yes (`card`) | the consumer's; C's cards are one attribute (`data-tilt="card"`) |
 | magnetic | follows 16% of the pointer's offset, leans 12° | C 35%, no lean | yes (`flat`) | the consumer's; C's badge is one attribute (`data-magnetic="flat"`) |
+| celebrate | the house's bits (struts, ticks, euro signs, the alpaca), 30, thrown 110–250px | C's shapes (paws, hearts, bones), 26, 90–220px | yes (the shapes) | the consumer's; C's set is one option (`shapes: ["paw", "heart", "bone"]`), its colours and reach settings |
 
 ## Naming registry
 
@@ -219,12 +220,8 @@ canonical name.
 
 ## Pending defaults
 
-Decided in phase 2 (D19), each with its entry; a decided row moves to
-D19's table.
-
-| Entry | A | C (or FAST) |
-| --- | --- | --- |
-| celebrate | brand bits (struts, squares, €, alpaca) | shapes (paws, hearts, bones) |
+None left: phase 2 decided each with its entry, in D19's table. A new
+entry whose sources differ gets its row there when it's ported.
 
 ## Open
 

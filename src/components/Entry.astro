@@ -33,8 +33,11 @@ interface Props {
   look?: string;
   /** Show the replay button (default: for effects that play once). */
   replay?: boolean;
+  /** What the hook does, when it isn't what the effect builds on (a
+   *  function's: what it moves). */
+  hookWhat?: string;
 }
-const { id, markup, attributes = [], look, replay } = Astro.props;
+const { id, markup, attributes = [], look, replay, hookWhat = "The hook: the effect builds on every element that matches it." } = Astro.props;
 
 const entry = catalog.entries.get(id);
 if (!entry) throw new Error(`${id}: no row in catalog.md`);
@@ -139,7 +142,7 @@ const where = entry.section.group ? `${TIER_LABEL[entry.section.tier]} · ${entr
               <tr>
                 <td><code>{hook}</code></td>
                 <td>—</td>
-                <td>The hook: the effect builds on every element that matches it.</td>
+                <td set:html={inline(hookWhat)} />
               </tr>
               {
                 attributes.map((a) => (

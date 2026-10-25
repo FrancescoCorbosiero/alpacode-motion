@@ -19,9 +19,9 @@ their files) are the worked examples.
   (the full sha is in every source link); the same for
   `comunicazionecinofila`. Never edit them.
 - Open every link in the row: each site's code, its CSS, its "Live"
-  markup. Where the sources differ, the difference becomes a setting (D9)
-  and a line in the row's Notes; the default waits for its phase's
-  side-by-side demo (decisions.md, Pending defaults).
+  markup. Where the sources differ, the difference becomes a setting or a
+  per-element variant (D9) and a line in the row's Notes; alpacode's
+  tuning is the default (D19), and the choice a row in D19's table.
 - An effect new to the catalog gets its row first (id, hook, what,
   sources at a commit, cost, notes); a name that collides goes in the
   naming registry (decisions.md).
@@ -100,9 +100,8 @@ their files) are the worked examples.
   fold and `once` effects play as they enter.
 - Scoped `<style>` in the demo file; elements SplitText creates need
   `:global()`.
-- Two sources, same move (pending defaults): the variants side by side,
-  each section tuned by its own settings, and the default chosen and
-  written down (decisions.md).
+- Two sources, same move: the variants side by side when a variant
+  costs one attribute, the default written down (D19's table).
 - A pinned stage fits a phone (390×664).
 
 ## 5. Verify

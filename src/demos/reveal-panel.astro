@@ -1,0 +1,142 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<form>…</form>
+<div data-reveal-panel hidden>  <!-- shown: its children rise in -->
+  <p>…</p> <h3>…</h3> <p>…</p> <button>…</button>
+</div>`;
+---
+
+<Entry
+  id="reveal-panel"
+  markup={markup}
+  look="Premi Invia: il modulo lascia il posto al pannello di conferma, e i suoi pezzi salgono al loro posto uno dopo l'altro."
+  replay={false}
+  hookWhat="A panel shown by removing its `hidden`: its children rise in each time; or the page's script calls `revealPanel(panel)`, without the hook."
+>
+  <section class="rp">
+    <div class="wrap">
+      <div class="rp-card">
+        <form class="rp-form" data-try-form data-astro-reload>
+          <h3 class="rp-title">Una domanda allo studio</h3>
+          <label class="rp-field">
+            <span>La domanda</span>
+            <textarea rows="3">Come si copia un effetto in un sito?</textarea>
+          </label>
+          <button class="rp-btn" type="submit">Invia</button>
+        </form>
+        <div class="rp-done" data-reveal-panel hidden>
+          <p class="rp-kicker">Ricevuto</p>
+          <h3 class="rp-title">Il modulo ha lasciato il posto a questo pannello.</h3>
+          <p class="rp-text">Il titolo, il testo e il pulsante salgono uno dopo l'altro: il pannello è nuovo, e lo dice.</p>
+          <button class="rp-btn rp-btn--ghost" type="button" data-try-back>Torna al modulo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<script>
+  // The demo's page script swaps the panels: the hook does the rest.
+  // (The form opts out of the router, data-astro-reload: it never leaves.)
+  document.addEventListener("submit", (e) => {
+    const form = e.target instanceof HTMLFormElement && e.target.matches("[data-try-form]") ? e.target : null;
+    if (!form) return;
+    e.preventDefault();
+    const done = form.parentElement?.querySelector<HTMLElement>("[data-reveal-panel]");
+    if (!done) return;
+    form.hidden = true;
+    done.hidden = false;
+    done.querySelector<HTMLElement>("button")?.focus({ preventScroll: true });
+  });
+  document.addEventListener("click", (e) => {
+    const back = e.target instanceof Element ? e.target.closest("[data-try-back]") : null;
+    const done = back?.closest<HTMLElement>("[data-reveal-panel]");
+    const form = done?.parentElement?.querySelector<HTMLFormElement>("[data-try-form]");
+    if (!done || !form) return;
+    done.hidden = true;
+    form.hidden = false;
+    form.querySelector("textarea")?.focus({ preventScroll: true });
+  });
+</script>
+
+<style>
+  .rp {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .rp-card {
+    max-width: 640px;
+    min-height: 340px;
+    padding: clamp(24px, 3vw, 40px);
+    border: 1.5px solid var(--ink);
+    background: #fff;
+  }
+  .rp-form,
+  .rp-done {
+    display: grid;
+    gap: 18px;
+  }
+  .rp-form[hidden],
+  .rp-done[hidden] {
+    display: none;
+  }
+  .rp-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--blue-deep);
+  }
+  .rp-kicker::before {
+    content: "";
+    width: 24px;
+    height: 3px;
+    background: var(--blue);
+  }
+  .rp-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.08;
+  }
+  .rp-text {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--mute-2);
+  }
+  .rp-field {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .rp-field textarea {
+    padding: 14px 16px;
+    border: 1.5px solid var(--ink);
+    font: 15px/1.5 var(--sans);
+    resize: vertical;
+  }
+  .rp-btn {
+    justify-self: start;
+    padding: 14px 24px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 15px var(--sans);
+    cursor: pointer;
+  }
+  .rp-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .rp-btn--ghost {
+    background: #fff;
+    color: var(--ink);
+  }
+  .rp-btn--ghost:hover {
+    color: #fff;
+  }
+</style>

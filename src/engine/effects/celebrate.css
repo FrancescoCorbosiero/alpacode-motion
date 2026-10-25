@@ -1,0 +1,43 @@
+/* ============================================================
+   celebrate.
+
+   Reduced motion: no burst (the effects layer isn't shown either).
+
+   The bits' looks: the house's struts, ticks, euro signs and alpaca,
+   sized here; a drawn shape (C's paws, hearts and bones, or markup of
+   the page's own) at its --fx-size, set per bit. Where they fly is the
+   script's; the layer itself is the core's (core.css).
+
+   Sources: A src/styles/motion.css:325; C src/styles/motion.css:116.
+   ============================================================ */
+.fx-strut {
+  width: 26px;
+  height: 6px;
+  background: currentColor;
+}
+.fx-square {
+  width: 9px;
+  height: 9px;
+  background: currentColor;
+}
+.fx-euro {
+  font-family: var(--display, sans-serif);
+  font-size: 26px;
+  line-height: 1;
+}
+.fx-alpaca {
+  width: 24px;
+  height: 29px;
+}
+.fx-paw,
+.fx-heart,
+.fx-bone,
+.fx-shape {
+  width: var(--fx-size, 22px);
+  height: var(--fx-size, 22px);
+}
+.fx-bit svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

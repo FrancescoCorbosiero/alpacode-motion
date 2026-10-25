@@ -1,0 +1,105 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<button type="button" data-celebrate>…</button>
+<!-- fewer bits, closer: count and spread -->
+<button type="button" data-celebrate="12 0.7">…</button>
+
+<script>
+  import { celebrate } from "../engine/effects/celebrate";
+  // a form sent: from its title, another set
+  celebrate(title, { count: 26, shapes: ["paw", "heart", "bone"] });
+</script>`;
+---
+
+<Entry
+  id="celebrate"
+  markup={markup}
+  look="Premi un pulsante: dal suo centro parte un anello di coriandoli che salgono, girano e poi cadono svanendo. Il primo usa il set della casa, il secondo quello di un altro sito."
+  replay={false}
+  hookWhat="A click on it sets off a burst from it; a page script calls `celebrate(el, opts)`."
+  attributes={[{ name: "data-celebrate", value: "12 0.7", what: "How many bits, and how far they fly (1: the settings'). Default: `COUNT`, 1." }]}
+>
+  <section class="ce">
+    <div class="wrap ce-grid">
+      <div class="ce-item">
+        <button class="ce-btn" type="button" data-celebrate>Festeggia</button>
+        <p><code>data-celebrate</code>: il set della casa, trattini, quadretti, euro e un alpaca</p>
+      </div>
+      <div class="ce-item">
+        <button class="ce-btn ce-btn--alt" type="button" data-try-celebrate>Festeggia</button>
+        <p><code>celebrate(el, &#123; shapes &#125;)</code>: un altro set, zampe, cuori e ossa</p>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<script>
+  import { celebrate } from "../engine/effects/celebrate";
+
+  // The demo's page script: once per visit, on the document.
+  document.addEventListener("click", (e) => {
+    const button = e.target instanceof Element ? e.target.closest<HTMLElement>("[data-try-celebrate]") : null;
+    if (button) celebrate(button, { count: 26, shapes: ["paw", "heart", "bone"] });
+  });
+</script>
+
+<style>
+  .ce {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .ce-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .ce-item {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 24px;
+    min-height: 320px;
+    padding: 24px;
+    border: 1px solid var(--rule);
+    text-align: center;
+  }
+  .ce-item p {
+    margin: 0;
+    max-width: 26em;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+  .ce-item code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .ce-btn {
+    padding: 18px 30px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 16px var(--sans);
+    cursor: pointer;
+    transition: background 0.3s var(--ease);
+  }
+  .ce-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .ce-btn--alt {
+    background: #fff;
+    color: var(--ink);
+  }
+  .ce-btn--alt:hover {
+    color: #fff;
+  }
+  @media (max-width: 640px) {
+    .ce-grid {
+      grid-template-columns: 1fr;
+    }
+    .ce-item {
+      min-height: 240px;
+    }
+  }
+</style>

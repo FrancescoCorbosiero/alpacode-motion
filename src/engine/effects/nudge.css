@@ -1,0 +1,9 @@
+/* ============================================================
+   nudge.
+
+   Reduced motion: no shake; the browser's message, or the page's,
+   says what to fix.
+
+   No rules to copy: the look of a field that needs fixing
+   (:user-invalid, .is-invalid) is the site's.
+   ============================================================ */

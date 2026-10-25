@@ -1,0 +1,103 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<form data-nudge>
+  <label>… <input name="email" type="email" required /></label>
+  <button>…</button>
+</form>
+
+<script>
+  // a form that validates in its own script
+  import { nudge } from "../engine/effects/nudge";
+  nudge(form.querySelectorAll(".is-invalid"));
+</script>`;
+---
+
+<Entry
+  id="nudge"
+  markup={markup}
+  look="Premi Invia con i campi vuoti, o con un indirizzo sbagliato: i campi da sistemare fanno no con la testa, una scossa breve a destra e a sinistra."
+  replay={false}
+  hookWhat="A form the browser validates: the fields it flags shake together; a form that validates in its own script calls `nudge(fields)`."
+  attributes={[{ name: "data-nudge-field", value: "—", what: "What shakes for a control: its field's box (else its label, else the control)." }]}
+>
+  <section class="nu">
+    <div class="wrap">
+      <form class="nu-form" data-nudge data-try-nudge data-astro-reload>
+        <h3 class="nu-title">Scrivi allo studio</h3>
+        <div class="nu-field" data-nudge-field>
+          <label for="nu-name">Il nome</label>
+          <input id="nu-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="nu-field" data-nudge-field>
+          <label for="nu-email">L'email</label>
+          <input id="nu-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <button class="nu-btn" type="submit">Invia</button>
+        <p class="nu-ok" data-try-ok hidden>Tutto in ordine: è una prova, il modulo non parte.</p>
+      </form>
+    </div>
+  </section>
+</Entry>
+
+<script>
+  // The demo's form never leaves the page (data-astro-reload keeps the
+  // router off it; this stops the submit).
+  document.addEventListener("submit", (e) => {
+    const form = e.target instanceof HTMLFormElement && e.target.matches("[data-try-nudge]") ? e.target : null;
+    if (!form) return;
+    e.preventDefault();
+    const ok = form.querySelector<HTMLElement>("[data-try-ok]");
+    if (ok) ok.hidden = false;
+  });
+</script>
+
+<style>
+  .nu {
+    padding-block: clamp(120px, 20vh, 220px);
+  }
+  .nu-form {
+    display: grid;
+    gap: 18px;
+    max-width: 560px;
+  }
+  .nu-title {
+    margin: 0 0 6px;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.05;
+  }
+  .nu-field {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .nu-field input {
+    padding: 14px 16px;
+    border: 1.5px solid var(--ink);
+    background: #fff;
+    font: 15px var(--sans);
+  }
+  .nu-field input:user-invalid {
+    border-color: #c8372d;
+  }
+  .nu-btn {
+    justify-self: start;
+    padding: 14px 24px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font: 700 15px var(--sans);
+    cursor: pointer;
+  }
+  .nu-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .nu-ok {
+    margin: 0;
+    color: var(--mute-2);
+  }
+</style>
