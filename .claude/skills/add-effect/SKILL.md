@@ -73,8 +73,11 @@ their files) are the worked examples.
   blank line, what the rules are for, `Sources:`. The page shows the
   end-state paragraph; `npm run check` requires it.
 - Nothing is hidden by CSS. The rules lay out the end state; a scene
-  switches to its stage only under `.has-motion` (set by the core when
-  motion runs).
+  (or a rail) switches to its live layout only on an attribute its
+  script sets on the elements it runs (`data-scene-live`,
+  `data-rail-live`), never on `.has-motion` alone: a lazy chunk that
+  fails to load, or an element left alone in the first view, keeps the
+  end state.
 - No rules needed: the header and "No rules to copy."
 
 ## 3. The registry — `src/engine/registry.ts`

@@ -1,0 +1,69 @@
+/* ============================================================
+   stage.
+
+   Reduced motion: an ordinary section, its beats one after another,
+   no progress rule. Without JS, or before its chunk has loaded, the
+   same: the stage switches on [data-scene-live], set by the script on
+   the scenes it runs.
+
+   The live scene is --len screens tall and its stage sticks for it, a
+   screen high, its content centred; the beats share one cell; the rule
+   runs along the stage's foot, filled to --p. Nothing above a stage
+   may clip it with overflow: hidden (sticky stops working): use
+   overflow: clip. On a phone the stage must fit 390×664: secondary
+   copy marked [data-scene-aside] steps out of sight there (screen
+   readers keep it). The rule's colours are --scene-progress-color and
+   --scene-progress-track, its sides --scene-gutter.
+
+   Sources: A src/styles/landing.css:422.
+   ============================================================ */
+[data-scene] {
+  position: relative;
+}
+[data-scene-live] {
+  height: calc(var(--len, 2.5) * 100svh);
+}
+[data-scene-live] > [data-scene-stage] {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+[data-scene-live] [data-scene-beats] {
+  display: grid;
+}
+[data-scene-live] [data-scene-beat] {
+  grid-area: 1 / 1;
+}
+@media (max-width: 720px) {
+  [data-scene-live] [data-scene-aside] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+[data-scene-progress] {
+  display: none;
+}
+[data-scene-live] [data-scene-progress] {
+  display: block;
+  position: absolute;
+  left: var(--scene-gutter, 24px);
+  right: var(--scene-gutter, 24px);
+  bottom: 28px;
+  height: 2px;
+  background: var(--scene-progress-track, rgba(127, 140, 166, 0.22));
+}
+[data-scene-live] [data-scene-progress]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--scene-progress-color, currentColor);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+}

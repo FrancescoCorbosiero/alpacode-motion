@@ -455,6 +455,15 @@
       ],
       "total": 55339
     },
+    "stage": {
+      "min": 1456,
+      "gzip": 822,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52533
+    },
     "stamp": {
       "min": 642,
       "gzip": 433,

@@ -1,0 +1,129 @@
+---
+import Entry from "../components/Entry.astro";
+import { plate } from "./_shared/plates";
+
+const markup = `<section data-scene data-scene-at="0.34 0.67" style="--len: 3">
+  <div data-scene-stage>
+    <div data-scene-beats>
+      <div data-scene-beat>…</div>
+      <div data-scene-beat>…</div>
+      <div data-scene-beat>…</div>
+    </div>
+    <figure data-scene-aside>…</figure>  <!-- steps out of sight on a phone -->
+    <span data-scene-progress></span>
+  </div>
+</section>`;
+const beatsCopy = [
+  { n: "01", title: "Il palco resta fermo.", text: "La sezione è alta tre schermi: mentre la scorri, il palco rimane sullo schermo." },
+  { n: "02", title: "Il testo cambia, una battuta alla volta.", text: "Ogni battuta lascia il posto alla successiva in un punto preciso dello scroll." },
+  { n: "03", title: "La riga in fondo dice quanto manca.", text: "Quando la sezione finisce, il palco riprende a scorrere con la pagina." },
+];
+---
+
+<Entry
+  id="stage"
+  markup={markup}
+  look="Scorri: il palco resta sullo schermo per tre schermi di scroll, le battute si passano la parola a un terzo e a due terzi, la riga in fondo si riempie. Tornando su, tutto torna indietro."
+  replay={false}
+  attributes={[
+    { name: "--len", value: "3", what: "How many screens of scroll the scene lasts (default 2.5)." },
+    { name: "data-scene-at", value: "0.34 0.67", what: "When each beat hands over to the next, as shares of the scene (evenly spaced without it)." },
+    { name: "data-scene-aside", value: "—", what: "Secondary content that steps out of sight on a phone's stage (screen readers keep it)." },
+  ]}
+>
+  <section class="sg" data-scene data-scene-at="0.34 0.67" style="--len: 3">
+    <div class="sg-stage" data-scene-stage>
+      <div class="wrap sg-grid">
+        <div class="sg-beats" data-scene-beats>
+          {
+            beatsCopy.map((b) => (
+              <div class="sg-beat" data-scene-beat>
+                <p class="sg-n">{b.n} / 03</p>
+                <h3 class="sg-title">{b.title}</h3>
+                <p class="sg-text">{b.text}</p>
+              </div>
+            ))
+          }
+        </div>
+        <figure class="sg-plate" data-scene-aside>
+          <img src={plate(61)} alt="Una tavola in stile cianografia." width="1200" height="900" />
+        </figure>
+      </div>
+      <span class="sg-progress" data-scene-progress aria-hidden="true"></span>
+    </div>
+  </section>
+  <div class="wrap sg-after">
+    <p>Dopo la sezione la pagina riprende normale: il palco è CSS (sticky), senza spazi aggiunti dallo script.</p>
+  </div>
+</Entry>
+
+<style>
+  .sg {
+    --scene-gutter: var(--gutter);
+    --scene-progress-color: var(--blue);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .sg-stage {
+    padding-block: clamp(72px, 12vh, 120px);
+  }
+  .sg-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+    width: 100%;
+  }
+  .sg-beats {
+    display: grid;
+    gap: 48px;
+  }
+  .sg-n {
+    margin: 0 0 18px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--blue);
+  }
+  .sg-title {
+    margin: 0 0 18px;
+    max-width: 13em;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(32px, 4.4vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .sg-text {
+    margin: 0;
+    max-width: 30em;
+    line-height: 1.6;
+    color: var(--on-ink-mute);
+  }
+  .sg-plate {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--on-ink-rule);
+  }
+  .sg-plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sg-after {
+    padding-block: clamp(64px, 10vh, 120px) clamp(160px, 26vh, 280px);
+  }
+  .sg-after p {
+    margin: 0;
+    max-width: 34em;
+    color: var(--mute-2);
+  }
+  @media (max-width: 720px) {
+    .sg-grid {
+      grid-template-columns: 1fr;
+    }
+    .sg-title {
+      font-size: clamp(30px, 9vw, 40px);
+    }
+  }
+</style>

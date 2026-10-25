@@ -15,6 +15,9 @@
    - loops run only on screen: the marquee stands still off screen; the
      hero video plays only on screen, and has no sources under reduced
      motion;
+   - the sticky stage: its chunk only where a scene is, the stage
+     sticking while the beats hand over, an ordinary section under
+     reduced motion;
    - pointer play only with a mouse, handed back to the stylesheet when
      the pointer leaves; a tap on a touch screen moves nothing.
    Prints each check; any failure or page error fails the run.
@@ -31,7 +34,7 @@ let failed = 0;
 // The lazy chunks (registry.ts) and the plugin they bring.
 const lazyFetched = [];
 page.on("request", (r) => {
-  if (/\/_astro\/(mark-circle|mark-box|hand|_loops|DrawSVGPlugin)[.-]/.test(r.url())) lazyFetched.push(r.url());
+  if (/\/_astro\/(mark-circle|mark-box|hand|_loops|DrawSVGPlugin|stage)[.-]/.test(r.url())) lazyFetched.push(r.url());
 });
 
 function check(name, ok, detail = "") {
@@ -292,6 +295,40 @@ check("reduced motion: no sources, the poster, no toggle", film.sources === 0 &&
 await page.emulateMedia({ reducedMotion: "no-preference" });
 await settle(400);
 check("…and off again, its sources are back", (await video()).sources > 0);
+
+/* The sticky stage (tier 2, lazy): its chunk only where a scene is; the
+   scene goes live, its stage sticks while the beats hand over; under
+   reduced motion it's an ordinary section. */
+step = "stage";
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("pages without a scene fetched no stage chunk", !lazyFetched.some((u) => /\/stage[.-]/.test(u)));
+check("→ /stage/ softly", (await navigate("/")) && (await navigate("/stage/")));
+await settle(400);
+check("a page with a scene fetches the stage chunk", lazyFetched.some((u) => /\/stage[.-]/.test(u)));
+const scene = () =>
+  page.evaluate(() => {
+    const root = document.querySelector("[data-scene]");
+    const stage = root.querySelector("[data-scene-stage]");
+    return {
+      live: root.hasAttribute("data-scene-live"),
+      top: Math.round(stage.getBoundingClientRect().top),
+      shown: [...root.querySelectorAll("[data-scene-beat]")].map((b) => getComputedStyle(b).visibility !== "hidden"),
+    };
+  });
+check("below the fold, the scene goes live", (await scene()).live);
+const sceneTop = await page.evaluate(() => document.querySelector("[data-scene]").getBoundingClientRect().top + scrollY);
+const sceneLen = await page.evaluate(() => document.querySelector("[data-scene]").offsetHeight - innerHeight);
+await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), sceneTop + sceneLen * 0.5);
+await settle(1000);
+let sc = await scene();
+check("halfway through, the stage sticks and the second beat speaks", sc.top === 0 && sc.shown.join() === "false,true,false", `top ${sc.top}, beats ${sc.shown.join(" ")}`);
+await page.emulateMedia({ reducedMotion: "reduce" });
+await settle(400);
+sc = await scene();
+check("reduced motion: an ordinary section, every beat shown", !sc.live && sc.shown.every(Boolean));
+await page.emulateMedia({ reducedMotion: "no-preference" });
+await settle(400);
 
 /* Pointer play: with a mouse it leans, and hands back when it leaves;
    on a touch screen nothing moves. */

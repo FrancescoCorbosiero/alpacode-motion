@@ -107,6 +107,7 @@ Weight column of catalog.md.
 | `split-pop` | 576 B | 977 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-wipe` | 538 B | 905 B | gsap, ScrollTrigger, SplitText | 55.4 KB |
 | `split-words` | 518 B | 877 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
+| `stage` | 822 B | 1.5 KB | gsap, ScrollTrigger | 52.5 KB |
 | `stamp` | 433 B | 642 B | gsap, ScrollTrigger | 52.2 KB |
 | `strut` | 311 B | 443 B | gsap, ScrollTrigger | 52.1 KB |
 | `tilt` | 879 B | 1.7 KB | gsap | 52.6 KB |

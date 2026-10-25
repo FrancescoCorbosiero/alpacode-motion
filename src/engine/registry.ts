@@ -60,4 +60,5 @@ export const lazy: LazyEffect[] = [
   { hook: '[data-mark="circle"]', load: () => import("./effects/mark-circle") },
   { hook: '[data-mark="box"]', load: () => import("./effects/mark-box") },
   { hook: "[data-hand]", load: () => import("./effects/hand") },
+  { hook: "[data-scene]", load: () => import("./effects/stage") },
 ];
