@@ -1,0 +1,23 @@
+/* ============================================================
+   frame-scroll.
+
+   Reduced motion: the page scrolls by hand inside its frame
+   (overflow-y: auto), from its top. Without JS, the same.
+
+   The viewport holds the tall picture at its full width; the effect
+   takes the scroll over (data-frame-scroll-on) and hides the bar.
+
+   Sources: A src/styles/showcase.css (new, the case pages).
+   ============================================================ */
+[data-frame-scroll] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+[data-frame-scroll] img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+[data-frame-scroll-on] {
+  overflow: hidden;
+}

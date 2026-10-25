@@ -1,0 +1,16 @@
+/* ============================================================
+   method.
+
+   Reduced motion: every step shows its own drawing, as laid out.
+   Without JS, the same.
+
+   Once the scene is live ([data-scene-live], set by the stage's
+   scrubbed()) the wrapper is --len screens tall and its stage sticks:
+   stage.css does it (copy it too), so this entry has no rules of its
+   own. Where the drawings share their place (one over the other) and
+   where the texts stand is the site's layout: alpacode.it puts the
+   steps in a column beside the drawing on a desktop, and in one place
+   under it on a phone.
+
+   Sources: A src/styles/showcase.css (new, the home and /servizi).
+   ============================================================ */

@@ -1,0 +1,362 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<div data-scene="method" style="--len: 4.2">
+  <div data-scene-stage>
+    <ol>
+      <li data-method-step>
+        <svg viewBox="0 0 480 360">  <!-- the same pieces, in the same order, in every step -->
+          <rect data-method-piece="0" x="40" y="64" width="260" height="112" />
+          …
+          <path data-method-piece="path" d="M424 96 L424 74 …" />  <!-- as many points in every step -->
+          <g data-method-note>…</g>
+        </svg>
+        <div data-method-text>…</div>
+      </li>
+      …
+    </ol>
+    <div data-method-rail hidden><i></i></div>
+  </div>
+</div>`;
+
+const steps = [
+  { n: "01", t: "La call", d: "Mezz'ora per capire cosa serve, senza vendere niente.", note: "30 minuti" },
+  { n: "02", t: "La proposta", d: "Cosa si fa, in quanto tempo e a che costo, per iscritto.", note: "cosa · tempi · costo" },
+  { n: "03", t: "La costruzione", d: "Il progetto cresce sotto gli occhi di chi lo ha chiesto.", note: "un aggiornamento a ogni passo" },
+  { n: "04", t: "Il lancio", d: "Online, e chi l'ha fatto resta per quello che serve.", note: "online, e si resta" },
+];
+
+type R = [x: number, y: number, w: number, h: number];
+type C = [cx: number, cy: number, r: number];
+interface Drawing {
+  /** frame, soft, bar, accent, then four lines/blocks */
+  rects: [R, R, R, R, R, R, R, R];
+  dot: C;
+  ring: C;
+  /** six points, always six: the scene morphs it point by point */
+  path: [number, number][];
+  /** the note's dimension line and where its text sits */
+  dim: [x1: number, y1: number, x2: number, y2: number];
+  text: [x: number, y: number, anchor: "start" | "middle" | "end"];
+}
+
+/* viewBox 480 × 360. The order of the rects is their stacking order
+   and their role: 0 the frame (paper), 1 the soft one (blue tint,
+   painted first so it sits behind), 2 the bar (ink), 3 the accent
+   (blue), 4–7 lines that become blocks. */
+const DRAWINGS: Drawing[] = [
+  {
+    // 01 — the call: two voices, a clock
+    rects: [
+      [40, 64, 260, 112],
+      [200, 190, 230, 96],
+      [64, 88, 96, 12],
+      [224, 214, 120, 10],
+      [64, 114, 200, 8],
+      [64, 134, 164, 8],
+      [224, 236, 176, 8],
+      [224, 256, 132, 8],
+    ],
+    dot: [424, 96, 4],
+    ring: [424, 96, 30],
+    path: [[424, 96], [424, 74], [424, 96], [442, 105], [442, 105], [442, 105]],
+    dim: [394, 146, 454, 146],
+    text: [424, 170, "middle"],
+  },
+  {
+    // 02 — the proposal: the sheets, the cost box, the signature
+    rects: [
+      [150, 22, 200, 280],
+      [176, 36, 200, 280],
+      [174, 48, 104, 14],
+      [174, 222, 152, 34],
+      [174, 82, 152, 8],
+      [174, 100, 136, 8],
+      [174, 118, 148, 8],
+      [174, 136, 100, 8],
+    ],
+    dot: [318, 284, 4],
+    ring: [306, 176, 14],
+    path: [[178, 288], [196, 276], [212, 290], [230, 274], [248, 288], [264, 280]],
+    dim: [150, 326, 376, 326],
+    text: [263, 350, "middle"],
+  },
+  {
+    // 03 — the build: the site takes shape, an update at every step
+    rects: [
+      [20, 36, 360, 220],
+      [316, 268, 144, 52],
+      [20, 36, 360, 22],
+      [40, 76, 200, 64],
+      [40, 156, 100, 80],
+      [150, 156, 100, 80],
+      [260, 156, 100, 80],
+      [256, 78, 104, 10],
+    ],
+    dot: [226, 126, 4],
+    ring: [226, 126, 12],
+    path: [[338, 294], [348, 304], [368, 282], [368, 282], [368, 282], [368, 282]],
+    dim: [316, 332, 460, 332],
+    text: [460, 354, "end"],
+  },
+  {
+    // 04 — the launch: the site live, and the pulse of who stays
+    rects: [
+      [20, 36, 360, 220],
+      [292, 10, 88, 16],
+      [20, 36, 360, 22],
+      [40, 76, 320, 64],
+      [40, 156, 100, 80],
+      [150, 156, 100, 80],
+      [260, 156, 100, 80],
+      [40, 244, 320, 4],
+    ],
+    dot: [448, 300, 5],
+    ring: [448, 300, 14],
+    path: [[20, 300], [180, 300], [196, 280], [214, 320], [230, 300], [434, 300]],
+    dim: [20, 326, 180, 326],
+    text: [20, 350, "start"],
+  },
+];
+const RECT_CLASS = ["m-frame", "m-soft", "m-bar", "m-accent", "m-line", "m-line", "m-line", "m-line"];
+const pathD = (pts: [number, number][]) => pts.map(([x, y], i) => `${i ? "L" : "M"}${x} ${y}`).join(" ");
+
+---
+
+<Entry
+  id="method"
+  markup={markup}
+  look="Un disegno solo, sul palco fermo: la call diventa la proposta, poi il cantiere del sito, poi il sito online. I pezzi sono gli stessi in ogni passo; cambia solo dove stanno. Col movimento ridotto, ogni passo ha il suo disegno."
+>
+  <section class="md-demo">
+    <div class="wrap md-head">
+      <p class="md-k">Metodo</p>
+      <h2 class="md-h">Dalla prima call al lancio.</h2>
+    </div>
+    <div class="md-scene" data-scene="method" style="--len:4.2">
+      <div class="md-stage" data-scene-stage>
+        <div class="wrap">
+          <ol class="md-steps">
+            {
+              steps.map((s, i) => {
+                const d = DRAWINGS[i]!;
+                return (
+                  <li class="md-step" data-method-step>
+                    <svg class="md-art" viewBox="0 0 480 360" aria-hidden="true">
+                      <g>
+                        {[1, 0, 2, 3, 4, 5, 6, 7].map((k) => {
+                          const [x, y, w, h] = d.rects[k]!;
+                          return <rect class={RECT_CLASS[k]} data-method-piece={k} x={x} y={y} width={w} height={h} />;
+                        })}
+                        <circle class="m-ring" data-method-piece="ring" cx={d.ring[0]} cy={d.ring[1]} r={d.ring[2]} />
+                        <circle class="m-dot" data-method-piece="dot" cx={d.dot[0]} cy={d.dot[1]} r={d.dot[2]} />
+                        <path class="m-path" data-method-piece="path" d={pathD(d.path)} />
+                      </g>
+                      <g data-method-note>
+                        <line class="m-dim" x1={d.dim[0]} y1={d.dim[1]} x2={d.dim[2]} y2={d.dim[3]} />
+                        <line class="m-dim" x1={d.dim[0]} y1={d.dim[1] - 5} x2={d.dim[0]} y2={d.dim[1] + 5} />
+                        <line class="m-dim" x1={d.dim[2]} y1={d.dim[3] - 5} x2={d.dim[2]} y2={d.dim[3] + 5} />
+                        <text class="m-text" x={d.text[0]} y={d.text[1]} text-anchor={d.text[2]}>
+                          {s.note}
+                        </text>
+                      </g>
+                    </svg>
+                    <div class="md-text" data-method-text>
+                      <span class="md-no">{s.n}</span>
+                      <h3>{s.t}</h3>
+                      <p>{s.d}</p>
+                    </div>
+                  </li>
+                );
+              })
+            }
+          </ol>
+          <div class="md-rail" data-method-rail hidden aria-hidden="true"><i /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .md-demo {
+    padding-block: clamp(96px, 16vh, 180px) clamp(120px, 20vh, 220px);
+    background: var(--paper-2);
+  }
+  .md-head {
+    margin-bottom: 40px;
+  }
+  .md-k {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+  .md-h {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 50px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .md-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block: 1px solid var(--ink);
+  }
+  .md-step {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+    padding: 24px 20px 28px;
+    border-right: 1px solid var(--rule);
+  }
+  .md-step:last-child {
+    border-right: 0;
+  }
+  .md-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--paper-3) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-3) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 1px solid var(--rule);
+  }
+  .md-text {
+    display: grid;
+    gap: 8px;
+  }
+  .md-no {
+    font-family: var(--display);
+    font-size: 36px;
+    line-height: 1;
+  }
+  .md-text h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 21px;
+    line-height: 1;
+  }
+  .md-text p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mute-2);
+  }
+  .m-frame {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .m-soft {
+    fill: var(--blue-soft);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .m-bar {
+    fill: var(--ink);
+  }
+  .m-accent {
+    fill: var(--blue);
+  }
+  .m-line {
+    fill: var(--rule);
+  }
+  .m-ring {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .m-dot {
+    fill: var(--blue);
+  }
+  .m-path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .m-dim {
+    stroke: var(--blue);
+    stroke-width: 1;
+  }
+  .m-text {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 700;
+    fill: var(--blue-deep);
+  }
+  .md-rail {
+    height: 3px;
+    margin-top: 24px;
+    overflow: hidden;
+    background: var(--rule);
+  }
+  .md-rail i {
+    display: block;
+    height: 100%;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  /* The scene: the drawings in one place, the steps in a column beside. */
+  :global([data-scene-live]) .md-stage {
+    padding: 72px 0 24px;
+  }
+  :global([data-scene-live]) .md-stage > .wrap {
+    width: 100%;
+  }
+  :global([data-scene-live]) .md-steps {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    column-gap: 56px;
+    align-items: center;
+    border: 0;
+  }
+  :global([data-scene-live]) .md-step {
+    display: contents;
+  }
+  :global([data-scene-live]) .md-art {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+  :global([data-scene-live]) .md-text {
+    grid-column: 2;
+    padding: 14px 0 14px 22px;
+    border-left: 2px solid var(--rule);
+  }
+  :global([data-scene-live]) .md-text:global(.is-active) {
+    border-left-color: var(--blue);
+  }
+  @media (max-width: 900px) {
+    .md-steps {
+      grid-template-columns: 1fr 1fr;
+    }
+    :global([data-scene-live]) .md-steps {
+      grid-template-columns: 1fr;
+      row-gap: 18px;
+    }
+    :global([data-scene-live]) .md-art {
+      grid-row: 1;
+    }
+    :global([data-scene-live]) .md-text {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      padding: 0;
+      border-left: 0;
+    }
+  }
+  @media (max-width: 560px) {
+    .md-steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

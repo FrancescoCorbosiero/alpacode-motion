@@ -54,6 +54,9 @@ npm run shots     # each entry's screenshots (after build)
 npm run weight    # each entry's weight, into the catalog and the docs
 ```
 
-Status: phase 2 — every tier-1 entry alpacode has, and tier 2's sticky
-`stage`, are `demo` (46 entries); the engine runs the sites (D18). Next,
-the site switch and the rest of tier 2 (`docs/status.md`).
+Status: phase 2 — every tier-1 entry alpacode has, tier 2's sticky
+`stage`, and the moves of alpacode.it's showcase and of Alpacode
+Studio (`cursor-thumb`, `frame-scroll`, `flip-filter`; the scenes
+`cases`, `method`, `map`, `meter`) are `demo` (53 entries); the engine
+runs both alpacode sites (D18). Next, the rest of tier 2, and
+comunicazionecinofila's switch (`docs/status.md`).

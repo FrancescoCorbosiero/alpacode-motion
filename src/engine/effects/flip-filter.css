@@ -1,0 +1,12 @@
+/* ============================================================
+   flip-filter.
+
+   Reduced motion: the filter works at once, with CSS alone. Without
+   JS, the same.
+
+   No rules to copy. The filtering itself is the site's, one rule per
+   kind, standing down while the effect runs:
+   [data-flip-filter]:not([data-flip-filter-on]):has(input[value="shop"]:checked)
+     [data-flip-filter-item]:not([data-flip-filter-item~="shop"]) { display: none; }
+   (alpacode.it writes them from its kinds, src/components/pages/Lavori.astro).
+   ============================================================ */

@@ -7,7 +7,7 @@ in the gallery, and the Status column follows them (see
 [`docs/status.md`](docs/status.md)). The gallery's index is built from this
 file, and `npm run check` keeps the two in step.
 
-**86 effects**: 63 tier-1 primitives, 8 tier-2 scenes, 15 tier-3 showcase
+**91 effects**: 65 tier-1 primitives, 8 tier-2 scenes, 18 tier-3 showcase
 entries — plus 13 core pieces (the engine, not effects) and 61 CSS
 keyframes (listed at the end). When two sources do the same move, they are
 one entry and the differences are in Notes.
@@ -56,6 +56,7 @@ Pinned commits — the line numbers below are valid there:
 
 - **A** — `FrancescoCorbosiero/alpacode-website` at `0876836` (2026-10-22): alpacode.it (`src/`) and fast.alpacode.it (`fast/`)
 - **C** — `FrancescoCorbosiero/comunicazionecinofila` at `505c8c6` (2026-10-19)
+- **H** — `FrancescoCorbosiero/alpacode-website` at `0daaa1e` (2026-10-24): alpacode.it with its showcase (/lavori, the case pages, the home's cases, method and map). The moves were born there in this repo's contract; the files are where they are used
 
 | Key | File |
 | --- | --- |
@@ -79,6 +80,13 @@ Pinned commits — the line numbers below are valid there:
 | CSC | [`src/styles/sections.css`](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/sections.css) — the pages' sections, the scenes' CSS |
 | CFC | [`src/styles/effects.css`](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/effects.css) |
 | CSI | [`src/styles/site.css`](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/site.css) |
+| HL | [`src/components/pages/Lavori.astro`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/pages/Lavori.astro) — /lavori: the index, its filters, its cursor frame |
+| HB | [`src/components/BrowserFrame.astro`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/BrowserFrame.astro) — a project's site in a browser frame |
+| HH | [`src/components/home/Cases.astro`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Cases.astro) — Casi di studio |
+| HP | [`src/components/home/Process.astro`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Process.astro) — Metodo: the four drawings |
+| HV | [`src/components/home/Coverage.astro`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Coverage.astro) — Dove operiamo: the map |
+| HD | [`src/lib/italy-dots.ts`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/lib/italy-dots.ts) — the dots of Italy and the projection, at build |
+| HSC | [`src/styles/showcase.css`](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css) — the showcase's CSS |
 
 ---
 
@@ -185,6 +193,7 @@ The studio's hand on the copy: marks drawn on words, notes in the margin.
 | spin | `src` | `data-spin` | A round badge turns with the scroll | [CM 1002](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1002) | scrub | — |  |
 | rail | `demo` | `data-rail` (`[data-rail-step]`, `[data-rail-tile]`; `--p`) | A rail fills with the scroll (`--p`), the steps light up as it passes, each tile gives a little jolt | [AM 740](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L740) · [CM 968](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L968) · CSS [AMC 178](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/styles/motion.css#L178) | scrub | 567 B | A's `data-progress` (`[data-progress-fill]`, `[data-progress-step]`, `[data-progress-tile]`) maps to `data-rail`, `[data-rail-step]`, `[data-rail-tile]`; the fill needs no hook: `--p` is set on the rail and the fill's CSS reads it (C's way; A set it on the fill). C's `data-rail` keeps its markup. The waiting steps dim under `[data-rail-live]`, set by the script on the rails it runs (both sources dimmed under `.has-motion`, a first-view rail included): a site's look for a lit step is its default, the waiting look goes under `[data-rail-live] … :not(.is-reached)` (A's `.clb-step` wrote it as `.is-reached` or `html:not(.has-motion)`). A's runner (the alpaca leaping along the tiles, `data-here`) is tier 3. The port leaves a rail in the first view full. Thresholds: D19 (A i/n, C i/(n−1): `LAST_AT_END`) |
 | float | `src` | `data-float` | Stickers bob slowly, each in its own time | [CM 544](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L544) | loop | — | Ambient. C's loops run off screen too: pause them there when ported |
+| frame-scroll | `demo` | `data-frame-scroll` | A whole page scrolls inside its frame as the visitor scrolls past it | [HB 38](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/BrowserFrame.astro#L38) · CSS [HSC 75](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css#L75) | scrub | 401 B | The tall picture is the page from top to bottom; without motion the frame scrolls by hand (`overflow-y: auto`). Distance from layout (the picture's height minus the view's), clamped at the start, so a frame in the first view starts at its top. Live: the case pages, `/lavori/<id>/`, once a project has its full-page screenshot |
 
 ### Pointer and input
 
@@ -195,7 +204,8 @@ The studio's hand on the copy: marks drawn on words, notes in the margin.
 | coin | `demo` | `data-coin` | On change, the chosen option's icon flips like a coin and swells | [AM 1040](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L1040) | input | 443 B | A's `[data-payout-picker]` maps to `data-coin`, its `.rf-payout-icon` to `[data-coin-icon]` (found through the input's label, A's `.rf-payout-option`, else its closest `[data-coin-option]`). The icon's `data-pop` (its reveal) stays. The port flips only a chosen option (an unchecked checkbox doesn't flip) and undoes a flip still running when the page goes |
 | accordion | `demo` | `data-accordion` (on `<details>`) | Opens and closes with a height tween; clicked again while closing, it opens back up from where it is | [AM 1058](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/src/lib/motion.ts#L1058) | click | 531 B | Works without JS (native `<details>`). A's `details.rf-faq-item` maps to `data-accordion`; its answer, `.rf-faq-a`, needs no hook: it's the box after the summary. `.is-closing` stays A's class (its icon turns back on it). The port clips the answer while it folds too (A set `overflow: hidden` only while it opened, so the folding text spilled over what follows) and, if the page goes mid-fold, finishes closing it |
 | cursor-trail | `src` | `data-cursor-trail` | Prints follow the mouse, left and right in turn, facing the way it moves; on touch, one print per tap | [CM 1252](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1252) · CSS [CMC 107](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/motion.css#L107) | ptr, tap | — | C's `data-paw-trail`: the glyph is the brand's (paws) |
-| cursor-thumb | `src` | `data-cursor-thumb` | An index row's thumbnail follows the pointer and pops in, tilted | [CM 1227](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1227) | ptr | — | C's `data-path-row`. Live: [index.astro:175](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/pages/index.astro#L175) |
+| cursor-thumb | `demo` | `data-cursor-thumb` (`-row`, `-pic`, `-frame`, `-slot`, `-bar`) | Over an index, a frame follows the pointer and shows the picture of the row under it | [HL 75](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/pages/Lavori.astro#L75) · CSS [HSC 268](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css#L268) · [CM 1227](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1227) | ptr | 1.2 KB | Canonical: H's — one frame for the list: each row's picture wipes in from the side the pointer came from, the frame leans with its speed, and a click hands the row's view-transition name to it (what the visitor looks at grows into the next page). C keeps one thumb per row that pops in from nothing, tilted at random: `ENTER_SCALE`, `ENTER_TILT`; its markup becomes one list with its frame (C's `data-path-row`). Live: [index.astro:175](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/pages/index.astro#L175) · alpacode.it `/lavori` |
+| flip-filter | `demo` | `data-flip-filter` (`[data-flip-filter-item]`, radio inputs) | A filter that rearranges its list: what stays slides to its new place, what goes folds away, what comes back opens in | [HL 59](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/pages/Lavori.astro#L59) | input, Flip | 678 B | Works with no script: the site's `:has()` rules filter on the checked input and stand down under `data-flip-filter-on`. The list's height eases with the items, so what follows doesn't jump. Live: alpacode.it `/lavori` |
 | lens | `src` | `data-lens="url"` | A magnifier follows the pointer over an image: the same image, zoomed, in a circle | [CM 1307](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1307) · CSS [CMC 140](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/motion.css#L140) | ptr, tick | — | Live: [lavora-con-noi.astro:100](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/pages/lavora-con-noi.astro#L100) |
 | pet | `src` | `data-pet` | Wags when the pointer passes; a burst of hearts on click | [CM 1365](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1365) | ptr, click | — | Uses `celebrate` with one shape |
 | roll | `src` | `data-roll` | A button's label rolls: out at the top, back in from below | [CM 1380](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L1380) · CSS [CMC 126](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/motion.css#L126) | ptr | — | The JS only prepares the DOM, the hover is CSS. C does it to every `.btn` |
@@ -306,12 +316,23 @@ Promoted to tier 1, since the move is generic: `knoll` → knoll, `bars` →
 bars, `stamp` → stamp, `trades` → alternate, `pact` → draw. The scene
 `stack` is listed as `layers` (C's `data-stack` is another effect).
 
+### The house's showcase (H)
+
+alpacode.it's home and /lavori, rebuilt in October 2026. Born in this
+repo's contract (a hook and `init(kit)`), so the module is the code.
+
+| id | Status | Page | Type | Weight | The story | Worth reusing | Source |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| cases | `demo` | home, Casi di studio | stage | 1.1 KB | The projects one after another on a pinned stage: each one's "before" is struck through as its "after" comes in, then the next site wipes up over the frame | built on `stage`'s helpers (`scrubbed`); beats with links that stay focusable: focus on a case still to come scrolls the stage to it | [HH 38](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Cases.astro#L38) · CSS [HSC 792](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css#L792) |
+| method | `demo` | home and /servizi, Metodo | stage | 1.3 KB | One technical drawing turns from the call into the proposal, the build and the launch as the steps go by | built on `stage`'s helpers (`scrubbed`); the drawings are the states: the same pieces in every drawing, their geometry read from the markup and tweened (`attr`), so a step's drawing is changed in the markup alone | [HP 44](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Process.astro#L44) · CSS [HSC 997](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css#L997) |
+| map | `demo` | home and /lavori, Dove operiamo | once, loop | 972 B | Italy in dots spreads out from the base, then an arc reaches every place where a client is; each place pops in as its arc lands | a dot map as one path of zero-length round-capped strokes, worked out at build ([HD 56](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/lib/italy-dots.ts#L56)); an SVG mask circle as the reach; rows and places lit together | [HV 40](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/components/home/Coverage.astro#L40) · CSS [HSC 1083](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/src/styles/showcase.css#L1083) |
+
 ### Two more
 
 | id | Status | Where | Type | Weight | The story | Worth reusing | Source |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | iris | `src` | C, home hero (`data-hero-zoom`) | pin, desk | — | The hero photo sits in a peach circle, a bowl seen from above; scrolling, the circle grows to fill the screen while the photo returns to its full scale: you step into the photo | geometry read from CSS variables, a focal point (`data-focal`) kept centred through `object-fit` maths, `fromTo` because the CSS intro is still running at init | [CM 565](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/scripts/motion.ts#L565) · CSS [CSC 88](https://github.com/FrancescoCorbosiero/comunicazionecinofila/blob/505c8c66c85df1b4ad153c7fa601b1f2f6564c65/src/styles/sections.css#L88) |
-| meter | `src` | FAST, home | stage | — | A needle swings from PAURA to LEVA; the word scrambles into the next; the beats hand over | ScrambleText on a scrubbed timeline, a needle turned on its `svgOrigin` | [AF 81](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/fast/src/lib/motion.ts#L81) |
+| meter | `demo` | FAST, home; Alpacode Studio, /prodotti/ai-al-lavoro | stage | 899 B | A needle swings from one end of a dial to the other, a step per beat; the word under it scrambles into the next; the beats hand over | ScrambleText on a scrubbed timeline built on `stage`'s helpers, a needle turned on its `svgOrigin`; the angles are settings (`FROM`, `TO`), the pivot is the needle's `data-meter-pivot`, the beats spread evenly | [AF 81](https://github.com/FrancescoCorbosiero/alpacode-website/blob/08768362c6f5e3042921ef3d173b0147369b62db/fast/src/lib/motion.ts#L81) · [H studio motion.ts 71](https://github.com/FrancescoCorbosiero/alpacode-website/blob/0daaa1ee12627bd50a179bb09130160376914543/sites/studio/src/lib/motion.ts#L71) |
 
 `iris` is generalizable (any photo into full screen): a tier-2 candidate.
 
@@ -360,7 +381,7 @@ the `gsap` package. Measured weights in [`docs/weight.md`](docs/weight.md).
 
 | Plugin | What it could bring |
 | --- | --- |
-| Flip | layout transitions: a filtered grid that rearranges, a card that becomes its page |
+| Flip | layout transitions: a card that becomes its page (a filtered list that rearranges is `flip-filter` now) |
 | Draggable + Inertia | things to tug and throw (see below) |
 | Observer | gesture- and wheel-driven scenes, full-screen section swipes |
 | MorphSVG | shapes turning into other shapes |
@@ -388,6 +409,21 @@ Open:
 - C's `lens` keeps a ticker callback per lens for the page's lifetime (it
   returns early when hidden): subscribe on enter instead.
 - Unused hooks: A's `data-speed`; C's `data-draw` and `data-clip`.
+
+Found on the house's showcase (H, 2026-10-24):
+
+- GSAP writes an SVG element's transform as its `transform` attribute, in
+  the drawing's own space, with the origin worked out from its box. A CSS
+  `transform-box: fill-box` on the same element moves it a second time:
+  the map's ping drifted to the corner. Keep CSS transforms (hover states)
+  on what the tweened element contains (`map`).
+- A sticky stage stops sticking under an ancestor with `overflow: hidden`
+  (it becomes the scroll box). alpacode's Metodo band had one for its
+  background hatch: `overflow: clip` clips the same and leaves sticky
+  alone (`method`, `cases`).
+- Flip with `absolute: true` takes the leaving items out of the flow at
+  once, so what follows the list jumps up before they're gone:
+  `flip-filter` eases the list's height between the two layouts.
 
 Fixed in the port (phase 2):
 

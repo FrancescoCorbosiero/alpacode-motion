@@ -1,0 +1,211 @@
+---
+import Entry from "../components/Entry.astro";
+import { arc, dotPath, mapBox, project } from "./_shared/italy-dots";
+
+const markup = `<section data-scene="map">
+  <svg viewBox="0 0 440 565">
+    <defs>
+      <radialGradient id="reach-fade">…</radialGradient>
+      <mask id="reach" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="565">
+        <circle data-map-reach cx="104" cy="81" r="715" fill="url(#reach-fade)" />
+      </mask>
+    </defs>
+    <path data-map-dots d="M3.3 3.3h0M9.8 3.3h0…" />  <!-- the land, worked out at build -->
+    <path data-map-arc="roma" d="M104 81Q…" pathLength="1" />
+    <g data-map-place="roma"><circle …/><text>Roma</text></g>
+    <g data-map-base="milano"><circle data-map-ping …/><circle …/></g>
+  </svg>
+  <ul><li data-map-row="roma">Roma · …</li></ul>
+</section>`;
+
+const BASE = { id: "milano", name: "Milano", lat: 45.4642, lon: 9.19 };
+const PLACES = [
+  { id: "torino", name: "Torino", lat: 45.0703, lon: 7.6869, what: "uno studio di architettura" },
+  { id: "bologna", name: "Bologna", lat: 44.4949, lon: 11.3426, what: "una libreria" },
+  { id: "firenze", name: "Firenze", lat: 43.7696, lon: 11.2558, what: "una bottega" },
+  { id: "roma", name: "Roma", lat: 41.9028, lon: 12.4964, what: "una casa editrice" },
+  { id: "bari", name: "Bari", lat: 41.1171, lon: 16.8719, what: "un'agenzia" },
+  { id: "palermo", name: "Palermo", lat: 38.1157, lon: 13.3615, what: "una cantina" },
+];
+const dots = dotPath();
+const base = project(BASE.lat, BASE.lon);
+const places = PLACES.map((p) => ({ ...p, ...project(p.lat, p.lon) })).sort(
+  (a, b) => Math.hypot(a.x - base.x, a.y - base.y) - Math.hypot(b.x - base.x, b.y - base.y),
+);
+---
+
+<Entry
+  id="map"
+  markup={markup}
+  look="Quando la mappa entra, i punti si allargano dalla base; poi un arco raggiunge ogni luogo, dal più vicino, e il luogo si accende quando l'arco arriva. Passa il mouse su una riga: si accende il suo luogo."
+>
+  <section class="mp" data-scene="map">
+    <div class="wrap mp-grid">
+      <figure class="mp-figure">
+        <svg class="mp-map" viewBox={`0 0 ${mapBox.w} ${mapBox.h}`} role="img" aria-label={`Mappa dell'Italia: la base a Milano, e ${places.map((p) => p.name).join(", ")}`}>
+          <defs>
+            <radialGradient id="mp-reach-fade">
+              <stop offset="0.82" stop-color="#fff" />
+              <stop offset="1" stop-color="#fff" stop-opacity="0" />
+            </radialGradient>
+            <mask id="mp-reach" maskUnits="userSpaceOnUse" x="0" y="0" width={mapBox.w} height={mapBox.h}>
+              <circle data-map-reach cx={base.x} cy={base.y} r={Math.hypot(mapBox.w, mapBox.h)} fill="url(#mp-reach-fade)" />
+            </mask>
+          </defs>
+          <path class="mp-dots" d={dots.d} data-map-dots />
+          {places.map((p) => <path class="mp-arc" d={arc(base, p)} pathLength="1" data-map-arc={p.id} />)}
+          {
+            places.map((p) => (
+              <g class="mp-place" data-map-place={p.id}>
+                <circle class="mp-pt" cx={p.x} cy={p.y} r="3.4" />
+                <text class="mp-label" x={p.x + 8} y={p.y + 4}>
+                  {p.name}
+                </text>
+              </g>
+            ))
+          }
+          <g class="mp-base" data-map-base={BASE.id}>
+            <circle class="mp-ping" cx={base.x} cy={base.y} r="7" data-map-ping />
+            <circle class="mp-hq" cx={base.x} cy={base.y} r="4.6" />
+            <text class="mp-label" x={base.x} y={base.y - 14} text-anchor="middle">
+              {BASE.name}
+            </text>
+          </g>
+        </svg>
+      </figure>
+      <div class="mp-sheet">
+        <p class="mp-k">Una rete di luoghi</p>
+        <h2 class="mp-h">Una base, e fin dove arriva.</h2>
+        <ul class="mp-rows">
+          <li class="mp-row" data-map-row={BASE.id} tabindex="0">
+            <span>{BASE.name}</span>
+            <span>la base</span>
+          </li>
+          {
+            places.map((p) => (
+              <li class="mp-row" data-map-row={p.id} tabindex="0">
+                <span>{p.name}</span>
+                <span>{p.what}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mp {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .mp-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  .mp-figure {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+  .mp-map {
+    width: auto;
+    max-width: 100%;
+    height: min(78vh, 680px);
+    overflow: visible;
+  }
+  .mp-dots {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 3.4;
+    stroke-linecap: round;
+  }
+  .mp-arc {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .mp-pt,
+  .mp-hq {
+    fill: var(--blue);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mp-hq {
+    stroke: var(--paper);
+    stroke-width: 2;
+  }
+  .mp-ping {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 1.5;
+  }
+  .mp-label {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+  }
+  .mp-place:global(.is-hot) .mp-pt,
+  .mp-base:global(.is-hot) .mp-hq {
+    transform: scale(1.7);
+  }
+  .mp-arc:global(.is-hot) {
+    stroke-width: 2.6;
+  }
+  .mp-k {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+  .mp-h {
+    margin: 0 0 28px;
+    font-family: var(--display);
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .mp-rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+  .mp-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+    cursor: default;
+  }
+  .mp-row span:first-child {
+    font-weight: 700;
+  }
+  .mp-row span:last-child {
+    color: var(--mute-2);
+  }
+  .mp-row:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+  @media (max-width: 860px) {
+    .mp-grid {
+      grid-template-columns: 1fr;
+    }
+    .mp-map {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import Entry from "../components/Entry.astro";
+import { page } from "./_shared/plates";
+
+const markup = `<figure class="frame">
+  <div class="bar">…</div>
+  <div class="view" data-frame-scroll>  <!-- a fixed height: the window -->
+    <img src="page-full.png" alt="…" />  <!-- the whole page, top to bottom -->
+  </div>
+</figure>`;
+---
+
+<Entry
+  id="frame-scroll"
+  markup={markup}
+  look="Mentre la cornice attraversa lo schermo, la pagina dentro scorre dalla testata al piede. Col movimento ridotto la finestra si scorre a mano."
+>
+  <section class="fs">
+    <div class="wrap fs-grid">
+      <div class="fs-copy">
+        <p class="fs-k">Un sito intero, in una finestra</p>
+        <p class="fs-t">La pagina scorre dentro la sua cornice al ritmo della pagina che la contiene: si legge il progetto dall'inizio alla fine senza uscire dal caso.</p>
+      </div>
+      <figure class="fs-frame">
+        <div class="fs-bar" aria-hidden="true"><i></i><i></i><i></i><span>un-sito-intero</span></div>
+        <div class="fs-view" data-frame-scroll>
+          <img src={page(5)} alt="Una pagina intera in stile cianografia: la testata, sezioni di testo, immagini e schede, il piede." width="1440" height="5200" />
+        </div>
+      </figure>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .fs {
+    padding-block: clamp(96px, 16vh, 180px) clamp(160px, 30vh, 320px);
+  }
+  .fs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  .fs-k {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+  .fs-t {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(22px, 2.6vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .fs-frame {
+    margin: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .fs-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper-2);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mute-2);
+  }
+  .fs-bar i {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+  .fs-bar span {
+    flex: 1;
+    padding-right: 30px;
+    text-align: center;
+  }
+  .fs-view {
+    height: min(70vh, 640px);
+    background: var(--paper-3);
+  }
+  @media (max-width: 860px) {
+    .fs-grid {
+      grid-template-columns: 1fr;
+    }
+    .fs-view {
+      height: 60vh;
+    }
+  }
+</style>

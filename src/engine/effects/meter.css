@@ -1,0 +1,20 @@
+/* ============================================================
+   meter.
+
+   Reduced motion: the needle rests at the far end (its transform in
+   the markup), on the last beat's word; the beats read one after the
+   other. Without JS, the same.
+
+   Once the scene is live ([data-scene-live], set by the stage's
+   scrubbed()) the wrapper is --len screens tall and its stage sticks
+   (stage.css: copy it too); the beats share one place.
+
+   Sources: AF fast/src/styles/fast.css; H sites/studio/src/styles/studio.css.
+   ============================================================ */
+[data-scene="meter"][data-scene-live] [data-meter-beats] {
+  display: grid;
+  grid-template-areas: "beat";
+}
+[data-scene="meter"][data-scene-live] [data-meter-beat] {
+  grid-area: beat;
+}

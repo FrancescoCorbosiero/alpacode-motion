@@ -1,0 +1,17 @@
+/* ============================================================
+   map.
+
+   Reduced motion: the map is whole: every dot, every arc drawn, every
+   place in. Without JS, the same. The ping round the base doesn't
+   show: it only plays.
+
+   The ping and the places are moved by GSAP, which writes SVG
+   transforms in the drawing's own space: a transform-box on them (or
+   on the elements that pop) would move them twice. Put the hover
+   states on what they contain.
+
+   Sources: A src/styles/showcase.css (new, the home and /lavori).
+   ============================================================ */
+[data-map-ping] {
+  opacity: 0;
+}

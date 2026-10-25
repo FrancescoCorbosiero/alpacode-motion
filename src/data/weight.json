@@ -109,6 +109,14 @@
       ],
       "total": 52169
     },
+    "cases": {
+      "min": 2226,
+      "gzip": 1056,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52671
+    },
     "celebrate": {
       "min": 2790,
       "gzip": 1501,
@@ -152,6 +160,14 @@
       ],
       "total": 52378
     },
+    "cursor-thumb": {
+      "min": 2698,
+      "gzip": 1193,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52909
+    },
     "deal": {
       "min": 1163,
       "gzip": 665,
@@ -169,6 +185,24 @@
         "ScrollTrigger"
       ],
       "total": 52259
+    },
+    "flip-filter": {
+      "min": 1185,
+      "gzip": 678,
+      "needs": [
+        "gsap",
+        "Flip"
+      ],
+      "total": 61531
+    },
+    "frame-scroll": {
+      "min": 615,
+      "gzip": 401,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52143
     },
     "hand": {
       "min": 953,
@@ -242,6 +276,15 @@
       ],
       "total": 52577
     },
+    "map": {
+      "min": 2043,
+      "gzip": 972,
+      "needs": [
+        "gsap",
+        "ScrollTrigger"
+      ],
+      "total": 52653
+    },
     "mark-box": {
       "min": 2335,
       "gzip": 1229,
@@ -297,6 +340,23 @@
         "ScrollTrigger"
       ],
       "total": 52473
+    },
+    "meter": {
+      "min": 1766,
+      "gzip": 899,
+      "needs": [
+        "gsap",
+        "ScrambleText"
+      ],
+      "total": 56251
+    },
+    "method": {
+      "min": 2732,
+      "gzip": 1321,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52932
     },
     "nudge": {
       "min": 562,

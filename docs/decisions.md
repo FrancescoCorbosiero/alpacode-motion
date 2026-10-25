@@ -233,6 +233,9 @@ canonical name.
 | `[data-card]` (the scramble's hover) | FAST | none: the text's closest link or button | the structure says it |
 | the fields in `panelEnter()`, `stepEnter()` | A, C | `[data-panel-field]` (or `config.selectors`) | no site classes in an effect (D5) |
 | `.lnd-stage`, `.lnd-beats`, `.lnd-beat`, `.lnd-progress`, `.lnd-aside-sm` | A | `[data-scene-stage]`, `[data-scene-beats]`, `[data-scene-beat]`, `[data-scene-progress]`, `[data-scene-aside]` | attributes only |
+| `data-hover-preview` (one frame for the list) | H | `data-cursor-thumb` (`-row`, `-pic`, `-frame`, `-slot`, `-bar`) | same move as C's thumb; H's variant is the canonical one |
+| `.cases-stage`, `.method-stage` | H | `data-scene-stage` | the sticky stage of a scene; `data-stage` is the gallery's own live section |
+| `data-m`, `data-m-note` | H | `data-method-piece`, `data-method-note` | says what it is |
 
 ## Pending defaults
 

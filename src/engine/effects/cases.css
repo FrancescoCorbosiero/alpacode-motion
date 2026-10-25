@@ -1,0 +1,27 @@
+/* ============================================================
+   cases.
+
+   Reduced motion: the cases stand one under the other, each one's
+   "before" struck through and its "after" in. Without JS, the same.
+
+   Once the scene is live ([data-scene-live], set by the stage's
+   scrubbed()) the wrapper is --len screens tall and its stage sticks
+   (stage.css: copy it too); the cases ([data-cases]) share one place,
+   and only the one on stage takes the pointer. The strike line is laid
+   out drawn: the scene draws it from the left.
+
+   Sources: A src/styles/showcase.css (new, the home).
+   ============================================================ */
+[data-scene="cases"][data-scene-live] [data-cases] {
+  display: grid;
+  grid-template-areas: "stack";
+}
+[data-scene="cases"][data-scene-live] [data-case] {
+  grid-area: stack;
+}
+[data-scene="cases"][data-scene-live] [data-case]:not(.is-active) {
+  pointer-events: none;
+}
+[data-case-strike] {
+  transform-origin: left center;
+}

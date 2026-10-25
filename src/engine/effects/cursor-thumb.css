@@ -1,0 +1,41 @@
+/* ============================================================
+   cursor-thumb.
+
+   Reduced motion: no frame; every row shows its own picture, as laid
+   out. Without JS, the same: the frame waits hidden (the hidden
+   attribute) and the rows' pictures are the list's.
+
+   The frame floats over the list, placed from the list's parent (which
+   the site makes position: relative), and never takes the pointer.
+   While the effect is on, the rows' own pictures step aside under the
+   pointer: the frame shows them.
+
+   Sources: A src/styles/showcase.css (new, /lavori); C
+   src/styles/sections.css (.pr-thumb).
+   ============================================================ */
+[data-cursor-thumb-frame] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform;
+}
+[data-cursor-thumb-slot] {
+  position: relative;
+  overflow: hidden;
+}
+[data-cursor-thumb-slot] img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+[data-cursor-thumb-on] [data-cursor-thumb-pic] {
+  transition: opacity 0.35s ease;
+}
+[data-cursor-thumb-on]:hover [data-cursor-thumb-pic] {
+  opacity: 0;
+}

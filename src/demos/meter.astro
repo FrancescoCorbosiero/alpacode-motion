@@ -1,0 +1,168 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section data-scene="meter" style="--len: 3">
+  <div data-scene-stage>
+    <svg viewBox="0 0 400 220">
+      …the dial…
+      <g data-meter-needle data-meter-pivot="200 200" transform="rotate(80 200 200)">…</g>
+    </svg>
+    <b data-meter-word>A REGIME</b>  <!-- the last beat's word: the end state -->
+    <ol data-meter-beats>
+      <li data-meter-beat><span data-meter-key>FERMO</span> …</li>
+      <li data-meter-beat><span data-meter-key>IN MOTO</span> …</li>
+      <li data-meter-beat><span data-meter-key>A REGIME</span> …</li>
+    </ol>
+  </div>
+</section>`;
+
+const beats = [
+  { word: "FERMO", t: "Tutto a mano, ogni volta da capo.", d: "Le stesse cose rifatte ogni settimana: il tempo se ne va lì." },
+  { word: "IN MOTO", t: "Lo strumento giusto prende il ripetitivo.", d: "Un passo alla volta, si sposta il lavoro che non chiede di pensare." },
+  { word: "A REGIME", t: "Il tempo va dove serve davvero.", d: "Quello che resta è il lavoro che solo tu sai fare." },
+];
+const ticks = Array.from({ length: 11 }, (_, i) => {
+  const a = Math.PI * (1 - i / 10);
+  const at = (r: number) => [200 + r * Math.cos(a), 200 - r * Math.sin(a)].map((n) => n.toFixed(1));
+  const [x1, y1] = at(134);
+  const [x2, y2] = at(150);
+  return { x1, y1, x2, y2 };
+});
+---
+
+<Entry
+  id="meter"
+  markup={markup}
+  look="Il palco resta fermo: la lancetta va da un capo all'altro del quadrante un passo per ogni battuta, molleggiando; la parola sotto si rimescola nella successiva."
+>
+  <section class="mt-scene" data-scene="meter" style="--len:3">
+    <div class="mt-stage" data-scene-stage>
+      <div class="wrap mt-grid">
+        <div class="mt-gauge" aria-hidden="true">
+          <svg viewBox="0 0 400 220">
+            <path class="mt-arc" d="M30 200 A170 170 0 0 1 370 200"></path>
+            {ticks.map((t) => <line class="mt-tick" x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} />)}
+            <g class="mt-needle" data-meter-needle data-meter-pivot="200 200" transform="rotate(80 200 200)">
+              <line x1="200" y1="200" x2="200" y2="58"></line>
+              <circle cx="200" cy="200" r="14"></circle>
+            </g>
+          </svg>
+          <div class="mt-ends"><span>Fermo</span><span>A regime</span></div>
+          <b class="mt-word" data-meter-word>{beats[beats.length - 1]!.word}</b>
+        </div>
+        <ol class="mt-beats" data-meter-beats>
+          {
+            beats.map((b) => (
+              <li class="mt-beat" data-meter-beat>
+                <span class="mt-key" data-meter-key>
+                  {b.word}
+                </span>
+                <h3>{b.t}</h3>
+                <p>{b.d}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mt-scene {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mt-stage {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  :global([data-scene-live]) .mt-stage {
+    padding-block: 0;
+  }
+  :global([data-scene-live]) .mt-stage > .wrap {
+    width: 100%;
+  }
+  .mt-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  .mt-gauge {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+  }
+  .mt-gauge svg {
+    width: min(100%, 440px);
+    height: auto;
+    overflow: visible;
+  }
+  .mt-arc {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 18;
+    stroke-linecap: round;
+  }
+  .mt-tick {
+    stroke: var(--on-ink-faint);
+    stroke-width: 2;
+  }
+  .mt-needle line {
+    stroke: var(--paper);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+  .mt-needle circle {
+    fill: var(--paper);
+  }
+  .mt-ends {
+    display: flex;
+    justify-content: space-between;
+    width: min(100%, 440px);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--on-ink-mute);
+  }
+  .mt-word {
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 52px);
+    letter-spacing: 0.02em;
+  }
+  .mt-beats {
+    display: grid;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mt-beat h3 {
+    margin: 8px 0 6px;
+    font-family: var(--display);
+    font-size: clamp(22px, 2.4vw, 32px);
+    line-height: 1.05;
+  }
+  .mt-beat p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--on-ink-mute);
+  }
+  .mt-key {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--on-ink-rule);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 860px) {
+    .mt-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .mt-gauge svg {
+      width: min(100%, 300px);
+    }
+  }
+</style>

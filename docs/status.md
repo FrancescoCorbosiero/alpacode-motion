@@ -20,7 +20,7 @@ Where the work stands. Updated at the end of every session.
   `parallax`, `parallax-cover`, `peek`, `spin`, `float`, `cursor-trail`,
   `lens`, `pet`, `roll`, `swing`, `step-progress`, `success-burst`),
   `speed` (no markup uses it), tier 3 and the rest of tier 2.
-  `cursor-thumb` and `meter` are ported on the `showcase-moves` branch.
+  `cursor-thumb` and `meter` are ported with the house's showcase (below).
 - **Decisions**: D18 (O4 decided: the catalog's engine runs the sites,
   which adopt its hooks) and D19 (alpacode's tuning is the default; the
   other sources' become settings or one-attribute variants, shown side
@@ -44,6 +44,30 @@ Where the work stands. Updated at the end of every session.
   demo media drawn with ffmpeg (`public/media/hero-demo.*`), Caveat for
   the hand's notes, an entry page that can describe a function's hook
   (`hookWhat`).
+
+## The house's showcase (2026-10-24, merged 2026-10-25)
+
+Six entries born on alpacode.it's new showcase (the H source, commit
+`0daaa1e` of `alpacode-website`), written in this repo's contract and
+taken to `demo` here: module, CSS with its end state, registry, demo
+page with neutral content (new plates: `site()`, `page()` in
+`src/demos/_shared/plates.ts`), weight, screenshots.
+
+- Tier 1: `cursor-thumb` (C's index thumb, ported with H's variant as
+  the canonical one: one frame for the list; C's pop and tilt are
+  settings), `frame-scroll`, `flip-filter` (the first entry on Flip,
+  lazy).
+- Tier 3, "The house's showcase (H)": `cases`, `method`, `map` (lazy);
+  and `meter` (FAST's, now on Alpacode Studio's crash-course page),
+  the first of "Two more" ported (lazy, ScrambleText).
+  The map's dots are worked out at build (`_shared/italy-dots.ts`, from
+  the site's `src/lib/italy-dots.ts`).
+- The stage: `stage`, ported since, took the same hook
+  (`data-scene-stage`), and `cases`, `method` and `meter` are built on
+  its helpers: their layout switches on `[data-scene-live]`, set by
+  `scrubbed()`, like every pinned scene's.
+- Assumed, to validate: C's per-row thumbs become one list with its
+  frame when C adopts `cursor-thumb`.
 
 ## Phase 1 (2026-10-23)
 

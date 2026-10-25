@@ -1,0 +1,175 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<section data-flip-filter>
+  <fieldset>
+    <label><input type="radio" name="kind" value="all" checked /> Tutti</label>
+    <label><input type="radio" name="kind" value="shop" /> E-commerce</label>
+    …
+  </fieldset>
+  <ul>
+    <li data-flip-filter-item="shop">…</li>
+    <li data-flip-filter-item="site">…</li>
+  </ul>
+</section>
+<style>
+  /* the filter without a script: one rule per kind, the site's */
+  [data-flip-filter]:not([data-flip-filter-on]):has(input[value="shop"]:checked)
+    [data-flip-filter-item]:not([data-flip-filter-item~="shop"]) { display: none; }
+</style>`;
+
+const kinds = [
+  { value: "site", label: "Siti" },
+  { value: "shop", label: "E-commerce" },
+  { value: "app", label: "Software" },
+];
+const items = [
+  { kind: "site", name: "Una falegnameria" },
+  { kind: "shop", name: "Una libreria" },
+  { kind: "site", name: "Uno studio legale" },
+  { kind: "app", name: "Un gestionale per un magazzino" },
+  { kind: "site", name: "Una palestra" },
+  { kind: "shop", name: "Un negozio di dischi" },
+  { kind: "app", name: "Un portale per i clienti" },
+  { kind: "site", name: "Una cantina" },
+];
+const css = kinds
+  .map((k) => `.ff:not([data-flip-filter-on]):has(input[value="${k.value}"]:checked) .ff-item:not([data-flip-filter-item~="${k.value}"]){display:none}`)
+  .join("");
+const label = (v: string) => kinds.find((k) => k.value === v)?.label ?? v;
+---
+
+<Entry
+  id="flip-filter"
+  markup={markup}
+  look="Scegli un tipo: le schede che restano scivolano al loro nuovo posto, le altre si piegano via, e la sezione sotto non salta. Senza script, o col movimento ridotto, il filtro funziona lo stesso, di colpo."
+  replay={false}
+>
+  <section class="ff" data-flip-filter>
+    <style is:inline set:html={css}></style>
+    <div class="wrap">
+      <fieldset class="ff-chips">
+        <legend class="ff-legend">Filtra per tipo di lavoro</legend>
+        <label class="ff-chip"><input type="radio" name="ff-kind" value="all" checked /> Tutti <span>{items.length}</span></label>
+        {
+          kinds.map((k) => (
+            <label class="ff-chip">
+              <input type="radio" name="ff-kind" value={k.value} /> {k.label} <span>{items.filter((i) => i.kind === k.value).length}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+      <ul class="ff-grid">
+        {
+          items.map((it, i) => (
+            <li class="ff-item" data-flip-filter-item={it.kind}>
+              <span class="ff-no">{String(i + 1).padStart(2, "0")}</span>
+              <span class="ff-name">{it.name}</span>
+              <span class="ff-kind">{label(it.kind)}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="ff-after">Quello che viene dopo l'elenco sale e scende con lui, senza scatti.</p>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .ff {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .ff-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 28px;
+    padding: 0;
+    border: 0;
+  }
+  .ff-legend {
+    width: 100%;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .ff-chip {
+    position: relative;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid var(--rule);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .ff-chip input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .ff-chip span {
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  .ff-chip:has(input:checked) {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .ff-chip:has(input:focus-visible) {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+  .ff-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ff-item {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    min-height: 168px;
+    padding: 20px;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .ff-no {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mute);
+  }
+  .ff-name {
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .ff-kind {
+    align-self: end;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+  .ff-after {
+    margin: 40px 0 0;
+    padding: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--display);
+    font-size: clamp(20px, 2.4vw, 30px);
+    line-height: 1.15;
+  }
+  @media (max-width: 1024px) {
+    .ff-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
