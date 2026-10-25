@@ -45,6 +45,29 @@ Where the work stands. Updated at the end of every session.
   the hand's notes, an entry page that can describe a function's hook
   (`hookWhat`).
 
+## Adoption: alpacode.it and Alpacode Studio (2026-10-25)
+
+Both alpacode sites run this engine, copied at `c19c357`
+(`alpacode-website`, branch `claude/busy-noether-amfgzf`):
+
+- **alpacode.it** (`src/engine/`): the core and 48 entries as they are
+  (every alpacode one, the showcase's, `stage` and the five functions);
+  its `config.ts` maps the house's classes onto the hooks (the section
+  titles onto `data-split`, the blocks onto `data-reveal`, …) and its
+  `registry.ts` loads them; its tier 3 is the alpaca (`alpaca.ts` on its
+  rig) and the landings' scenes (`lib/landing/scenes.ts`, on `stage`'s
+  helpers). The markup took the contract in the rows' Notes; the
+  landing kit's scene CSS switches on `[data-scene-live]`. Its old
+  `lib/motion.ts` is gone. `count` and `stamp` aren't copied: no page
+  uses them.
+- **Alpacode Studio** (`sites/studio/src/engine/`): the core (its
+  `core.css` without the intro: the studio's hero is its own), `reveal`,
+  `deal`, `skew`, and `meter` with `stage`.
+- Verified against the engine they had: every page shot as it scrolls,
+  frame by frame, at 1440×900, 390×844 and 390×664, and full pages under
+  reduced motion: the same, but for what moves on its own (a marquee,
+  a loop, a scramble).
+
 ## The house's showcase (2026-10-24, merged 2026-10-25)
 
 Six entries born on alpacode.it's new showcase (the H source, commit
@@ -106,10 +129,10 @@ page with neutral content (new plates: `site()`, `page()` in
 | 0 | catalog, decisions, weight, prompts | done, 2026-10-23 |
 | 1 | the gallery (Astro), the core, the effect contract, the weight and screenshot scripts; `reveal`, `split-lines`, `scrub` end to end; the add-effect skill | done, 2026-10-23 |
 | 2a | tier 1: headings, reveals, the pen (32) | alpacode's and FAST's 26 `demo`, 2026-10-25 (with phase 1's); the 6 cinofila-only left; defaults decided (D19) |
-| 2b | tier 1: scroll-linked, pointer, functions (31) | alpacode's and FAST's 16 `demo`, 2026-10-25 (`cursor-thumb` on its own branch); the cinofila-only and `speed` left; porting notes fixed for the ported |
+| 2b | tier 1: scroll-linked, pointer, functions (31) | alpacode's and FAST's 16 `demo`, 2026-10-25, and the showcase's `cursor-thumb`, `frame-scroll`, `flip-filter`; the cinofila-only and `speed` left; porting notes fixed for the ported |
 | 3 | tier 2 (8), on the sticky stage where the demo agrees (D6) | `stage` `demo`, 2026-10-25; the 7 scenes left; every stage fits 390×664 |
 | 4 | tier 3: recipes for the 12 landing scenes, the alpaca's rig and moves, demos for a few | recipes written, demos up |
-| 5 | adoption: the sites point at the catalog | a line in each site's CLAUDE.md |
+| 5 | adoption: the sites point at the catalog | alpacode.it and Alpacode Studio, 2026-10-25 (copied at `c19c357`, a line in each one's CLAUDE.md); comunicazionecinofila left |
 
 ## Assumptions to validate
 
@@ -189,9 +212,8 @@ From phase 2:
 
 ## Next
 
-- Merge `showcase-moves` (`cursor-thumb`, `frame-scroll`, `flip-filter`,
-  `meter`, the house's showcase).
-- The site switch: alpacode.it copies the engine and adopts its hooks
-  (the markup contract per entry is in each row's Notes).
-- Phase 3, the rest of tier 2 on the stage (D6); the cinofila-only tier-1
-  entries when cinofila adopts the engine.
+- Phase 3, the rest of tier 2 on the stage (D6).
+- comunicazionecinofila's switch, with the cinofila-only tier-1 entries
+  it needs (`split-drop`, `sticker-wall`, …).
+- Phase 4: the recipes of tier 3 (the landings' scenes, the alpaca), now
+  that the house's copies stand on `stage`.
