@@ -14,7 +14,9 @@
      its hook, built inside the page, and undone with it;
    - loops run only on screen: the marquee stands still off screen; the
      hero video plays only on screen, and has no sources under reduced
-     motion.
+     motion;
+   - pointer play only with a mouse, handed back to the stylesheet when
+     the pointer leaves; a tap on a touch screen moves nothing.
    Prints each check; any failure or page error fails the run.
    ============================================================ */
 import { launch, serve, watchErrors } from "./lib/browser.mjs";
@@ -290,6 +292,35 @@ check("reduced motion: no sources, the poster, no toggle", film.sources === 0 &&
 await page.emulateMedia({ reducedMotion: "no-preference" });
 await settle(400);
 check("…and off again, its sources are back", (await video()).sources > 0);
+
+/* Pointer play: with a mouse it leans, and hands back when it leaves;
+   on a touch screen nothing moves. */
+step = "pointer";
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+await settle(200);
+check("→ /tilt/ softly", (await navigate("/")) && (await navigate("/tilt/")));
+const tile = page.locator('[data-tilt="card"]');
+await tile.scrollIntoViewIfNeeded();
+await settle(300);
+const tileBox = await tile.boundingBox();
+const leanOf = () => tile.evaluate((el) => getComputedStyle(el).transform);
+await page.mouse.move(tileBox.x + tileBox.width / 2, tileBox.y + tileBox.height / 2);
+await page.mouse.move(tileBox.x + tileBox.width * 0.9, tileBox.y + tileBox.height * 0.15, { steps: 6 });
+await settle(600);
+check("with a mouse, the card leans toward the pointer", (await leanOf()) !== "none");
+await page.mouse.move(2, 2, { steps: 4 });
+await settle(1300);
+check("…and when it leaves, its transform is the stylesheet's again", (await leanOf()) === "none" && (await tile.evaluate((el) => el.style.transform)) === "");
+const touch = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "no-preference" });
+const phone = await touch.newPage();
+const phoneErrors = watchErrors(phone, () => "pointer (touch)");
+await phone.goto(`${origin}/tilt/`, { waitUntil: "networkidle" });
+await phone.locator('[data-tilt="card"]').scrollIntoViewIfNeeded();
+await phone.tap('[data-tilt="card"]');
+await phone.waitForTimeout(600);
+check("on a touch screen a tap leaves it still", (await phone.locator('[data-tilt="card"]').evaluate((el) => getComputedStyle(el).transform)) === "none");
+await touch.close();
+errors.push(...phoneErrors);
 
 /* The core page: scroll to, with done; the scroll lock. */
 step = "core";

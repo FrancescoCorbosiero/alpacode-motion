@@ -1,0 +1,9 @@
+/* ============================================================
+   coin.
+
+   Reduced motion: the choice shows, the icon still. Without JS, the
+   same: the group is a plain radio group (arrow keys and all).
+
+   No rules to copy: the chosen option's look (:has(input:checked)) is
+   the site's.
+   ============================================================ */

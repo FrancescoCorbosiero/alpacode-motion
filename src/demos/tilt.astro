@@ -1,0 +1,91 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<a class="tile" href="…" data-tilt>…</a>
+<!-- leans further, and rises while the pointer is on it -->
+<article class="card" data-tilt="card">…</article>`;
+---
+
+<Entry
+  id="tilt"
+  markup={markup}
+  look="Con il mouse sopra, la prima tessera si inclina appena verso il puntatore; la seconda di più, e intanto si solleva. Quando il puntatore esce, tornano a posto con una molla. Sul telefono restano ferme."
+  replay={false}
+  attributes={[{ name: "data-tilt", value: "card", what: "Leans further (10° instead of 5) and rises 8px, a touch larger, while the pointer is on it (C's cards)." }]}
+>
+  <section class="tl">
+    <div class="wrap tl-grid">
+      <a class="tl-tile" href="#tilt-a" id="tilt-a" data-tilt>
+        <span class="tl-tag">data-tilt</span>
+        <strong>Si inclina appena</strong>
+        <span>Cinque gradi ai bordi: un cartello, un collegamento, una tessera che non deve distrarre.</span>
+      </a>
+      <article class="tl-tile tl-tile--card" data-tilt="card">
+        <span class="tl-tag">data-tilt="card"</span>
+        <strong>Si inclina e si solleva</strong>
+        <span>Dieci gradi, otto pixel più in alto: una carta che invita a prenderla.</span>
+      </article>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .tl {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .tl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .tl-tile {
+    display: grid;
+    align-content: end;
+    gap: 14px;
+    min-height: clamp(280px, 34vw, 380px);
+    padding: clamp(24px, 3vw, 40px);
+    border: 1.5px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      border-color 0.35s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+  .tl-tile:hover {
+    border-color: var(--blue);
+  }
+  .tl-tile--card {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .tl-tile--card:hover {
+    box-shadow: 0 24px 48px -24px rgba(11, 14, 20, 0.55);
+  }
+  .tl-tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue);
+  }
+  .tl-tile strong {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 38px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  .tl-tile span:last-child {
+    max-width: 30em;
+    line-height: 1.55;
+    color: var(--mute-2);
+  }
+  .tl-tile--card span:last-child {
+    color: var(--on-ink-mute);
+  }
+  @media (max-width: 640px) {
+    .tl-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

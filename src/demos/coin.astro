@@ -1,0 +1,157 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<fieldset data-coin>
+  <legend>…</legend>
+  <label>
+    <input type="radio" name="contact" value="phone" checked />
+    <span data-coin-icon aria-hidden="true">…</span> Telefono
+  </label>
+  <label>…</label>
+</fieldset>`;
+const options = [
+  { id: "phone", title: "Telefono", body: "Una chiamata, nei giorni e negli orari che indichi.", icon: "M7 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A18 18 0 0 1 5 5a2 2 0 0 1 2-2z" },
+  { id: "mail", title: "Email", body: "Una risposta scritta, da rileggere con calma.", icon: "M3 6h20v14H3zM3 7l10 7 10-7" },
+  { id: "meet", title: "Incontro", body: "Di persona o in videochiamata.", icon: "M4 6h18v12H4zM9 22h8M13 18v4" },
+];
+---
+
+<Entry
+  id="coin"
+  markup={markup}
+  look="Scegli un'opzione, con un clic o con le frecce: la sua icona fa un giro su se stessa, come una moneta, e intanto si gonfia un poco."
+  replay={false}
+  attributes={[
+    { name: "data-coin-icon", value: "—", what: "The option's icon, inside the input's label (or its [data-coin-option])." },
+  ]}
+>
+  <section class="cn">
+    <div class="wrap">
+      <fieldset class="cn-group" data-coin>
+        <legend class="cn-legend">Come preferisci essere ricontattato?</legend>
+        <div class="cn-grid">
+          {
+            options.map((o, i) => (
+              <label class="cn-option">
+                <input class="cn-input" type="radio" name="coin-contact" value={o.id} checked={i === 0} />
+                <span class="cn-icon" data-coin-icon aria-hidden="true">
+                  <svg viewBox="0 0 26 26" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                    <path d={o.icon} />
+                  </svg>
+                </span>
+                <span class="cn-text">
+                  <strong>{o.title}</strong>
+                  <span>{o.body}</span>
+                </span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .cn {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .cn-group {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .cn-legend {
+    margin-bottom: clamp(28px, 4vh, 44px);
+    padding: 0;
+    font-family: var(--display);
+    font-size: clamp(26px, 3vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+  .cn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 1px solid var(--rule);
+    background: #fff;
+  }
+  .cn-option {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 16px 20px;
+    padding: 32px 28px;
+    border-left: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.3s var(--ease);
+  }
+  .cn-option:first-child {
+    border-left: 0;
+  }
+  .cn-option::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: -1px;
+    height: var(--strut);
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.6s var(--ease-expo);
+  }
+  .cn-option:hover {
+    background: var(--paper);
+  }
+  .cn-option:has(.cn-input:checked)::before {
+    transform: scaleX(1);
+  }
+  .cn-option:has(.cn-input:focus-visible) {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+  .cn-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .cn-icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    background: var(--blue);
+    color: #fff;
+    transition: background 0.3s var(--ease);
+  }
+  .cn-option:has(.cn-input:checked) .cn-icon {
+    background: var(--ink);
+  }
+  .cn-text {
+    display: grid;
+    gap: 6px;
+  }
+  .cn-text strong {
+    font-size: 18px;
+    color: var(--blue-deep);
+  }
+  .cn-text span {
+    line-height: 1.5;
+    color: var(--mute-2);
+  }
+  @media (max-width: 760px) {
+    .cn-grid {
+      grid-template-columns: 1fr;
+    }
+    .cn-option {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .cn-option:first-child {
+      border-top: 0;
+    }
+  }
+</style>

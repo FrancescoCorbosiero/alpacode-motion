@@ -2,7 +2,7 @@
 
 What motion costs a page. Measured with `npm run weight` (esbuild 0.27.7:
 bundled, minified, ESM; gzip -9), gsap 3.15.0 and lenis 1.3.27, on
-2026-10-24; the script rewrites the tables marked as its own. Gzip is
+2026-10-25; the script rewrites the tables marked as its own. Gzip is
 what travels; the browser parses and runs the minified size, about three
 times as much. 1 KB = 1000 bytes.
 
@@ -66,10 +66,12 @@ Weight column of catalog.md.
 |  | Its own code, gzip | minified | Needs | A page with the core and only it |
 | --- | --- | --- | --- | --- |
 | the core (all 13 pieces) | 2.3 KB | 5.3 KB | gsap, ScrollTrigger, Lenis | 51.9 KB |
+| `accordion` | 531 B | 980 B | gsap | 52.3 KB |
 | `alternate` | 625 B | 1.1 KB | gsap, ScrollTrigger | 52.3 KB |
 | `bars` | 411 B | 577 B | gsap, ScrollTrigger | 52.2 KB |
 | `chat` | 630 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `clip` | 569 B | 975 B | gsap, ScrollTrigger | 52.3 KB |
+| `coin` | 443 B | 737 B | gsap | 52.2 KB |
 | `count` | 600 B | 951 B | gsap, ScrollTrigger | 52.4 KB |
 | `deal` | 665 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 | `draw` | 486 B | 764 B | gsap, ScrollTrigger | 52.3 KB |
@@ -80,6 +82,7 @@ Weight column of catalog.md.
 | `kicker` | 398 B | 678 B | gsap, ScrollTrigger | 52.2 KB |
 | `kinetic` | 337 B | 501 B | gsap, ScrollTrigger | 52.2 KB |
 | `knoll` | 638 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
+| `magnetic` | 840 B | 1.6 KB | gsap | 52.6 KB |
 | `mark-box` | 1.2 KB | 2.3 KB | gsap, DrawSVG, ScrollTrigger | 54.6 KB |
 | `mark-circle` | 1.4 KB | 2.8 KB | gsap, DrawSVG, ScrollTrigger | 54.8 KB |
 | `mark-highlight` | 632 B | 1.1 KB | gsap, ScrollTrigger | 52.4 KB |
@@ -101,6 +104,7 @@ Weight column of catalog.md.
 | `split-words` | 518 B | 877 B | gsap, ScrollTrigger, SplitText | 55.3 KB |
 | `stamp` | 433 B | 642 B | gsap, ScrollTrigger | 52.2 KB |
 | `strut` | 311 B | 443 B | gsap, ScrollTrigger | 52.1 KB |
+| `tilt` | 879 B | 1.7 KB | gsap | 52.6 KB |
 | `wordmark` | 643 B | 1.2 KB | gsap, ScrollTrigger | 52.4 KB |
 <!-- /weight:ported -->
 

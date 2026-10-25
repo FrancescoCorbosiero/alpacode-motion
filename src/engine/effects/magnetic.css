@@ -1,0 +1,9 @@
+/* ============================================================
+   magnetic.
+
+   Reduced motion: it stays where the page put it. Without a mouse or
+   without JS, the same.
+
+   No rules to copy: its hover and its press are the site's, and keep
+   their transitions while it plays (but transform's, held at 0s).
+   ============================================================ */

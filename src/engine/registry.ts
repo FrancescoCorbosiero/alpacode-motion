@@ -11,10 +11,12 @@
    their end state, which must not wait for the chunk.
    ============================================================ */
 import type { Effect, LazyEffect } from "./core/kit";
-import * as clip from "./effects/clip";
+import * as accordion from "./effects/accordion";
 import * as alternate from "./effects/alternate";
 import * as bars from "./effects/bars";
 import * as chat from "./effects/chat";
+import * as clip from "./effects/clip";
+import * as coin from "./effects/coin";
 import * as count from "./effects/count";
 import * as deal from "./effects/deal";
 import * as draw from "./effects/draw";
@@ -23,6 +25,7 @@ import * as heroSettle from "./effects/hero-settle";
 import * as heroVideo from "./effects/hero-video";
 import * as kicker from "./effects/kicker";
 import * as kinetic from "./effects/kinetic";
+import * as magnetic from "./effects/magnetic";
 import * as markHighlight from "./effects/mark-highlight";
 import * as marquee from "./effects/marquee";
 import * as markStrike from "./effects/mark-strike";
@@ -43,9 +46,10 @@ import * as splitPop from "./effects/split-pop";
 import * as splitWipe from "./effects/split-wipe";
 import * as splitWords from "./effects/split-words";
 import * as strut from "./effects/strut";
+import * as tilt from "./effects/tilt";
 import * as wordmark from "./effects/wordmark";
 
-export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, markHighlight, markUnderline, markStrike, scrub, heroAway, heroSettle, heroVideo, kinetic, marquee, skew, rail];
+export const effects: Effect[] = [splitLines, splitWipe, splitWords, splitBlur, splitChars, splitPop, splitCycle, reveal, clip, strut, kicker, pop, stamp, count, print, wordmark, chat, draw, knoll, alternate, bars, deal, markHighlight, markUnderline, markStrike, scrub, heroAway, heroSettle, heroVideo, kinetic, marquee, skew, rail, tilt, magnetic, coin, accordion];
 
 export const lazy: LazyEffect[] = [
   { hook: '[data-mark="circle"]', load: () => import("./effects/mark-circle") },

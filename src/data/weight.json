@@ -1,5 +1,5 @@
 {
-  "measured": "2026-10-24",
+  "measured": "2026-10-25",
   "tools": {
     "esbuild": "0.27.7",
     "gsap": "3.15.0",
@@ -83,6 +83,14 @@
     "total": 51880
   },
   "entries": {
+    "accordion": {
+      "min": 980,
+      "gzip": 531,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52280
+    },
     "alternate": {
       "min": 1095,
       "gzip": 625,
@@ -118,6 +126,14 @@
         "ScrollTrigger"
       ],
       "total": 52335
+    },
+    "coin": {
+      "min": 737,
+      "gzip": 443,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52221
     },
     "count": {
       "min": 951,
@@ -209,6 +225,14 @@
         "ScrollTrigger"
       ],
       "total": 52409
+    },
+    "magnetic": {
+      "min": 1623,
+      "gzip": 840,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52577
     },
     "mark-box": {
       "min": 2335,
@@ -408,6 +432,14 @@
         "ScrollTrigger"
       ],
       "total": 52117
+    },
+    "tilt": {
+      "min": 1704,
+      "gzip": 879,
+      "needs": [
+        "gsap"
+      ],
+      "total": 52614
     },
     "wordmark": {
       "min": 1198,

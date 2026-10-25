@@ -1,0 +1,125 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<details data-accordion>
+  <summary>La domanda <span class="icon" aria-hidden="true"></span></summary>
+  <div class="answer"><p>…</p></div>  <!-- one box, its padding inside -->
+</details>`;
+const faqs = [
+  ["Devo installare il catalogo sul mio sito?", "No. Il catalogo non si installa: il codice di un effetto si copia a mano nel sito e lì si adatta, con le sue impostazioni in cima al file."],
+  ["Che cosa succede se lo script non arriva?", "La pagina resta completa: niente è nascosto dal CSS. Queste domande si aprono e si chiudono lo stesso, con il comportamento nativo del browser."],
+  ["E chi ha chiesto di ridurre il movimento?", "Vede ogni effetto nel suo stato finale, subito. Le risposte qui si aprono senza animazione."],
+  ["Quanto pesa un effetto?", "Ogni voce riporta il proprio peso, misurato sul suo codice compresso, e quello della pagina con le librerie che le servono."],
+];
+---
+
+<Entry
+  id="accordion"
+  markup={markup}
+  look="Apri una domanda: la risposta si allunga e appare, invece di comparire di colpo. Richiudila; se la riapri mentre si chiude, riparte da dove è arrivata."
+  replay={false}
+>
+  <section class="ac">
+    <div class="wrap ac-grid">
+      <h2 class="ac-head">Domande frequenti</h2>
+      <div class="ac-list">
+        {
+          faqs.map(([q, a], i) => (
+            <details class="ac-item" data-accordion open={i === 0}>
+              <summary>
+                <span>{q}</span>
+                <span class="ac-ic" aria-hidden="true" />
+              </summary>
+              <div class="ac-a">
+                <p>{a}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .ac {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .ac-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+  .ac-head {
+    margin: 0;
+    max-width: 12ch;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(32px, 3.8vw, 54px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .ac-list {
+    border-bottom: 1px solid var(--rule);
+  }
+  .ac-item {
+    border-top: 1px solid var(--rule);
+  }
+  .ac-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--display);
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.2;
+  }
+  .ac-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .ac-item summary:hover {
+    color: var(--blue-deep);
+  }
+  .ac-ic {
+    position: relative;
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+  .ac-ic::before,
+  .ac-ic::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 18px;
+    height: 2px;
+    background: var(--blue);
+    transition: transform 0.35s var(--ease-expo);
+  }
+  .ac-ic::after {
+    transform: rotate(90deg);
+  }
+  .ac-item[open] .ac-ic::after {
+    transform: rotate(0deg);
+  }
+  .ac-item.is-closing .ac-ic::after {
+    transform: rotate(90deg);
+  }
+  .ac-a p {
+    max-width: 46em;
+    margin: 0;
+    padding: 0 40px 26px 0;
+    line-height: 1.6;
+    color: var(--mute-2);
+  }
+  @media (max-width: 760px) {
+    .ac-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

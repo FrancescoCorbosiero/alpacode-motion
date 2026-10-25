@@ -1,0 +1,103 @@
+---
+import Entry from "../components/Entry.astro";
+
+const markup = `<a class="btn" href="#contatti" data-magnetic>Parliamone →</a>
+<!-- pulled harder, no lean -->
+<a class="badge" href="…" data-magnetic="flat">…</a>`;
+---
+
+<Entry
+  id="magnetic"
+  markup={markup}
+  look="Con il mouse sopra, il pulsante segue un poco il puntatore e si inclina verso di lui; il bollino lo segue di più, dritto. Quando il puntatore esce, tornano a posto con una molla. Sul telefono restano fermi."
+  replay={false}
+  attributes={[{ name: "data-magnetic", value: "flat", what: "Follows 35% of the pointer's offset instead of 16%, and doesn't lean (C's)." }]}
+>
+  <section class="mg">
+    <div class="wrap mg-row">
+      <div class="mg-item">
+        <a class="mg-btn" href="#magnetic-a" id="magnetic-a" data-magnetic>Parliamone <span aria-hidden="true">→</span></a>
+        <p><code>data-magnetic</code> segue il 16% e si inclina</p>
+      </div>
+      <div class="mg-item">
+        <a class="mg-badge" href="#magnetic-b" id="magnetic-b" data-magnetic="flat">
+          <span>Il<br />catalogo</span>
+        </a>
+        <p><code>data-magnetic="flat"</code> segue il 35%, dritto</p>
+      </div>
+    </div>
+  </section>
+</Entry>
+
+<style>
+  .mg {
+    padding-block: clamp(96px, 16vh, 180px);
+  }
+  .mg-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(32px, 5vw, 72px);
+  }
+  .mg-item {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 28px;
+    min-height: 320px;
+    border: 1px solid var(--rule);
+  }
+  .mg-item p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--mute-2);
+  }
+  .mg-item code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .mg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 28px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition:
+      background 0.45s var(--ease-expo),
+      border-color 0.45s var(--ease-expo),
+      transform 0.1s;
+  }
+  .mg-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .mg-btn:active {
+    transform: translateY(1px);
+  }
+  .mg-badge {
+    display: grid;
+    place-items: center;
+    width: 148px;
+    aspect-ratio: 1;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--display);
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+  }
+  @media (max-width: 640px) {
+    .mg-row {
+      grid-template-columns: 1fr;
+    }
+    .mg-item {
+      min-height: 240px;
+    }
+  }
+</style>
